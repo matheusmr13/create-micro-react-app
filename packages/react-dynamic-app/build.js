@@ -17,7 +17,7 @@ const promiseExec = (command) => new Promise((resolve, reject) => {
 const promiseZip = (filename, dir) => new Promise((resolve, reject) => {
 	var output = fs.createWriteStream(filename);
 	var archive = archiver('zip', {
-		zlib: { level: 9 } // Sets the compression level.
+		zlib: { level: 9 }
 	});
 	output.on('close', function() {
 		resolve();

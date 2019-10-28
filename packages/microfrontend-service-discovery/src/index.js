@@ -1,30 +1,42 @@
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
-var multer  = require('multer');
+const multer  = require('multer');
+const AdmZip = require('adm-zip');
+const fs = require('fs');
 
-var storage = multer.diskStorage({
+
+const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'gen/uploads')
+    const {
+      packageName
+    } = req.body;
+    const dir = `${process.env.PWD}/gen/microfrontends/${packageName}`;
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true })
+    }
+    cb(null, dir)
   },
   filename: function (req, file, cb) {
-    console.info('gtting file name', req.body);
-    cb(null, req.body.packageName + '.zip')
+    const {
+      version = '0.0.1'
+    } = req.body;
+    const versionEscaped = version.replace(/\./g, '');
+    cb(null, `${versionEscaped}.zip`)
   }
-})
+});
 
-var upload = multer({ storage: storage })
+const upload = multer({ storage: storage })
 
 
-const adapter = new FileSync('./gen/db.json')
+const adapter = new FileSync(`${process.env.PWD}/gen/db.json`)
 const db = low(adapter)
 
 db.defaults({ microfrontends: [] })
   .write()
 
-var express = require('express')
-var app = express()
+const express = require('express')
+const app = express()
 app.use(express.json());
-console.info(__dirname + '/public')
 app.use('/static', express.static('gen'));
 
 app.get('/', function (req, res) {
@@ -44,10 +56,20 @@ app.post('/microfrontend', function(request, response){
   response.send();
 });
 
+console.info(process.env.PWD)
+
 app.post('/profile', upload.single('build'), function (req, res, next) {
-  console.info(req.file, req.body);
+  const {
+    packageName,
+    version = '0.0.1'
+  } = req.body;
+  const filename = `${process.env.PWD}/gen/microfrontends/${packageName}/${version.replace(/\./g, '')}.zip`;
+  console.info(filename)
+  var zip = new AdmZip(`${process.env.PWD}/gen/microfrontends/${packageName}/${version.replace(/\./g, '')}.zip`);
+  zip.extractAllTo(`${process.env.PWD}/gen/microfrontends/${packageName}/actual/`, true);
   res.send();
-})
+});
+
 
 const PORT = 8080;
 app.listen(PORT, () => {

@@ -1,12 +1,13 @@
 {
   "name": "microfrontend-service-discovery",
   "version": "1.0.0",
-  "main": "./src/index.js",
+  "main": "./index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node ./src/index.js"
+    "start": "STATIC_PATH=./gen node ./index.js"
   },
   "dependencies": {
+    "adm-zip": "^0.4.13",
     "express": "^4.17.1",
     "lowdb": "^1.0.0",
     "multer": "^1.4.2",
