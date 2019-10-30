@@ -27,7 +27,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
-
 const adapter = new FileSync(`${process.env.PWD}/gen/db.json`)
 const db = low(adapter)
 

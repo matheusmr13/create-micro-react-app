@@ -7,6 +7,7 @@ const {
 
 const overridePublicPath = () => config => {
 	config.output.jsonpFunction = package.name;
+	config.output.publicPath = `/microfrontends/${package.name}/`;
 	return config;
 };
 

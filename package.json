@@ -3,6 +3,10 @@
     "jsdom": "^15.2.0"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "sw-precache-cra": "^1.0.0"
+  },
+  "scripts": {
+    "sw-precache": "sw-precache-cra --config sw-config.js"
   }
 }
