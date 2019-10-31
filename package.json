@@ -1,12 +1,15 @@
 {
   "devDependencies": {
-    "jsdom": "^15.2.0"
+    "jsdom": "^15.2.0",
+    "lerna": "^3.16.4"
   },
   "dependencies": {
     "express": "^4.17.1",
     "sw-precache-cra": "^1.0.0"
   },
   "scripts": {
-    "sw-precache": "sw-precache-cra --config sw-config.js"
-  }
+    "sw-precache": "sw-precache-cra --config sw-config.js",
+    "build-all": "./packages/microfrontend-controller/bin/index.js build-all"
+  },
+  "name": "cra-microfrontend"
 }

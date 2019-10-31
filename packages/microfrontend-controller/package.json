@@ -1,0 +1,13 @@
+{
+  "name": "microfrontend-controller",
+  "version": "1.0.0",
+  "description": "Microfrontend ruler",
+  "main": "index.js",
+  "author": "Matheus Martins",
+  "license": "MIT",
+  "dependencies": {
+    "customize-cra": "^0.8.0",
+    "react-app-rewired": "^2.1.4"
+  },
+  "config-overrides-path": "./config/cra-webpack-config-override.js"
+}
