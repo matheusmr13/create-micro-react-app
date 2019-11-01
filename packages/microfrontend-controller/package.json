@@ -5,6 +5,9 @@
   "main": "index.js",
   "author": "Matheus Martins",
   "license": "MIT",
+  "bin": {
+    "microfrontend-controller": "./bin/index.js"
+  },
   "dependencies": {
     "customize-cra": "^0.8.0",
     "react-app-rewired": "^2.1.4"
