@@ -6,10 +6,13 @@
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-helmet": "^5.2.1",
-    "react-scripts": "3.2.0"
+    "react-scripts": "3.2.0",
+    "microfrontend-controller": "*",
+    "react-controller": "*"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "microfrontend-controller start",
+    "start-standalone": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -8,8 +8,10 @@
     "react-scripts": "3.2.0"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "microfrontend-controller build",
+    "start": "IS_MICROFRONTEND=true microfrontend-controller start",
+    "start-standalone": "microfrontend-controller start",
+    "build": "IS_MICROFRONTEND=true microfrontend-controller build",
+    "build-standalone": "microfrontend-controller build",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject"
   },

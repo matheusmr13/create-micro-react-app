@@ -5,11 +5,13 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "sw-precache-cra": "^1.0.0"
+    "sw-precache-cra": "^1.0.0",
+    "microfrontend-controller": "*"
   },
   "scripts": {
     "sw-precache": "sw-precache-cra --config sw-config.js",
-    "build-all": "./packages/microfrontend-controller/bin/index.js build-all"
+    "build-all": "./packages/microfrontend-controller/bin/index.js build-all",
+    "start-all": "./packages/microfrontend-controller/bin/index.js start-all"
   },
   "name": "cra-microfrontend"
 }

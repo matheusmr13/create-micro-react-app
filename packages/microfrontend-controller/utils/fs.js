@@ -1,4 +1,5 @@
 const fs = require('fs');
+const fse = require('fs-extra');
 const path = require('path')
 const appDirectory = fs.realpathSync(process.cwd());
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
@@ -9,12 +10,8 @@ const getAppFile = (file) => {
 	return require(resolveApp(file));
 }
 
-const promiseWriteFile = (file, content) => new Promise((resolve, reject) => {
-	fs.writeFile(file, content, function(err) {
-		if (err) return reject (err);
-		resolve();
-	});
-})
+
+const promiseWriteFile = (file, content) => fse.outputFile(file, content);
 
 
 const isDirectory = source => fs.statSync(source).isDirectory()
@@ -25,5 +22,6 @@ module.exports = {
 	getAppFile,
 	promiseWriteFile,
 	isDirectory,
-	getDirectories
+	getDirectories,
+	resolveApp
 }
