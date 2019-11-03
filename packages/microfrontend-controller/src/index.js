@@ -1,4 +1,4 @@
-const Controller = require('./react-controller');
+// const Controller = require('./react-controller');
 const microfrontendFolderName = 'microfrontends';
 
 const getMicrofrontends = () => fetch(`/${microfrontendFolderName}/meta.json`).then(response => response.json());
@@ -6,5 +6,5 @@ const getMicrofrontends = () => fetch(`/${microfrontendFolderName}/meta.json`).t
 
 module.exports = {
 	getMicrofrontends,
-	Controller
+	// Controller
 };

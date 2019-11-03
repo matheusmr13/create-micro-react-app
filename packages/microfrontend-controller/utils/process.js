@@ -1,13 +1,23 @@
 
-const { exec, execSync } = require('child_process');
+const { exec, execSync, spawn } = require('child_process');
+
+
 
 const promiseExec = (command) => new Promise((resolve, reject) => {
-	const execution = exec(command, (err) => {
-		if (err) return reject(err);
-		resolve()
-	})
-	execution.stdout.pipe(process.stdout);
-	return execution;
+	const ls    = spawn(command, [], { shell: true, stdio: [process.stdin, process.stdout, 'pipe'] });
+
+	// ls.stdout.on('data', function (data) {
+	// 	console.log(data.toString());
+	// });
+
+	// ls.stderr.on('data', function (data) {
+	// 	console.log(data.toString());
+	// });
+
+	ls.on('exit', function (code) {
+		// console.log('child process exited with code ' + code.toString());
+		resolve();
+	});
 });
 
 module.exports = {

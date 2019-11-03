@@ -6,7 +6,7 @@ import './App.css';
 function App() {
   return (
     <div className="MyMicrofrontend">
-      my qweqwe with red FOI LK
+      v8888
       <img src={logo} className="other_logo" alt="logo" />
     </div>
   );

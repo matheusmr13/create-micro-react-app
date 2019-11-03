@@ -82,9 +82,9 @@ const startAll = async () => {
 	const metaJson = microfrontends.reduce((agg, package, i) => ({
 		[package]: {
 			js: [
-				`http://localhost:${INITIAL_PORT+i}/static/js/bundle.js`,
-				`http://localhost:${INITIAL_PORT+i}/static/js/0.chunk.js`,
-				`http://localhost:${INITIAL_PORT+i}/static/js/main.chunk.js`
+				// `http://localhost:${INITIAL_PORT+i}/static/js/bundle.js`,
+				// `http://localhost:${INITIAL_PORT+i}/static/js/0.chunk.js`,
+				// `http://localhost:${INITIAL_PORT+i}/static/js/main.chunk.js`
 			],
 			css: [],
 			host: `http://localhost:${INITIAL_PORT+i}`

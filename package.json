@@ -5,8 +5,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "sw-precache-cra": "^1.0.0",
-    "microfrontend-controller": "*"
+    "sw-precache-cra": "^1.0.0"
   },
   "scripts": {
     "sw-precache": "sw-precache-cra --config sw-config.js",
