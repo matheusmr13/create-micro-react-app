@@ -1,0 +1,66 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "airbnb"
+  ],
+  "env": {
+    "es6": true,
+    "browser": true
+  },
+  "plugins": [
+    "react"
+  ],
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "rules": {
+    "max-len": ["error", {
+      "code": 120
+    }],
+    "react/jsx-filename-extension": [1, {
+      "extensions": [".test.js", ".jsx", "js"]
+    }],
+    "arrow-parens": ["as-needed", {
+      "requireForBlockBody": true
+    }]
+  }
+}
+
+// {
+//   "extends": [
+//     "./node_modules/eslint-config-react-app/index.js",
+//     "airbnb",
+//     "plugin:cypress/recommended"
+//   ],
+//   "parser": "babel-eslint",
+//   "env": {
+//     "browser": true,
+//     "jest": true,
+//     "cypress/globals": true
+//   },
+//   "plugins": [
+//     "react-hooks",
+//     "cypress"
+//   ],
+//   "rules": {
+//     "comma-dangle": ["error", "never"],
+//     "react/no-array-index-key": 0,
+//     "react/jsx-filename-extension": [1, {
+//       "extensions": [".test.js", ".jsx", "js"]
+//     }],
+//     "jsx-a11y/no-autofocus": 0,
+
+//     "jsx-a11y/click-events-have-key-events": 0,
+//     "lines-between-class-members": 0,
+//     "react-hooks/rules-of-hooks": "error",
+//     "react-hooks/exhaustive-deps": "warn",
+//     "jsx-a11y/no-noninteractive-tabindex": "off"
+//   },
+//   "settings": {
+//     "import/resolver": {
+//       "node": {
+//         "paths": ["src"]
+//       }
+//     }
+//   },
+// }
