@@ -1,5 +1,6 @@
 const { getAppFile, isDirectory, getDirectories, promiseWriteFile } = require('../utils/fs');
 const { promiseExec, execSync } = require('../utils/process');
+const generateServiceWorker = require('../utils/create-sw');
 
 const buildAllConfigurationsFile = getAppFile('build-configuration.js');
 if (!buildAllConfigurationsFile) throw new Error('"build-configuration.js" should exist in root project');
@@ -57,14 +58,14 @@ const buildMicrofrontend = async(package) => {
 		'precache-manifest*',
 		'robots.txt',
 		'service-worker.js'
-	].map(file => `./${packagesFolder}/${package}/build/${file}`).join(' ')}`)
+	].map(file => `./${packagesFolder}/${package}/build/${file}`).join(' ')}  || true`)
 }
 const buildApp = async(package) => {
 	await buildPackage(package);
 	await promiseExec(`rm ${[
 		`${microfrontendFolderName}/meta.json`,
 		'service-worker.js'
-	].map(file => `./${packagesFolder}/${package}/build/${file}`).join(' ')}`)
+	].map(file => `./${packagesFolder}/${package}/build/${file}`).join(' ')}  || true`)
 }
   
 const buildAll = async () => {
@@ -100,6 +101,8 @@ const buildAll = async () => {
 
 	const metaMicrofrontend = await mapMicrofrontend(`./${distFolder}/${microfrontendFolderName}`);
 	await promiseWriteFile(`./${distFolder}/${microfrontendFolderName}/meta.json`, JSON.stringify(metaMicrofrontend, null, 2));
-	await promiseExec('yarn sw-precache');
+	await promiseExec(`rm -rf ${distFolder}/service-worker.js || true`);
+	await generateServiceWorker(distFolder);
 }
+
 module.exports = buildAll;

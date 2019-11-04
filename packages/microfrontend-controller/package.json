@@ -13,7 +13,8 @@
     "customize-cra": "^0.8.0",
     "fs-extra": "^8.1.0",
     "react-app-rewired": "^2.1.4",
-    "react-scripts": "^3.2.0"
-  },
-  "config-overrides-path": "./config/cra-webpack-config-override.js"
+    "react-scripts": "^3.2.0",
+    "sw-precache": "^5.2.1",
+    "uglify-js": "^3.6.7"
+  }
 }
