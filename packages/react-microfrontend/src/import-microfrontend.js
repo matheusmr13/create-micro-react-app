@@ -22,7 +22,7 @@ class ReactMicrofrontend extends React.Component {
       iframesToLoad: null,
       cssToLoad: null,
       jsToLoad: null,
-      styleToLoad: null,
+      styleToLoad: {},
       microfrontends: null
     };
   }
@@ -48,6 +48,8 @@ class ReactMicrofrontend extends React.Component {
       })
       .onMicrofrontendStyleChange((name, styles) => {
         const { styleToLoad } = this.state;
+        console.info(name, styles, styleToLoad);
+        console.info(Object.values(styleToLoad).length && Object.values(styleToLoad).map((styleContent) => styleContent.map(content => <style type="text/css" >{content}</style> )))
         this.setState({
           styleToLoad: {
             ...styleToLoad,
@@ -77,7 +79,7 @@ class ReactMicrofrontend extends React.Component {
         <Helmet>
           { jsToLoad && jsToLoad.map((url) => <script key={url} src={url} type="text/javascript" /> )}
           { cssToLoad && cssToLoad.map((url) => <link key={url} href={url} type="text/css" rel="stylesheet" /> )}
-          { styleToLoad && styleToLoad.map((styleContent) => <style type="text/css" >{styleContent}</style> )}
+          { Object.values(styleToLoad).length && Object.values(styleToLoad).map((styleContent) => styleContent.map(content => <style type="text/css" >{content}</style> ))}
         </Helmet>
         {
           iframesToLoad && iframesToLoad.map((iframeSrc) => (

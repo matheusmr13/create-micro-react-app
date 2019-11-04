@@ -1,4 +1,9 @@
 {
+  "react-another-micro-app": {
+    "js": [],
+    "css": [],
+    "host": "http://localhost:3002"
+  },
   "react-dynamic-app": {
     "js": [],
     "css": [],

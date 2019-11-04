@@ -30,6 +30,7 @@ class Controller {
   }
 
   onStyleMessage = message => () => {
+    console.info(message);
     const messageMicrofrontend = this.microfrontends[message.origin];
     messageMicrofrontend.setStyle(event.data.payload);
     this.__onMicrofrontendStyleChange(messageMicrofrontend.name, messageMicrofrontend.style);

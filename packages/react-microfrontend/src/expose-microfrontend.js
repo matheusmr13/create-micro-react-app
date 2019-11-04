@@ -22,12 +22,12 @@ const ExportMicrofrontend = (objectToExport) => {
     communicate.send(Communication.TYPE.SCRIPT, getScriptSrcs());
 
     const mutationObserver = new MutationObserver(function(mutations) {
-      mutations.forEach(function() {
+      setTimeout(() => {
         const styleList = [];
         document.querySelectorAll('style').forEach(a => styleList.push(a.innerHTML));
 
-        communicate.send(Communication.TYPE.STYLE, getScriptSrcs(styleList));
-      });
+        communicate.send(Communication.TYPE.STYLE, styleList);
+      }, 100)
     });
     mutationObserver.observe(document.querySelector('head'), {
       childList: true
