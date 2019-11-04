@@ -31,6 +31,7 @@ const getEnvString = () => {
 		await promiseExec(`${getEnvString()} ${getReactAppRewiredPath()} build --config-overrides ${__dirname}/../config/cra-webpack-config-override.js`);
 	},
 	start: async () => {
+		console.info(getEnvString());
 		await promiseExec(`${getEnvString()} ${getReactAppRewiredPath()} start --config-overrides ${__dirname}/../config/cra-webpack-config-override.js`);
 	},
 	"build-all": async() => {

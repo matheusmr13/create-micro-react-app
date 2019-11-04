@@ -7691,7 +7691,7 @@ microevent.ts@~0.1.1:
   resolved "https://registry.yarnpkg.com/microevent.ts/-/microevent.ts-0.1.1.tgz#70b09b83f43df5172d0205a63025bce0f7357fa0"
   integrity sha512-jo1OfR4TaEwd5HOrt5+tAZ9mqT4jmpNAusXtyfNzqVm9uiSYFZlKM1wYL4oU7azZW/PxQW53wM0S6OR1JHNa2g==
 
-microfrontend-controller@^1.2.2:
+microfrontend-controller@*:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/microfrontend-controller/-/microfrontend-controller-1.2.2.tgz#e9cdc8fcb088904ecf118b2a51075b5e0f6fc936"
   integrity sha512-6yc0tpJUWwo+2ZkeN913UCt4E/30Y2lbsK+OcAOou5v6YVxL8kXEkz9qxgBXHXYGWJII0HCIl8RCP9Bn/GOszA==
@@ -9900,7 +9900,7 @@ react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.11.0.tgz#b85dfecd48ad1ce469ff558a882ca8e8313928fa"
   integrity sha512-gbBVYR2p8mnriqAwWx9LbuUrShnAuSCNnuPGyc7GJrMVQtPDAh8iLpv7FRuMPFb56KkaVZIYSz1PrjI9q0QPCw==
 
-react-microfrontend@^1.2.2:
+react-microfrontend@*:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/react-microfrontend/-/react-microfrontend-1.2.2.tgz#d7a4f86482042a8389504b407e75d94900cf20b0"
   integrity sha512-tLxtdP41HECg6sjxwnTxmMtG29LsvVZt8nEBRuHOl2K4jpbmyYZsxNI01sn26pvFIIDwCWwP84mdElnrtbksqA==
@@ -11887,9 +11887,9 @@ verror@1.10.0:
     extsprintf "^1.2.0"
 
 vm-browserify@^1.0.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.1.tgz#9d81bf6c0a56ba3c6e787b2e56d48ac0b003574a"
-  integrity sha512-VdaJ/et1OKy9VDEqH6epLQ/DlNMuHvtDgwjPYvDvqNOlgFSMAL4ucZvyIpz0D4x5qT+8wCSK19YjWicJuc00hQ==
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
+  integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
 w3c-hr-time@^1.0.1:
   version "1.0.1"
