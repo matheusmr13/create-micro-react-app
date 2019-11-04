@@ -24,7 +24,7 @@ class Microfrontend {
     this.files.js = metaInfo.js;
     this.files.css = metaInfo.css;
 
-    if (this.files.js && this.files.css) {
+    if (this.files.js && this.files.js.length > 0) {
       this.status = Microfrontend.STATUS.IMPORTED;
     } else {
       this.status = Microfrontend.STATUS.CREATED;

@@ -62,6 +62,7 @@ class Controller {
 
       shared.set('microfrontends', this.microfrontends);
 
+      console.info(this.microfrontends);
       if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.CREATED)) {
         this.__onMicrofrontendsDiscovered(this.microfrontends);
       } else if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.IMPORTED)) {
