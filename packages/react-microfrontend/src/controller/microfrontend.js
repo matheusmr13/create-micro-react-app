@@ -8,7 +8,7 @@ class Microfrontend {
   };
 
   name
-  status = Microfrontend.STATUS.CREATED;
+  status;
   host
   files = {
     js: null,
@@ -23,6 +23,12 @@ class Microfrontend {
     this.host = metaInfo.host;
     this.files.js = metaInfo.js;
     this.files.css = metaInfo.css;
+
+    if (this.files.js && this.files.css) {
+      this.status = Microfrontend.STATUS.IMPORTED;
+    } else {
+      this.status = Microfrontend.STATUS.CREATED;
+    }
   }
 
   register(content) {

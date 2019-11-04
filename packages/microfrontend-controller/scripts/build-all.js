@@ -21,8 +21,9 @@ const mapMicrofrontend = async (folder) => {
 
 	const meta = microfrontendsDirs.reduce((agg, dir) => {
 		const parts = dir.split('/');
-		const mf = parts[parts.length - 1];
+		const moduleName = parts[parts.length - 1];
 		const findResult = execSync(`find ${dir}`);
+
 		const files = findResult
 			.toString()
 			.split('\n')
@@ -30,14 +31,14 @@ const mapMicrofrontend = async (folder) => {
 			.filter(f => !!f && f.indexOf('.') > -1)
 			.reduce((fileTypes, file) => {
 				if (file.endsWith('.js')) {
-					fileTypes.js.push(`/microfrontends/${moduleName}/${file}`);
+					fileTypes.js.push(`/microfrontends/${moduleName}${file}`);
 				} else if (file.endsWith('.css')) {
-					fileTypes.css.push(`/microfrontends/${moduleName}/${file}`);
+					fileTypes.css.push(`/microfrontends/${moduleName}${file}`);
 				}
 				return fileTypes;
 			}, { js: [], css: []});
 
-		agg[mf] = files;
+		agg[moduleName] = files;
 		return agg;
 	}, {});
 
@@ -56,9 +57,18 @@ const buildMicrofrontend = async(package) => {
 		'service-worker.js'
 	].map(file => `./${packagesFolder}/${package}/build/${file}`).join(' ')}`)
 }
+const buildApp = async(package) => {
+	await buildPackage(package);
+	await promiseExec(`rm ${[
+		`${microfrontendFolderName}/meta.json`,
+		'service-worker.js'
+	].map(file => `./${packagesFolder}/${package}/build/${file}`).join(' ')}`)
+}
   
 const buildAll = async () => {
 	if (!microfrontends || !app) throw new Error('Configuration "microfrontends" and "app" are required.');
+
+	await promiseExec(`rm -rf ${distFolder} || true`);
 
 	if (shouldBuildPackages) {
 		await promiseExec(`rm -rf ${allBuildsFolder} || true`);
@@ -66,7 +76,7 @@ const buildAll = async () => {
 		await Promise.all(
 			[
 				...(microfrontends.map(package => buildMicrofrontend(package))),
-				buildPackage(app)
+				buildApp(app)
 			]
 		)
 
@@ -77,9 +87,9 @@ const buildAll = async () => {
 		}
 	}
 
-	await promiseExec(`rm -rf ${distFolder} || true`);
+	
 	await promiseExec(`cp -r ./${allBuildsFolder}/${app} ./${distFolder}`);
-	await promiseExec(`mkdir ./${distFolder}/${microfrontendFolderName}`);
+	await promiseExec(`mkdir -p ./${distFolder}/${microfrontendFolderName}`);
 
 	for (let i=0; i < microfrontends.length;i++) {
 		const package = microfrontends[i];

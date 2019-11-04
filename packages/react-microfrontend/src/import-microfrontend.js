@@ -48,8 +48,6 @@ class ReactMicrofrontend extends React.Component {
       })
       .onMicrofrontendStyleChange((name, styles) => {
         const { styleToLoad } = this.state;
-        console.info(name, styles, styleToLoad);
-        console.info(Object.values(styleToLoad).length && Object.values(styleToLoad).map((styleContent) => styleContent.map(content => <style type="text/css" >{content}</style> )))
         this.setState({
           styleToLoad: {
             ...styleToLoad,
