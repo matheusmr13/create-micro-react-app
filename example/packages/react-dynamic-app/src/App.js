@@ -7,7 +7,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="MyMicrofrontend">
-        v8888
+        v8888KAKAKA
         <img src={logo} className="other_logo" alt="logo" />
       </div>
     );

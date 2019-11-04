@@ -1,12 +1,20 @@
 #!/usr/bin/env node
 
 const { promiseExec } = require('../utils/process');
-const { getAppFile } = require('../utils/fs');
+const { getAppFile, fileExistsSync } = require('../utils/fs');
 
 const package = getAppFile('package.json');
 
 const args = process.argv.slice(2);
 const script = args[0];
+
+const getReactAppRewiredPath = () => {
+	const options = [
+		`${__dirname}/../../react-app-rewired/bin/index.js`,
+		`${__dirname}/../node_modules/react-app-rewired/bin/index.js`
+	];
+	return options.find(path => fileExistsSync(path));
+}
 
 const getEnvString = () => {
 	const envs = {
@@ -20,12 +28,13 @@ const getEnvString = () => {
 }
 ({
 	build: async () => {
-		await promiseExec(`${getEnvString()} ${__dirname}/../node_modules/react-app-rewired/bin/index.js build --config-overrides ${__dirname}/../config/cra-webpack-config-override.js`);
+		await promiseExec(`${getEnvString()} ${getReactAppRewiredPath()} build --config-overrides ${__dirname}/../config/cra-webpack-config-override.js`);
 	},
 	start: async () => {
-		await promiseExec(`${getEnvString()} ${__dirname}/../node_modules/react-app-rewired/bin/index.js start --config-overrides ${__dirname}/../config/cra-webpack-config-override.js`);
+		await promiseExec(`${getEnvString()} ${getReactAppRewiredPath()} start --config-overrides ${__dirname}/../config/cra-webpack-config-override.js`);
 	},
 	"build-all": async() => {
+		console.info
 		const buildAll = require('../scripts/build-all');
 		await buildAll();
 	},

@@ -44,7 +44,7 @@ class ReactMicrofrontend extends React.Component {
         })
       })
       .onMicrofrontendHotReload(() => {
-        window.locationo.reload();
+        window.location.reload();
       })
       .onMicrofrontendStyleChange((name, styles) => {
         const { styleToLoad } = this.state;

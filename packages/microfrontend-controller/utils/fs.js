@@ -23,5 +23,6 @@ module.exports = {
 	promiseWriteFile,
 	isDirectory,
 	getDirectories,
-	resolveApp
+	resolveApp,
+	fileExistsSync: file => fs.existsSync(file)
 }
