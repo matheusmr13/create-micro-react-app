@@ -1,10 +1,6 @@
 lerna bootstrap
 yarn
 
-cd example
-lerna bootstrap
-yarn
-
 cd node_modules
 
 rm -r microfrontend-controller
