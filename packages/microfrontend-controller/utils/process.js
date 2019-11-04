@@ -1,10 +1,8 @@
 
 const { exec, execSync, spawn } = require('child_process');
 
-
-
 const promiseExec = (command) => new Promise((resolve, reject) => {
-	const ls    = spawn(command, [], { shell: true});
+	const ls = spawn(command, [], { shell: true});
 
 	ls.stdout.on('data', function (data) {
 		console.log(data.toString());

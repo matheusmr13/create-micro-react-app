@@ -24,13 +24,6 @@ const overrideWebpackConfigs = () => config => {
 
 const overrideDevServerConfigs  = () => config => {
 	if (process.env.IS_MICROFRONTEND) {
-		// config.transportMode = {
-		// 	client: require.resolve('./CustomClient'),
-		// 	server: 'ws'
-		// }
-		// config.port = '3001';
-		// config.sockPath = 'xablau'
-		// config.sockHost = `localhost`;
 		config.headers = {
 			"Access-Control-Allow-Origin": "http://localhost:3000",
 			"Access-Control-Allow-Credentials": "true",

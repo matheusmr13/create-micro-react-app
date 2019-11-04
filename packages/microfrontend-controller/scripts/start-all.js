@@ -1,12 +1,10 @@
-#!/usr/bin/env node
-
 const { getAppFile, isDirectory, getDirectories, promiseWriteFile, resolveApp } = require('../utils/fs');
 const { promiseExec, execSync } = require('../utils/process');
 
-const net = require('net');
-const { spawn } = require('child_process');
+const buildAllConfigurationsFile = getAppFile('build-configuration.js');
+if (!buildAllConfigurationsFile) throw new Error('"build-configuration.js" should exist in root project');
 
-const buildAllConfigurations = (getAppFile('build-configuration.js'))();
+const buildAllConfigurations = buildAllConfigurationsFile();
 const {
 	shouldBuildPackages = false,
 	app,
@@ -16,47 +14,6 @@ const {
 	allBuildsFolder = 'builds',
 	distFolder = 'build'
 } = buildAllConfigurations;
-
-
-const port = process.env.PORT ? (process.env.PORT - 100) : 3000;
-
-process.env.ELECTRON_START_URL = `http://localhost:${port}`;
-
-const client = new net.Socket();
-
-let startedElectron = false;
-
-const reactProcess = spawn('npm', ['--prefix', 'packages/web', 'run', 'start']);
-reactProcess.stdout.on('data', (data) => {
-  console.log(`${data}`);
-});
-
-const tryConnection = () => client.connect({ port }, () => {
-  client.end();
-
-  if (!startedElectron) {
-    console.log('Starting electron');
-    startedElectron = true;
-
-    const electronProcess = spawn('npm', ['--prefix', 'packages/desktop', 'run', 'start']);
-    electronProcess.stdout.on('data', (data) => {
-      console.log(`${data}`);
-    });
-
-    electronProcess.on('exit', function(code, signal){
-        console.log('App quit');
-        electronProcess.stdin.pause();
-        electronProcess.kill();
-        reactProcess.stdin.pause();
-        reactProcess.kill();
-        process.exit(0);
-    });
-  }
-});
-
-client.on('error', () => {
-  setTimeout(tryConnection, 1000);
-});
 
 const startReactApp = async (package, port, isMicro) => {
 	await promiseExec(`${isMicro ? 'REACT_APP_IS_MICROFRONTEND=true ' : ''}PORT=${port} npm run --prefix ./packages/${package} start`);

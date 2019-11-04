@@ -1,0 +1,13 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build-all": "microfrontend-controller build-all",
+    "start-all": "microfrontend-controller start-all"
+  },
+  "dependencies": {
+    "microfrontend-controller": "link:../packages/microfrontend-controller"
+  }
+}
