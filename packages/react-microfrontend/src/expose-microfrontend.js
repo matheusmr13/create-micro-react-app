@@ -13,6 +13,7 @@ const shared = new Shared('__core__');
 const ExportMicrofrontend = (objectToExport) => {
   const registerMicrofrontend = shared.get('registerMicrofrontend');
 
+  // communicate.send(JSON.stringify(window.__shared__));
   if (registerMicrofrontend) {
     registerMicrofrontend(process.env.REACT_APP_PACKAGE_NAME, objectToExport);
   } else {

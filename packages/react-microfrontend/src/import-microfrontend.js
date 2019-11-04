@@ -1,6 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import Controller from './controller';
+import MicrofrontendRenderer from './renderer';
 
 const iframeStyle = {
   position: 'absolute',
@@ -13,6 +14,7 @@ const iframeStyle = {
   border:0
 };
 
+
 class ReactMicrofrontend extends React.Component {
   constructor(props) {
     super(props);
@@ -20,7 +22,8 @@ class ReactMicrofrontend extends React.Component {
       iframesToLoad: null,
       cssToLoad: null,
       jsToLoad: null,
-      styleToLoad: null
+      styleToLoad: null,
+      microfrontends: null
     };
   }
 
@@ -52,24 +55,25 @@ class ReactMicrofrontend extends React.Component {
           }
         })
       })
+      .onMicrofrontendsInitialized((microfrontends) => {
+        this.setState({
+          microfrontends
+        })
+      })
       .initialize()
   }
 
   render() {
-    const { iframesToLoad, jsToLoad, cssToLoad, styleToLoad } = this.state;
-    console.info(iframesToLoad, jsToLoad, cssToLoad, styleToLoad, this.props.children);
+    const { iframesToLoad, jsToLoad, cssToLoad, styleToLoad, microfrontends } = this.state;
     return (
       <React.Fragment>
-        {/* <div>
-          {
-            Object.values(registeredMicrofrontends).map((Micro) => (
-              <div>
-                <Micro />
-              </div>
-            ))
-          }
-        </div> */}
-        {this.props.children}
+        {
+          microfrontends && (
+            <MicrofrontendRenderer type={this.props.type} microfrontends={microfrontends}>
+              {this.props.children}
+            </MicrofrontendRenderer>
+          )
+        }
         <Helmet>
           { jsToLoad && jsToLoad.map((url) => <script key={url} src={url} type="text/javascript" /> )}
           { cssToLoad && cssToLoad.map((url) => <link key={url} href={url} type="text/css" rel="stylesheet" /> )}

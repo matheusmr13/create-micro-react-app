@@ -1,16 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 // import importScript from './import-script';
 
 class App extends React.Component {
   state = {
-    selectedMicrofrontend: null,
-    microfrontends: null
-  }
-
-  componentDidMount() {
+    selectedMicrofrontend: null
   }
 
   handleMicrofrontendClick = selectedMicrofrontend => () => {
@@ -20,8 +15,11 @@ class App extends React.Component {
   }
 
   render() {
-    const { microfrontends } = this.state;
-    if (!microfrontends) return null;
+    const { microfrontends } = this.props;
+    const { selectedMicrofrontend } = this.state;
+
+    const MicrofrontendComponent = selectedMicrofrontend && microfrontends[selectedMicrofrontend].content;
+    
     return (
       <div className="App">
         <div className="App__menu">
@@ -31,6 +29,13 @@ class App extends React.Component {
                 {microfrontend}
               </button>
             ))
+          }
+          {
+            MicrofrontendComponent && (
+              <div className="App_microfrontend-container">
+                <MicrofrontendComponent />
+              </div>
+            )
           }
         </div>
       </div>

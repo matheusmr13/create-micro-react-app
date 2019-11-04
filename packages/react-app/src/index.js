@@ -2,14 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
 import { ImportMicrofrontend } from 'react-microfrontend';
 
-// const { Controller } = Microfrontend;
-
-ReactDOM.render(<ImportMicrofrontend><App /></ImportMicrofrontend>, document.getElementById('root'));
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+ReactDOM.render((
+	<ImportMicrofrontend>
+		{microfrontends => <App microfrontends={microfrontends} /> }
+	</ImportMicrofrontend>
+), document.getElementById('root'));

@@ -11,7 +11,6 @@ class AppClient extends Communication {
     window.addEventListener('message', (event) => {
       if (!event.data || !event.data.source || event.data.source !== Communication.COMMUNICATION_SOURCE) return;
 
-      console.info(event.data);
       this.notifyMessage(event.data);
     }, false);
     return this;

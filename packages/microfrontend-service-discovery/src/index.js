@@ -55,15 +55,12 @@ app.post('/microfrontend', function(request, response){
   response.send();
 });
 
-console.info(process.env.PWD)
-
 app.post('/profile', upload.single('build'), function (req, res, next) {
   const {
     packageName,
     version = '0.0.1'
   } = req.body;
   const filename = `${process.env.PWD}/gen/microfrontends/${packageName}/${version.replace(/\./g, '')}.zip`;
-  console.info(filename)
   var zip = new AdmZip(`${process.env.PWD}/gen/microfrontends/${packageName}/${version.replace(/\./g, '')}.zip`);
   zip.extractAllTo(`${process.env.PWD}/gen/microfrontends/${packageName}/actual/`, true);
   res.send();

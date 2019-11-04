@@ -1,9 +1,9 @@
-import Shared from './shared';
-import Communication from './communication/app-client';
+import Shared from './../shared';
+import Communication from './../communication/app-client';
+import Microfrontend from './microfrontend';
 
 const shared = new Shared('__core__');
 const microfrontendFolderName = 'microfrontends';
-
 
 class Controller {
   microfrontends = null;
@@ -38,6 +38,10 @@ class Controller {
   initialize() {
     shared.set('registerMicrofrontend', (name, microfrontendShared) => {
       this.microfrontends[name].register(microfrontendShared);
+
+      if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.REGISTERED)) {
+        this.__onMicrofrontendsInitialized(this.microfrontends);
+      }
     });
 
     const communication = new Communication();
@@ -54,6 +58,8 @@ class Controller {
         .reduce((agg, microfrontendName) => Object.assign(agg, {
           [microfrontendName] : new Microfrontend(microfrontendName, meta[microfrontendName])
         }), {});
+
+      shared.set('microfrontends', this.microfrontends);
 
       this.__onMicrofrontendsDiscovered(this.microfrontends);
     });
@@ -75,60 +81,9 @@ class Controller {
     this.__onMicrofrontendStyleChange = callback;
     return this;
   }
-}
-
-class Microfrontend {
-  static STATUS = {
-    DISCOVERED: 'DISCOVERED',
-    LOADED: 'LOADED',
-    IMPORTED: 'IMPORTED',
-    REGISTERED: 'REGISTERED',
-    INITIALIZED: 'INITIALIZED'
-  };
-
-  name
-  status = Microfrontend.STATUS.CREATED;
-  host
-  files = {
-    js: null,
-    css: null
-  };
-  style = []
-  content
-  isLoaded = false
-
-  constructor(name, metaInfo) {
-    this.name = name;
-    this.host = metaInfo.host;
-    this.files.js = metaInfo.js;
-    this.files.css = metaInfo.css;
-  }
-
-  register(content) {
-    this.status = Microfrontend.STATUS.REGISTERED;
-    this.content = content;
-  }
-
-  loaded() {
-    this.status = Microfrontend.STATUS.LOADED;
-    this.isLoaded = true;
-  }
-
-  importScript(jsScripts) {
-    this.files.js = jsScripts;
-    this.status = Microfrontend.STATUS.IMPORTED;
-  }
-
-  hasBeenLoaded() {
-    return this.isLoaded;
-  }
-
-  isReady() {
-    return this.status === Microfrontend.STATUS.REGISTERED;
-  }
-
-  setStyle(style) {
-    this.style = style;
+  onMicrofrontendsInitialized(callback) {
+    this.__onMicrofrontendsInitialized = callback;
+    return this;
   }
 }
 
