@@ -1,6 +1,6 @@
 const { getAppFile, isDirectory, getDirectories, promiseWriteFile, resolveApp } = require('../utils/fs');
 const { promiseExec, execSync } = require('../utils/process');
-../utils/process
+
 const buildAllConfigurationsFile = getAppFile('build-configuration.js');
 if (!buildAllConfigurationsFile) throw new Error('"build-configuration.js" should exist in root project');
 
