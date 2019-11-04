@@ -1,6 +1,6 @@
 {
   "name": "react-microfrontend",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "",
   "author": "",
   "license": "MIT",
@@ -23,8 +23,8 @@
   },
   "peerDependencies": {
     "prop-types": "^15.5.4",
-    "react": "^15.0.0 || ^16.0.0",
-    "react-dom": "^15.0.0 || ^16.0.0"
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2"
   },
   "devDependencies": {
     "@svgr/rollup": "^2.4.1",

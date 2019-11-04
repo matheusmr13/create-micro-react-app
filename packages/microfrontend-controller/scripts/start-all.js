@@ -1,6 +1,6 @@
 const { getAppFile, isDirectory, getDirectories, promiseWriteFile, resolveApp } = require('../utils/fs');
 const { promiseExec, execSync } = require('../utils/process');
-
+../utils/process
 const buildAllConfigurationsFile = getAppFile('build-configuration.js');
 if (!buildAllConfigurationsFile) throw new Error('"build-configuration.js" should exist in root project');
 
@@ -16,6 +16,7 @@ const {
 } = buildAllConfigurations;
 
 const startReactApp = async (package, port, isMicro) => {
+	console.info({ isMicro })
 	await promiseExec(`${isMicro ? 'REACT_APP_IS_MICROFRONTEND=true ' : ''}PORT=${port} npm run --prefix ./packages/${package} start`);
 }
   
@@ -53,7 +54,7 @@ const startAll = async () => {
 
 	await Promise.all(
 		[
-			...(microfrontends.map((package, i) => startReactApp(package, INITIAL_PORT + i), true)),
+			...(microfrontends.map((package, i) => startReactApp(package, INITIAL_PORT + i, true))),
 			startReactApp(app, 3000)
 		]
 	)
