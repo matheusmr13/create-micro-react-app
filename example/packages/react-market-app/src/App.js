@@ -11,7 +11,6 @@ const messageWorker = new MessageWorker('TEST');
 
 const App = ({ microfrontends }) => {
   const { message } = useMessageWorker(messageWorker);
-
   const microfrontendKeyList = Object.keys(microfrontends);
 
   return (

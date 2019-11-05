@@ -7,8 +7,8 @@
 }
 
 .App-header {
-  background-color: #eeeeee;
-  min-height: 10vh;
+  background-color: #282c34;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
