@@ -30,7 +30,6 @@ class Controller {
   }
 
   onStyleMessage = message => () => {
-    console.info(message);
     const messageMicrofrontend = this.microfrontends[message.origin];
     messageMicrofrontend.setStyle(event.data.payload);
     this.__onMicrofrontendStyleChange(messageMicrofrontend.name, messageMicrofrontend.style);
@@ -62,7 +61,6 @@ class Controller {
 
       shared.set('microfrontends', this.microfrontends);
 
-      console.info(this.microfrontends);
       if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.CREATED)) {
         this.__onMicrofrontendsDiscovered(this.microfrontends);
       } else if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.IMPORTED)) {
