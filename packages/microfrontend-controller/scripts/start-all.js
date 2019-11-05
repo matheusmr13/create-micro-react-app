@@ -16,7 +16,6 @@ const {
 } = buildAllConfigurations;
 
 const startReactApp = async (package, port, isMicro) => {
-	console.info({ isMicro })
 	await promiseExec(`${isMicro ? 'REACT_APP_IS_MICROFRONTEND=true ' : ''}PORT=${port} npm run --prefix ./packages/${package} start`);
 }
   
