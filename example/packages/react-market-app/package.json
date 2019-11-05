@@ -10,9 +10,9 @@
     "react-market-base": "*"
   },
   "scripts": {
-    "start": "microfrontend-controller start",
+    "start": "REACT_APP_MY_COOL_ENV_TITLE=envTitle microfrontend-controller start",
     "start-standalone": "react-scripts start",
-    "build": "microfrontend-controller build",
+    "build": "REACT_APP_MY_COOL_ENV_TITLE=envTitle microfrontend-controller build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
