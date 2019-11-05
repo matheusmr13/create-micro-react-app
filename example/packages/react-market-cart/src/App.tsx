@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import MessageWorker from 'react-market-base';
 
 import FormComponent from './form';
 
@@ -10,7 +11,9 @@ interface AppProps {
   messageWorker: any
 }
 
-const App: React.FC<AppProps> = ({ test, messageWorker }) => {
+const messageWorker = new MessageWorker('TEST');
+
+const App: React.FC<AppProps> = ({ test }) => {
   return (
     <div className="App">
       <header className="App-header">

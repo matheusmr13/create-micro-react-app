@@ -17,7 +17,7 @@ const App = ({ microfrontends }) => {
     <div className="App">
       <h1>Welcome to Markety</h1>
       <h2>{message}</h2>
-      
+
       <div className="App__menu">
         {
           microfrontendKeyList.length > 0 && microfrontendKeyList.map((microfrontendKey) => {

@@ -8,32 +8,45 @@ interface MessageWorkers {
   [namespace: string]: Worker
 }
 
-class MessageWorker {
-  static _workers: MessageWorkers = {};
+declare global {
+  interface Window { _workers: MessageWorkers; }
+}
 
-  namespace: string;
+class MessageWorker {
+  private _namespace: string;
 
   constructor(namespace: string) {
-    const worker = new Worker(workerPath);
+    if (!window.Worker) throw new Error('Your browser doesn\'t support web workers :(');
 
-    MessageWorker._workers[namespace] = worker;
     this.namespace = namespace;
   }
 
+  set namespace(namespace: string) {
+    if (!window._workers) {
+      window._workers = {};
+    }
+
+    if (!window._workers[namespace]) {
+      window._workers[namespace] = new Worker(workerPath);
+    }
+
+    this._namespace = namespace;
+  }
+
   get worker() {
-    return MessageWorker._workers[this.namespace];
+    return window._workers[this._namespace];
   }
 
   sendMessage(message: string) {
     this.worker.postMessage({ message });
   }
 
-  onMessage(onMessage: (arg0: string) => void, onError: (this: AbstractWorker, ev: ErrorEvent) => any) {
+  onMessage(handleMessage: (arg0: string) => void, handleError: (this: AbstractWorker, ev: ErrorEvent) => any) {
     this.worker.onmessage = ({ data }: CustomMessageEvent) => {
-      onMessage(data)
+      handleMessage(data)
     }
 
-    this.worker.onerror = onError;
+    this.worker.onerror = handleError;
   }
 }
 
