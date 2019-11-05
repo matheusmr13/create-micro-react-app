@@ -1,54 +1,61 @@
-import * as workerPath from "file-loader?name=[name].js!./worker";
+const LISTENERS = '__listeners__';
 
-interface CustomMessageEvent extends MessageEvent {
-  data: string;
+interface handleOptions {
+  limitCount: number
 }
 
-interface MessageWorkers {
-  [namespace: string]: Worker
+interface ListenersMap {
+  [namespace: string]: (data:string) => void
 }
 
 declare global {
-  interface Window { _workers: MessageWorkers; }
+  interface Window { [LISTENERS]: ListenersMap }
 }
 
-class MessageWorker {
-  private _namespace: string;
+class EventManager {
+  _namespace: string
 
   constructor(namespace: string) {
-    if (!window.Worker) throw new Error('Your browser doesn\'t support web workers :(');
-
     this.namespace = namespace;
   }
 
   set namespace(namespace: string) {
-    if (!window._workers) {
-      window._workers = {};
-    }
-
-    if (!window._workers[namespace]) {
-      window._workers[namespace] = new Worker(workerPath);
+    if (!window[LISTENERS]) {
+      window[LISTENERS] = {}
     }
 
     this._namespace = namespace;
   }
 
-  get worker() {
-    return window._workers[this._namespace];
+  get listeners() {
+
   }
 
-  sendMessage(message: string) {
-    this.worker.postMessage({ message });
+  dispatch(name: string, data: any) {
+    const event = new CustomEvent(name, { detail: data });
+
+    window.dispatchEvent(event);
   }
 
-  onMessage(handleMessage: (arg0: string) => void, handleError: (this: AbstractWorker, ev: ErrorEvent) => any) {
-    this.worker.onmessage = ({ data }: CustomMessageEvent) => {
-      handleMessage(data)
+  on(eventName: string, callback: (data: any) => void, options: handleOptions = { limitCount: 0 }) {
+    const { limitCount } = options;
+
+    let count = 0;
+    const handleEvent = (callback: EventListenerOrEventListenerObject) => (event: CustomEvent) => {
+      if (limitCount > 0 && count >= limitCount) {
+        window.removeEventListener(eventName, callback);
+        return;
+      }
+
+      const { detail: data } = event;
+      
+      callback(data);
+      count++;
     }
 
-    this.worker.onerror = handleError;
+
+    window.addEventListener(eventName, handleEvent(callback));
   }
 }
 
-export default MessageWorker;
-
+export default EventManager;

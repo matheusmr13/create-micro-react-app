@@ -11,7 +11,7 @@ interface AppProps {
   messageWorker: any
 }
 
-const messageWorker = new MessageWorker('TEST');
+// const messageWorker = new MessageWorker('TEST');
 
 const App: React.FC<AppProps> = ({ test }) => {
   return (
@@ -21,7 +21,7 @@ const App: React.FC<AppProps> = ({ test }) => {
         <p>
           Edit <code>src/App.AAAAA</code> and save to reload.
         </p>
-        <FormComponent messageWorker={messageWorker} />
+        {/* <FormComponent messageWorker={messageWorker} /> */}
       </header>
     </div>
   );

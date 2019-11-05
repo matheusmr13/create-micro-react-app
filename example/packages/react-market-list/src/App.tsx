@@ -1,20 +1,27 @@
-import React, { FunctionComponent } from 'react';
-import MessageWorker from 'react-market-base';
+import React, { FunctionComponent, useState, useEffect } from 'react';
+// import { EventManager } from 'microfrontend-controller';
+import EventManager from 'react-market-base';
 
-import useMessageWorker from './useWorker';
+// import useMessageWorker from './useWorker';
+
+declare global {
+  interface Window { BLA: EventManager }
+}
 
 import './App.css';
 
-const messageWorker = new MessageWorker('AAA');
+const eventManager = new EventManager();
+const eventName = 'Abelha';
+eventManager.on(eventName, (test) => console.log({ TESTY: test }), { limitCount: 3 });
 
+window.BLA = eventManager;
 const App = () => {
-  const { message } = useMessageWorker(messageWorker);
 
   return (
     <div className="App">
       <header className="App-header">
         <h1>THIS IS THE LIST</h1>
-        <h1>{`Message sent via worker: ${message}`}</h1>
+        {/* <h1>{`Message sent via worker: ${message}`}</h1> */}
       </header>
     </div>
   );

@@ -1,31 +1,31 @@
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 
-function useMessageWorker(worker, callback) {
-  const [message, setMessage] = useState('');
+// function useMessageWorker(worker, callback) {
+//   const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    const handleError= (error) => {
-      console.log({ error })
-    }
+//   useEffect(() => {
+//     const handleError= (error) => {
+//       console.log({ error })
+//     }
     
-    const handleMessage = (messy) => {
-      console.log({ messy })
+//     const handleMessage = (messy) => {
+//       console.log({ messy })
 
-      setMessage(messy);
-    }
+//       setMessage(messy);
+//     }
 
-    worker.onMessage(handleMessage, handleError);
+//     worker.onMessage(handleMessage, handleError);
 
-    return () => {
-      if (worker) {
-        worker.terminate();
-      }
-    }
-  }, [worker]);
+//     return () => {
+//       if (worker) {
+//         worker.terminate();
+//       }
+//     }
+//   }, [worker]);
 
-  return {
-    message
-  };
-};
+//   return {
+//     message
+//   };
+// };
 
-export default useMessageWorker;
+// export default useMessageWorker;

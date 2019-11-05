@@ -1,4 +1,4 @@
-import Shared from './../shared';
+import Shared from '../shared';
 import Communication from './../communication/app-client';
 import Microfrontend from './microfrontend';
 
