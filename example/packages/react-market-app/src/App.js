@@ -1,45 +1,39 @@
 import React from 'react';
+import MessageWorker from 'react-market-base';
+
+import useMessageWorker from './useWorker';
+
 import './App.css';
 
 // import importScript from './import-script';
 
-class App extends React.Component {
-  state = {
-    selectedMicrofrontend: null
-  }
+const messageWorker = new MessageWorker('TEST');
 
-  handleMicrofrontendClick = selectedMicrofrontend => () => {
-    this.setState({
-      selectedMicrofrontend
-    });
-  }
+const App = ({ microfrontends }) => {
+  const { message } = useMessageWorker(messageWorker);
 
-  render() {
-    const { microfrontends } = this.props;
-    const { selectedMicrofrontend } = this.state;
+  const microfrontendKeyList = Object.keys(microfrontends);
 
-    const MicrofrontendComponent = selectedMicrofrontend && microfrontends[selectedMicrofrontend].content;
-    
-    return (
-      <div className="App">
-        <div className="App__menu">
-          {
-            Object.keys(microfrontends).map(microfrontend => (
-              <button onClick={this.handleMicrofrontendClick(microfrontend)}>
-                {microfrontend}
-              </button>
-            ))
-          }
-          {
-            MicrofrontendComponent && (
-              <div className="App_microfrontend-container">
-                <MicrofrontendComponent />
+  return (
+    <div className="App">
+      <h1>Welcome to Markety</h1>
+      <h2>{message}</h2>
+      
+      <div className="App__menu">
+        {
+          microfrontendKeyList.length > 0 && microfrontendKeyList.map((microfrontendKey) => {
+            const { content: MicrofrontendComponent } = microfrontends[microfrontendKey];
+
+            return (
+              <div className="App_microfrontend-container" key={microfrontendKey}>
+                <MicrofrontendComponent test={{ TESTY: 'ABELHA' }} messageWorker={messageWorker} />
               </div>
-            )
-          }
-        </div>
+            );
+          })
+        }
       </div>
-    );
-  }
+    </div>
+  );
 }
+
 export default App;

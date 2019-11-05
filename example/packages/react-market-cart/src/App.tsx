@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+import FormComponent from './form';
+
 import logo from './logo.svg';
 import './App.css';
 
-const App: React.FC = () => {
+interface AppProps {
+  test: any,
+  messageWorker: any
+}
+
+const App: React.FC<AppProps> = ({ test, messageWorker }) => {
   return (
     <div className="App">
       <header className="App-header">
@@ -10,17 +18,14 @@ const App: React.FC = () => {
         <p>
           Edit <code>src/App.AAAAA</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <FormComponent messageWorker={messageWorker} />
       </header>
     </div>
   );
+}
+
+App.defaultProps = {
+  test: {}
 }
 
 export default App;

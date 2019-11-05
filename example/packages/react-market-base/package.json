@@ -1,0 +1,27 @@
+{
+  "name": "react-market-base",
+  "version": "1.0.1",
+  "description": "A simple library for a common Mom",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "run:build": "node ./dist/index.js",
+    "prepare": "yarn run build",
+    "test": "jest --coverage"
+  },
+  "dependencies": {
+    "react-microfrontend": "*"
+  },
+  "author": "luis.takahashi",
+  "license": "Unlicense",
+  "devDependencies": {
+    "@types/jest": "^24.0.19",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.6.4"
+  }
+}
