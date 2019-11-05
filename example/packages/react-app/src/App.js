@@ -22,6 +22,9 @@ class App extends React.Component {
     
     return (
       <div className="App">
+        <div className="App__title">
+        {process.env.REACT_APP_MY_COOL_ENV_FILE_TITLE} - {process.env.REACT_APP_MY_COOL_ENV_TITLE}
+        </div>
         <div className="App__menu">
           {
             Object.keys(microfrontends).map(microfrontend => (

@@ -15,14 +15,18 @@ const getReactAppRewiredPath = () => {
 	];
 	return options.find(path => fileExistsSync(path));
 }
+const REACT_APP = /^REACT_APP_/i;
 
 const getEnvString = () => {
-	const envs = {
-		...(process.env.REACT_APP_IS_MICROFRONTEND ? { REACT_APP_IS_MICROFRONTEND : true } : {}),
-		...(process.env.REACT_APP_IS_MICROFRONTEND ? { BROWSER : 'none' } : {}),
-		PORT: process.env.PORT || 3000,
-		REACT_APP_PACKAGE_NAME: package.name
-	};
+	const envs = Object.keys(process.env)
+		.filter(key => REACT_APP.test(key))
+		.reduce((env, key) => Object.assign(env, { [key]: process.env[key] }), {
+			...(process.env.REACT_APP_IS_MICROFRONTEND ? { REACT_APP_IS_MICROFRONTEND : true } : {}),
+			...(process.env.REACT_APP_IS_MICROFRONTEND ? { BROWSER : 'none' } : {}),
+			PORT: process.env.PORT || 3000,
+			REACT_APP_PACKAGE_NAME: package.name,
+			SKIP_PREFLIGHT_CHECK: true
+		});
 
 	return Object.keys(envs).map(env => `${env}=${envs[env]}`).join(' ');
 }
