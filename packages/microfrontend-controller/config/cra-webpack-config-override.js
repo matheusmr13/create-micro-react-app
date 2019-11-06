@@ -4,6 +4,7 @@ const { getAppFile } = require('../utils/fs');
 
 const package = getAppFile('package.json');
 
+const MICROFRONTEND_FOLDER_NAME = 'microfrontends'; // TODO: get from build-configuration.js
 const { override, overrideDevServer } = require('customize-cra');
 
 const overrideWebpackConfigs = () => config => {
@@ -11,7 +12,7 @@ const overrideWebpackConfigs = () => config => {
 
 	if (process.env.NODE_ENV === 'production') {
 		if (process.env.IS_MICROFRONTEND) {
-			config.output.publicPath = `/microfrontends/${package.name}/`;
+			config.output.publicPath = `./${MICROFRONTEND_FOLDER_NAME}/${package.name}/`;
 		}
 	} else {
 		if (process.env.IS_MICROFRONTEND) {

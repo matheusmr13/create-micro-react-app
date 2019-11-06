@@ -34,9 +34,9 @@ const mapMicrofrontend = async (folder) => {
 			.filter(f => !!f && f.indexOf('.') > -1)
 			.reduce((fileTypes, file) => {
 				if (file.endsWith('.js')) {
-					fileTypes.js.push(`/microfrontends/${moduleName}${file}`);
+					fileTypes.js.push(`./${microfrontendFolderName}/${moduleName}${file}`);
 				} else if (file.endsWith('.css')) {
-					fileTypes.css.push(`/microfrontends/${moduleName}${file}`);
+					fileTypes.css.push(`./${microfrontendFolderName}/${moduleName}${file}`);
 				}
 				return fileTypes;
 			}, { js: [], css: []});
