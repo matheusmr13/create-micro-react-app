@@ -6,7 +6,7 @@ interface EventsArrayMap {
   [eventName: string]: CustomEventsArrayOrEmptyArray
 }
 
-type Listener = (data:string) => void;
+type Listener = (data: any) => void;
 type ListenersArrayOrEmptyArray = Array<Listener> | [];
 interface ListenersArrayMap {
   [eventName: string]: ListenersArrayOrEmptyArray
@@ -19,8 +19,8 @@ declare global {
   }
 }
 
-interface handleOptions {
-  limitCount: number
+interface handlerOptions {
+  latest: boolean
 }
 
 class EventManager {
@@ -56,49 +56,36 @@ class EventManager {
   set name(name: string) {
     this._name = name;
 
-    this.events = [];
-    this.listeners = [];
+    this.clear();
   }
 
   dispatch(data: any) {
-    const event = new CustomEvent(this._name, { detail: data });
+    this.events = this.events.concat(data);
 
-    if (this.listeners.length > 0) {
-      window.dispatchEvent(event);
-    } else {
-      this.events = this.events.concat(event as never);
-    }
+    if (!this.listeners.length) return;
+  
+    this.listeners.forEach((callback: Listener) => callback(data));
   }
 
-  on(callback: (data: any) => void, options: handleOptions = { limitCount: 0 }) {
-    const { limitCount } = options;
+  on(callback: Listener, options: handlerOptions = { latest: false }) {
+    const { latest } = options;
 
-    let count = 0;
-    const handleEvent = (callback) => (event: CustomEvent) => {
-      if (limitCount > 0 && count >= limitCount) {
-        window.removeEventListener(this._name, callback);
-        return;
-      }
+    const events = this.events;
 
-      const { detail: data } = event;
-
-      callback(data);
-      count++;
-    }
-
-    if (this.events.length > 0) {
-      const events = this.events;
-
+    if (latest && events.length > 0) {
       const lastEvent = events.pop();
 
-      handleEvent(callback)(lastEvent);
+      callback(lastEvent);
 
       this.events = events;
     }
 
-    window.addEventListener(this._name, handleEvent(callback));
-
     this.listeners = this.listeners.concat(callback as never);
+  }
+
+  clear() {
+    this.events = [];
+    this.listeners = [];
   }
 }
 
