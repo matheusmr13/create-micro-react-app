@@ -58,23 +58,23 @@ const buildMicrofrontend = async(package) => {
 		'precache-manifest*',
 		'robots.txt',
 		'service-worker.js'
-	].map(file => `./${packagesFolder}/${package}/build/${file}`).join(' ')}  || true`)
+	].map(file => `./${packagesFolder}/${package}/build/${file}`).join(' ')}  || true 2> /dev/null `)
 }
 const buildApp = async(package) => {
 	await buildPackage(package);
 	await promiseExec(`rm ${[
 		`${microfrontendFolderName}/meta.json`,
 		'service-worker.js'
-	].map(file => `./${packagesFolder}/${package}/build/${file}`).join(' ')}  || true`)
+	].map(file => `./${packagesFolder}/${package}/build/${file}`).join(' ')}  || true 2> /dev/null `)
 }
   
 const buildAll = async () => {
 	if (!microfrontends || !app) throw new Error('Configuration "microfrontends" and "app" are required.');
 
-	await promiseExec(`rm -rf ${distFolder} || true`);
+	await promiseExec(`rm -rf ${distFolder} || true 2> /dev/null `);
 
 	if (shouldBuildPackages) {
-		await promiseExec(`rm -rf ${allBuildsFolder} || true`);
+		await promiseExec(`rm -rf ${allBuildsFolder} || true 2> /dev/null `);
 		await promiseExec(`mkdir ${allBuildsFolder}`);
 		await Promise.all(
 			[
@@ -101,7 +101,7 @@ const buildAll = async () => {
 
 	const metaMicrofrontend = await mapMicrofrontend(`./${distFolder}/${microfrontendFolderName}`);
 	await promiseWriteFile(`./${distFolder}/${microfrontendFolderName}/meta.json`, JSON.stringify(metaMicrofrontend, null, 2));
-	await promiseExec(`rm -rf ${distFolder}/service-worker.js || true`);
+	await promiseExec(`rm -rf ${distFolder}/service-worker.js || true 2> /dev/null `);
 	await generateServiceWorker(distFolder);
 }
 

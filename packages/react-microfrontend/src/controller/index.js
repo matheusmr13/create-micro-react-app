@@ -53,7 +53,7 @@ class Controller {
       }[message.type] || (() => { console.info(`Unknown type ${message.type}`); }))();
     }).initialize();
 
-    fetch(`/${microfrontendFolderName}/meta.json`).then(response => response.json()).then(meta => {
+    fetch(`./${microfrontendFolderName}/meta.json`).then(response => response.json()).then(meta => {
       this.microfrontends = Object.keys(meta)
         .reduce((agg, microfrontendName) => Object.assign(agg, {
           [microfrontendName] : new Microfrontend(microfrontendName, meta[microfrontendName])
