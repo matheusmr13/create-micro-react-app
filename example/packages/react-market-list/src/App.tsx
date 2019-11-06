@@ -10,9 +10,7 @@ declare global {
 
 import './App.css';
 
-const eventManager = new EventManager();
-const eventName = 'Abelha';
-eventManager.on(eventName, (test) => console.log({ TESTY: test }), { limitCount: 3 });
+const eventManager = new EventManager('Abelha');
 
 window.BLA = eventManager;
 const App = () => {
