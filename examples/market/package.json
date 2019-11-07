@@ -1,0 +1,15 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "microfrontend-controller build-all",
+    "start": "microfrontend-controller start-all"
+  },
+  "dependencies": {
+    "react-microfrontend": "file:../../packages/react-microfrontend",
+    "microfrontend-controller": "file:../../packages/microfrontend-controller",
+    "lerna": "^3.16.4"
+  }
+}
