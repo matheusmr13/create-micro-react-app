@@ -1,8 +1,8 @@
 {
   "packages": [
     "packages/*",
-    "../packages/react-microfrontend",
-    "../packages/microfrontend-controller"
+    "../../packages/react-microfrontend",
+    "../../packages/microfrontend-controller"
   ],
   "version": "independent",
   "npmClient": "yarn"

@@ -1,10 +1,10 @@
 {
-  "react-another-micro-app": {
+  "react-market-list": {
     "js": [],
     "css": [],
     "host": "http://localhost:3002"
   },
-  "react-dynamic-app": {
+  "react-market-cart": {
     "js": [],
     "css": [],
     "host": "http://localhost:3001"

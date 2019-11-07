@@ -8,8 +8,8 @@
     "start-all": "microfrontend-controller start-all"
   },
   "dependencies": {
-    "microfrontend-controller": "*",
-    "lerna": "^3.16.4",
-    "react-microfrontend": "*"
+    "react-microfrontend": "file:../../packages/react-microfrontend",
+    "microfrontend-controller": "file:../../packages/microfrontend-controller",
+    "lerna": "^3.16.4"
   }
 }
