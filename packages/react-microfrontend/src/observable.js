@@ -41,11 +41,11 @@ class Observable {
   }
 
   dispatch(data) {
-    this.events = this.events.concat(data);
-
-    if (!this.observers.length) return;
-
-    this.observers.forEach((observer) => observer(data));
+    if (this.observers.length > 0) {
+      this.observers.forEach((observer) => observer(data));
+    } else {
+      this.events = this.events.concat(data);
+    };
   }
 
   subscribe(observer, options = { latest: false }) {
