@@ -4,8 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build-all": "microfrontend-controller build-all",
-    "start-all": "microfrontend-controller start-all"
+    "build": "microfrontend-controller build-all",
+    "start": "microfrontend-controller start-all"
   },
   "dependencies": {
     "react-microfrontend": "file:../../packages/react-microfrontend",
