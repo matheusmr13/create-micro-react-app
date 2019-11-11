@@ -10,7 +10,7 @@ const getAppFile = (file) => {
 	return require(resolveApp(file));
 }
 
-
+console.info('test')
 const promiseWriteFile = (file, content) => fse.outputFile(file, content);
 const promiseReadJson = (file) => fse.readJson(file);
 
