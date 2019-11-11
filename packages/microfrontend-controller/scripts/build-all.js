@@ -1,6 +1,7 @@
-const { getAppFile, isDirectory, getDirectories, promiseWriteFile } = require('../utils/fs');
+const { getAppFile, isDirectory, getDirectories, promiseWriteFile, promiseReadJson } = require('../utils/fs');
 const { promiseExec, execSync } = require('../utils/process');
 const generateServiceWorker = require('../utils/create-sw');
+const semver = require('semver')
 
 const buildAllConfigurationsFile = getAppFile('build-configuration.js');
 if (!buildAllConfigurationsFile) throw new Error('"build-configuration.js" should exist in root project');
@@ -48,6 +49,61 @@ const mapMicrofrontend = async (folder) => {
 	return meta;
 };
 
+const depsCheck = async () => {
+	const allPackages = [app, ...microfrontends];
+	const depsPerPackage = {};
+	for (let i=0; i < allPackages.length;i++) {
+		const package = allPackages[i];
+		depsPerPackage[package] = await promiseReadJson(`./${allBuildsFolder}/${package}/deps.json`);
+	}
+
+	const allDepsObj = Object.values(depsPerPackage).reduce((distinct, deps) => Object.assign(distinct, deps), {});
+	const allDepsList = Object.keys(allDepsObj);
+
+	const allPackagesPerVersion = {};
+	for (let i=0; i < allDepsList.length;i++) {
+		const dep = allDepsList[i];
+
+		packagesPerVersion = {};
+
+		Object.keys(depsPerPackage).forEach((package) => {
+			const packageDeps = depsPerPackage[package];
+			const packageVersion = packageDeps[dep] && semver.coerce(packageDeps[dep]);
+
+			if (packageVersion) {
+				const majorVersion = packageVersion.major;
+				packagesPerVersion[majorVersion] = packagesPerVersion[majorVersion] || [];
+				packagesPerVersion[majorVersion].push(package);
+			}
+		});
+
+		allPackagesPerVersion[dep] = packagesPerVersion;
+	}
+
+	const errorMessages = [];
+
+	Object.keys(allPackagesPerVersion).forEach((package) => {
+		const packagesPerMajorVersion = allPackagesPerVersion[package];
+
+		const majorVersions = Object.keys(packagesPerMajorVersion);
+
+		if (majorVersions.length > 1) {
+			errorMessages.push(`Multiple major versions (with breaking changes) from "${package}" found:`);
+			majorVersions.forEach((majorVersion) => {
+				errorMessages.push(`   Major version "${majorVersion}" on your project "${packagesPerMajorVersion[majorVersion]}".`);
+			})
+		}
+	});
+
+	if (errorMessages.length > 0) {
+		throw new Error(`
+			Error checking dependencies of your projects.
+
+			${errorMessages.join('\n')}
+		`);
+	}
+}
+
 const buildPackage = async (package) => await promiseExec(`npm run --prefix ./packages/${package} build`);
 const buildMicrofrontend = async(package) => {
 	await buildPackage(package);
@@ -90,6 +146,8 @@ const buildAll = async () => {
 		}
 	}
 
+
+	await depsCheck();
 	
 	await promiseExec(`cp -r ./${allBuildsFolder}/${app} ./${distFolder}`);
 	await promiseExec(`mkdir -p ./${distFolder}/${microfrontendFolderName}`);
