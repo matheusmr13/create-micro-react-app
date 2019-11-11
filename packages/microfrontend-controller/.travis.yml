@@ -1,8 +1,0 @@
-language: node_js
-node_js:
-  - "12.13"
-
-deploy:
-  provider: npm
-  email: "YOUR_EMAIL_ADDRESS"
-  api_key: "YOUR_AUTH_TOKEN"
