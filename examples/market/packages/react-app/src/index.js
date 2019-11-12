@@ -6,6 +6,6 @@ import { ImportMicrofrontend } from 'react-microfrontend';
 
 ReactDOM.render((
 	<ImportMicrofrontend>
-		{microfrontends => <App microfrontends={microfrontends} /> }
+		<App />
 	</ImportMicrofrontend>
 ), document.getElementById('root'));

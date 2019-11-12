@@ -1,7 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import Controller from './controller';
-import MicrofrontendRenderer from './renderer';
+// import MicrofrontendRenderer from './renderer';
 
 const iframeStyle = {
   position: 'absolute',
@@ -14,6 +14,25 @@ const iframeStyle = {
   border:0
 };
 
+const MicrofrontendContext = React.createContext(null);
+
+export const withMicrofrontend = (WrappedComponent, { microfrontendKey } = {}) => props => (
+  <MicrofrontendContext.Consumer>
+    { microfrontends => {
+      console.log({ microfrontends });
+      return (
+        <WrappedComponent
+          {...props}
+          microfrontend={
+            microfrontends[microfrontendKey] ? microfrontends[microfrontendKey].content : microfrontends
+          }
+          microfrontends={microfrontends}
+        />
+      )
+    }}
+  </MicrofrontendContext.Consumer>
+);
+
 
 class ReactMicrofrontend extends React.Component {
   constructor(props) {
@@ -23,7 +42,7 @@ class ReactMicrofrontend extends React.Component {
       cssToLoad: null,
       jsToLoad: null,
       styleToLoad: {},
-      microfrontends: null
+      microfrontends: {}
     };
   }
 
@@ -67,13 +86,9 @@ class ReactMicrofrontend extends React.Component {
     const { iframesToLoad, jsToLoad, cssToLoad, styleToLoad, microfrontends } = this.state;
     return (
       <React.Fragment>
-        {
-          microfrontends && (
-            <MicrofrontendRenderer type={this.props.type} microfrontends={microfrontends}>
-              {this.props.children}
-            </MicrofrontendRenderer>
-          )
-        }
+        <MicrofrontendContext.Provider value={microfrontends} >
+          {this.props.children}
+        </MicrofrontendContext.Provider>
         <Helmet>
           { jsToLoad && jsToLoad.map((url) => <script key={url} src={url} type="text/javascript" /> )}
           { cssToLoad && cssToLoad.map((url) => <link key={url} href={url} type="text/css" rel="stylesheet" /> )}

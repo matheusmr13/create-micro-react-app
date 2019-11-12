@@ -1,3 +1,3 @@
 lerna bootstrap
 yarn
-yarn start-all
+yarn start
