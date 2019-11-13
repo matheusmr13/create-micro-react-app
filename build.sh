@@ -1,1 +1,2 @@
-echo "hue"
+cd packages/react-microfrontend
+npm publish
