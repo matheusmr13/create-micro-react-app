@@ -17,5 +17,8 @@
     "semver": "^6.3.0",
     "sw-precache": "^5.2.1",
     "uglify-js": "^3.6.7"
+  },
+  "scripts": {
+    "test": "echo 'pass'"
   }
 }

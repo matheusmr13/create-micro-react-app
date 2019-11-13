@@ -1,6 +1,7 @@
 {
   "packages": [
-    "packages/*"
+    "packages/react-microfrontend",
+    "packages/microfrontend-controller"
   ],
   "version": "0.0.0"
 }
