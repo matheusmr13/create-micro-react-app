@@ -1,11 +1,20 @@
 import React from 'react';
+
+import { withMicrofrontend } from 'react-microfrontend';
+
 import './App.css';
 
 // import importScript from './import-script';
 
-const App = ({ microfrontends }) => {
+const App = ({ microfrontends, microfrontend }) => {
+  console.log({ microfrontends, microfrontend })
+
+  if (!microfrontends || !microfrontend) {
+    return <div>APPY VAZIO</div>
+  }
+
   const microFrontsKeysList = Object.keys(microfrontends).sort();
-  
+
   return (
     <div className="App">
       <div className="App__title">
@@ -25,4 +34,4 @@ const App = ({ microfrontends }) => {
   );
 }
 
-export default App;
+export default withMicrofrontend(App, { microfrontendKey: 'react-market-cart' });

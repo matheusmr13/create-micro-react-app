@@ -1,6 +1,7 @@
+import { withMicrofrontend } from 'react-microfrontend';
+
 import React from 'react';
 import './App.css';
-
 // import importScript from './import-script';
 
 class App extends React.Component {
@@ -45,4 +46,4 @@ class App extends React.Component {
     );
   }
 }
-export default App;
+export default withMicrofrontend(App);
