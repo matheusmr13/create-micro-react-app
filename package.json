@@ -5,6 +5,7 @@
     "lerna": "^3.18.3"
   },
   "scripts": {
-    "test": "lerna run test"
+    "test": "lerna run test",
+    "lerna-boostrap": "lerna bootstrap"
   }
 }
