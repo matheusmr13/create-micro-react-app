@@ -15,7 +15,7 @@ const script = args[0];
 		await build();
 	},
 	start: async () => {
-		const build = require('../scripts/build');
+		const start = require('../scripts/start');
 		await start();
 	},
 	"build-all": async() => {
