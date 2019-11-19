@@ -6,6 +6,6 @@
   },
   "scripts": {
     "test": "lerna run test",
-    "lerna-boostrap": "lerna bootstrap"
+    "lerna-bootstrap": "lerna bootstrap"
   }
 }
