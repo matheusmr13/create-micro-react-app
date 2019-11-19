@@ -9,7 +9,7 @@ before_script:
   - yarn lerna-bootstrap
 deploy:
   provider: script
-  script: "yarn run lerna:publish"
+  script: "lerna publish"
   skip_cleanup: true
   email: matheusmr00@gmail.com
   api_key:

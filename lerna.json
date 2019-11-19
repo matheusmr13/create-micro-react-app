@@ -3,7 +3,7 @@
     "packages/react-microfrontend",
     "packages/microfrontend-controller"
   ],
-  "version": "0.0.0",
+  "version": "independent",
   "command": {
     "run": {
       "npmClient": "yarn"
