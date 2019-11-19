@@ -124,6 +124,7 @@ const buildApp = async(package) => {
 	].map(file => `./${packagesFolder}/${package}/build/${file}`).join(' ')}  || true 2> /dev/null `)
 }
   
+
 const buildAll = async () => {
 	if (!microfrontends || !app) throw new Error('Configuration "microfrontends" and "app" are required.');
 
