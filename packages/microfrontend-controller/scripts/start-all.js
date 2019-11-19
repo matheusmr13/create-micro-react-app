@@ -19,6 +19,7 @@ const startReactApp = async (package, port, isMicro) => {
 	await promiseExec(`${isMicro ? 'REACT_APP_IS_MICROFRONTEND=true ' : ''}PORT=${port} npm run --prefix ./packages/${package} start`);
 }
   
+
 const startAll = async () => {
 	if (!microfrontends || !app) throw new Error('Configuration "microfrontends" and "app" are required.');
 
