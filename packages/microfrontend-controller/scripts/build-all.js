@@ -1,4 +1,4 @@
-const { getAppFile, isDirectory, getDirectories, promiseWriteFile, promiseReadJson } = require('../utils/fs');
+const { getAppFile, isDirectory, getDirectories, promiseWriteFile, promiseReadJson, promiseDeleteFile } = require('../utils/fs');
 const { promiseExec, execSync } = require('../utils/process');
 const generateServiceWorker = require('../utils/create-sw');
 const semver = require('semver')
@@ -55,6 +55,7 @@ const depsCheck = async () => {
 	for (let i=0; i < allPackages.length;i++) {
 		const package = allPackages[i];
 		depsPerPackage[package] = await promiseReadJson(`./${allBuildsFolder}/${package}/deps.json`);
+		await promiseDeleteFile(`./${allBuildsFolder}/${package}/deps.json`)
 	}
 
 	const allDepsObj = Object.values(depsPerPackage).reduce((distinct, deps) => Object.assign(distinct, deps), {});

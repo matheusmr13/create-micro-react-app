@@ -35,5 +35,6 @@ module.exports = {
 	resolveApp,
 	fileExistsSync,
 	getReactAppRewiredPath,
-	promiseReadJson
+	promiseReadJson,
+	promiseDeleteFile: fse.remove
 }
