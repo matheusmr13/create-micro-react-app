@@ -106,25 +106,6 @@ const depsCheck = async () => {
 }
 
 const buildPackage = async (package) => await promiseExec(`npm run --prefix ./packages/${package} build`);
-const buildMicrofrontend = async(package) => {
-	await buildPackage(package);
-	await promiseExec(`rm ${[
-		'asset-manifest.json',
-		'index.html',
-		'manifest.json',
-		'precache-manifest*',
-		'robots.txt',
-		'service-worker.js'
-	].map(file => `./${packagesFolder}/${package}/build/${file}`).join(' ')}  || true 2> /dev/null `)
-}
-const buildApp = async(package) => {
-	await buildPackage(package);
-	await promiseExec(`rm ${[
-		`${microfrontendFolderName}/meta.json`,
-		'service-worker.js'
-	].map(file => `./${packagesFolder}/${package}/build/${file}`).join(' ')}  || true 2> /dev/null `)
-}
-  
 
 const buildAll = async () => {
 	if (!app) throw new Error('Configuration "app" is required.');
@@ -138,9 +119,9 @@ const buildAll = async () => {
 		await promiseExec(`mkdir ${allBuildsFolder}`);
 		await Promise.all(
 			[
-				...(microfrontendsToBuild.map(package => buildMicrofrontend(package))),
-				buildApp(app)
-			]
+				...(microfrontendsToBuild),
+				app
+			].map(package => buildPackage(package))
 		)
 
 		const packages = [...microfrontendsToBuild, app];
