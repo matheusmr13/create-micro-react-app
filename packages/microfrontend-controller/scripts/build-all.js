@@ -1,4 +1,4 @@
-const { getAppFile, isDirectory, getDirectories, promiseWriteFile, promiseReadJson, promiseDeleteFile } = require('../utils/fs');
+const { getAppFile, isDirectory, getDirectories, promiseWriteFile, promiseReadJson } = require('../utils/fs');
 const { promiseExec, execSync } = require('../utils/process');
 const generateServiceWorker = require('../utils/create-sw');
 const semver = require('semver')
@@ -11,13 +11,14 @@ const buildAllConfigurations = buildAllConfigurationsFile();
 const {
 	shouldBuildPackages = false,
 	app,
-	microfrontends,
+	microfrontendsToBuild,
 	packagesFolder = 'packages',
 	microfrontendFolderName = 'microfrontends',
 	allBuildsFolder = 'builds',
 	distFolder = 'build'
 } = buildAllConfigurations;
 
+let microfrontends;
 const mapMicrofrontend = async (folder) => {
 	if (!isDirectory(folder)) throw new Error('Specified path is not a folder');
 
@@ -55,7 +56,6 @@ const depsCheck = async () => {
 	for (let i=0; i < allPackages.length;i++) {
 		const package = allPackages[i];
 		depsPerPackage[package] = await promiseReadJson(`./${allBuildsFolder}/${package}/deps.json`);
-		await promiseDeleteFile(`./${allBuildsFolder}/${package}/deps.json`)
 	}
 
 	const allDepsObj = Object.values(depsPerPackage).reduce((distinct, deps) => Object.assign(distinct, deps), {});
@@ -127,36 +127,45 @@ const buildApp = async(package) => {
   
 
 const buildAll = async () => {
-	if (!microfrontends || !app) throw new Error('Configuration "microfrontends" and "app" are required.');
+	if (!app) throw new Error('Configuration "app" is required.');
 
 	await promiseExec(`rm -rf ${distFolder} || true 2> /dev/null `);
 
 	if (shouldBuildPackages) {
+		if (!microfrontendsToBuild) throw new Error('Configuration "microfrontendsToBuild" is required.');
+
 		await promiseExec(`rm -rf ${allBuildsFolder} || true 2> /dev/null `);
 		await promiseExec(`mkdir ${allBuildsFolder}`);
 		await Promise.all(
 			[
-				...(microfrontends.map(package => buildMicrofrontend(package))),
+				...(microfrontendsToBuild.map(package => buildMicrofrontend(package))),
 				buildApp(app)
 			]
 		)
 
-		const packages = [...microfrontends, app];
+		const packages = [...microfrontendsToBuild, app];
 		for (let i=0; i < packages.length;i++) {
 			const package = packages[i];
 			await promiseExec(`cp -r ./${packagesFolder}/${package}/build ./${allBuildsFolder}/${package}`);
 		}
 	}
 
-
+	microfrontends = getDirectories(`./${allBuildsFolder}`)
+		.map(dir => {
+			const parts = dir.split('/');
+			return parts[parts.length - 1];
+		})
+		.filter(moduleName => moduleName !== app);
 	await depsCheck();
 	
 	await promiseExec(`cp -r ./${allBuildsFolder}/${app} ./${distFolder}`);
+	await promiseExec(`rm ./${distFolder}/deps.json`);
 	await promiseExec(`mkdir -p ./${distFolder}/${microfrontendFolderName}`);
 
 	for (let i=0; i < microfrontends.length;i++) {
 		const package = microfrontends[i];
 		await promiseExec(`cp -r ./${allBuildsFolder}/${package} ./${distFolder}/${microfrontendFolderName}/${package}`);
+		await promiseExec(`rm ./${distFolder}/${microfrontendFolderName}/${package}/deps.json`);
 	}
 
 	const metaMicrofrontend = await mapMicrofrontend(`./${distFolder}/${microfrontendFolderName}`);
