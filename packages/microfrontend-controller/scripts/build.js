@@ -14,9 +14,9 @@ const build = async () => {
 			'manifest.json',
 			'precache-manifest*',
 			'robots.txt',
-		].map(file => `./build/${file}`).join(' ')}  || true 2> /dev/null `)
+		].map(file => `./build/${file}`).join(' ')} || true 2> /dev/null `)
 	}
-	await promiseExec('rm ./build/service-worker.js');
+	await promiseExec('rm ./build/service-worker.js || true 2> /dev/null ');
 }
 
 module.exports = build;
