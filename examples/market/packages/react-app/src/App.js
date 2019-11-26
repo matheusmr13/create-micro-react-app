@@ -7,8 +7,6 @@ import './App.css';
 // import importScript from './import-script';
 
 const App = ({ microfrontends, microfrontend }) => {
-  console.log({ microfrontends, microfrontend })
-
   if (!microfrontends || !microfrontend) {
     return <div>APPY VAZIO</div>
   }

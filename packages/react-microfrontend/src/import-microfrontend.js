@@ -19,7 +19,6 @@ const MicrofrontendContext = React.createContext({});
 export const withMicrofrontend = (WrappedComponent, { microfrontendKey } = {}) => props => (
   <MicrofrontendContext.Consumer>
     { microfrontends => {
-      console.log({ microfrontends });
       return (
         <WrappedComponent
           {...props}
@@ -50,6 +49,7 @@ class ReactMicrofrontend extends React.Component {
     const controller = new Controller();
     controller
       .onMicrofrontendsDiscovered((microfrontends) => {
+        console.info('discovered', microfrontends)
         this.setState({
           iframesToLoad: Object.values(microfrontends).map(microfrontend => microfrontend.host)
         });

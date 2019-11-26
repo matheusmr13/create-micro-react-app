@@ -35,6 +35,12 @@ class Controller {
     this.__onMicrofrontendStyleChange(messageMicrofrontend.name, messageMicrofrontend.style);
   }
 
+  getMicrofrontendsOnStatus(status) {
+    return Object.values(this.microfrontends)
+      .filter(micro => micro.status === status)
+      .reduce((agg, micro) => Object.assign(agg, {[micro.name]: micro } ), {});
+  }
+
   initialize() {
     shared.set('registerMicrofrontend', (name, microfrontendShared) => {
       this.microfrontends[name].register(microfrontendShared);
@@ -61,9 +67,9 @@ class Controller {
 
       shared.set('microfrontends', this.microfrontends);
 
-      if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.CREATED)) {
-        this.__onMicrofrontendsDiscovered(this.microfrontends);
-      } else if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.IMPORTED)) {
+      this.__onMicrofrontendsDiscovered(this.getMicrofrontendsOnStatus(Microfrontend.STATUS.CREATED));
+
+      if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.IMPORTED)) {
         this.__onMicrofrontendsLoaded(this.microfrontends);
       }
     });
