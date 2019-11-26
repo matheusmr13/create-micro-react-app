@@ -8,7 +8,6 @@ const package = getAppFile('package.json');
 const args = process.argv.slice(2);
 const script = args[0];
 
-
 ({
 	build: async () => {
 		const build = require('../scripts/build');
@@ -25,5 +24,14 @@ const script = args[0];
 	"start-all": async() => {
 		const startAll = require('../scripts/start-all');
 		await startAll();
+	},
+	"start-mock": async() => {
+		const startMock = require('../scripts/start-mock');
+		const baseUrl = args[1];
+		await startMock(baseUrl);
+	},
+	"start-with-repo": async() => {
+		const startWithRepo = require('../scripts/start-with-repo');
+		await startWithRepo();
 	}
 }[script])();
