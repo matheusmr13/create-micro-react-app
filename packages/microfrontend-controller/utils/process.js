@@ -4,8 +4,8 @@ const { getAppFile } = require('./fs');
 
 const package = getAppFile('package.json');
 
-const promiseExec = (command) => new Promise((resolve, reject) => {
-	const ls = spawn(command, [], { shell: true});
+const promiseExec = (command, { cwd } = {}) => new Promise((resolve, reject) => {
+	const ls = spawn(command, [], { shell: true, cwd });
 
 	ls.stdout.on('data', function (data) {
 		console.log(data.toString());
@@ -16,7 +16,6 @@ const promiseExec = (command) => new Promise((resolve, reject) => {
 	});
 
 	ls.on('exit', function (code) {
-		// console.log('child process exited with code ' + code.toString());
 		resolve();
 	});
 });

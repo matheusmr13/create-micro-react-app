@@ -12,7 +12,7 @@ class Controller {
     return !Object.values(this.microfrontends).find(microfrontend => microfrontend.status !== status);
   }
 
-  onLoadMessage = message => () => {
+  handleLoadMessage = message => () => {
     const messageMicrofrontend = this.microfrontends[message.origin];
     if (messageMicrofrontend.hasBeenLoaded()) {
       this.__onMicrofrontendHotReload();
@@ -20,7 +20,7 @@ class Controller {
     messageMicrofrontend.loaded();
   }
 
-  onScriptMessage = message => () => {
+  handleScriptMessage = message => () => {
     const messageMicrofrontend = this.microfrontends[message.origin];
 
     messageMicrofrontend.importScript(event.data.payload);
@@ -29,7 +29,7 @@ class Controller {
     }
   }
 
-  onStyleMessage = message => () => {
+  handleStyleMessage = message => () => {
     const messageMicrofrontend = this.microfrontends[message.origin];
     messageMicrofrontend.setStyle(event.data.payload);
     this.__onMicrofrontendStyleChange(messageMicrofrontend.name, messageMicrofrontend.style);
@@ -53,9 +53,9 @@ class Controller {
     const communication = new Communication();
     communication.onMessage((message) => {
       ({
-        [Communication.TYPE.LOAD]: this.onLoadMessage(message),
-        [Communication.TYPE.SCRIPT]: this.onScriptMessage(message),
-        [Communication.TYPE.STYLE]: this.onStyleMessage(message)
+        [Communication.TYPE.LOAD]: this.handleLoadMessage(message),
+        [Communication.TYPE.SCRIPT]: this.handleScriptMessage(message),
+        [Communication.TYPE.STYLE]: this.handleStyleMessage(message)
       }[message.type] || (() => { console.info(`Unknown type ${message.type}`); }))();
     }).initialize();
 

@@ -1,22 +1,17 @@
 const { getAppFile, isDirectory, getDirectories, promiseWriteFile, promiseReadJson } = require('../utils/fs');
 const { promiseExec, execSync } = require('../utils/process');
 const generateServiceWorker = require('../utils/create-sw');
-const semver = require('semver')
-
-const buildAllConfigurationsFile = getAppFile('build-configuration.js');
-if (!buildAllConfigurationsFile) throw new Error('"build-configuration.js" should exist in root project');
-
-const buildAllConfigurations = buildAllConfigurationsFile();
+const semver = require('semver');
+const projectConfigurations = require('../config/project-configs');
 
 const {
-	shouldBuildPackages = false,
 	app,
 	microfrontendsToBuild,
-	packagesFolder = 'packages',
-	microfrontendFolderName = 'microfrontends',
-	allBuildsFolder = 'builds',
-	distFolder = 'build'
-} = buildAllConfigurations;
+	packagesFolder,
+	microfrontendFolderName,
+	allBuildsFolder,
+	distFolder
+} = projectConfigurations;
 
 let microfrontends;
 const mapMicrofrontend = async (folder) => {

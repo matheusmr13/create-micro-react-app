@@ -27,6 +27,28 @@ const getReactAppRewiredPath = () => {
 	return options.find(path => fileExistsSync(path));
 }
 
+const copyFile = async (file, location) => {
+	await fse.mkdirp((file).split('/').slice(0, -1).join('/'), 0o2775);
+	const content = await fse.readFile(location);
+	await promiseWriteFile(file, content);
+}
+
+const mergeDirs = async (src, dest) => {
+	const files = await fse.readdir(src);
+  
+	return Promise.all(files.map((file) => new Promise(async (resolve) => {
+	  const srcFile = '' + src + '/' + file
+	  const destFile = '' + dest + '/' + file
+  
+	  if (isDirectory(srcFile)) {
+		await mergeDirs(srcFile, destFile)
+	  } else {
+		await copyFile(destFile, srcFile)
+	  }
+	  resolve();
+	})));
+  }
+
 module.exports = {
 	getAppFile,
 	promiseWriteFile,
@@ -36,5 +58,6 @@ module.exports = {
 	fileExistsSync,
 	getReactAppRewiredPath,
 	promiseReadJson,
-	promiseDeleteFile: fse.remove
+	promiseDeleteFile: fse.remove,
+	mergeDirs
 }

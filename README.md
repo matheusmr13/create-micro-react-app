@@ -1,63 +1,115 @@
-# Create React App Microfrontend Examples
+# Create React App Microfrontend
+
+[![Build Status](https://travis-ci.com/matheusmr13/cra-microfrontend.svg?branch=master)](https://travis-ci.com/matheusmr13/cra-microfrontend)
+
+Create simple microfrontend architecture with tools like [Create React App](https://github.com/facebook/create-react-app).
+
+## Quick Overview
+
+  ```
+    npx microfrontend-controller create-app my-app
+    npx microfrontend-controller create-microfrontend my-micro ./my-app
+    cd my-app
+    npm start
+  ```
+
+## What it does
+
+  It helps you create a simple application with microfrontend architecture with no build configuration.
+
+## CLI Docs
+
+### build
+  Build your module.
+
+  `IS_MICROFRONTEND=true` Defines if you are building as microfrontend or base app
+
+### start
+  Build your module.
+
+  `IS_MICROFRONTEND=true` Defines if you are starting as microfrontend or base app
+
+### build-all
+  Build all your modules and create a `build` folder containing all assets necessary to serve with microfrontend structure.
 
 
-Example: 
-A simple store, with some pages:
 
- - Products
- - Cart
- - User
+### start-mock
+  Start your specific module simulating the current environment.
 
-All microfrontends assume that you have a common library or somthing to aggregate all packages.
+  Let's say your application is already deployed to `https://market.xyz`, it has a webapp and 3 other microfrontends. If you want to developed some feature on one of this 3 microfrontend, just create this script on your package json:
 
-## Multiple CRA into one (build time)
+  ```
+    "start-mock": "microfrontend-controller start-mock",
+  ```
 
-  Imagine this scenario where you want to create multiple frontends but do not want to recreate all build process
+  and then: 
+  ```
+    npm start-mock https://market.xyz
+  ```
 
-  Steps:
+  Access `http://localhost:3001` and you will have a environment with:
+   - current webapp version
+   - current 2 other microservices versions
+   - a devserver running just your current microfrontend in development
 
-   - Build all child packages (microfrontends)
-   - Build parent package (web app)
-   - Mount a customized index.html with all packages scripts (import bundle)
-   - If offline first, generate a service-worker.js after all packages set up
+### start-with-repo
 
-  Pros:
+### create-app
+
+  Create a new app with one microfrontend.
+
+  Example:
+
+  `microfrontend-controller create-app my-app`
+
+### create-microfrontend
+
+  Create a new microfrontend on a specified app
+
+  Example:
   
-   - Simple way of isolating parts of your system 
-   - Easy to develop
+  `npx microfrontend-controller create-microfrontend my-micro ./my-app`
 
-  Cons:
-   
-   - Needs to generate index.html after building all packages
-   - Needs to deploy all parts at once
+## Configuration Docs [IMPROVE]
+
+ Create a file named `build-configuration.js` in your project's root:
+ ```
+  module.exports = () => ({
+    shouldBuildPackages: true
+  });
+ ```
 
 
-## Multiple CRA into one (runtime)
+ ### shouldBuildPackages
 
-  Steps:
+  If set `true`, `build-all` will build all microfrontends in `./packaged`. This is recommended only if you want to build a quick application.
 
-   - Build all apps (webapp and microfrontends) and host somewhere
-   - Create some place to get all current microfrontends
-      - could be a bucket with a json (filled by a automated CI) or a service (with endpoints to register and get microfrontends)
-      - some json like
-      ```
-      {
-        "cart": [
-          "https://cart-cdn/**/*.chunk.js"
-        ],
-        "user": [
-          "https://user-cdn/**/*.chunk.js"
-        ]
-      }
-      ```
-   - Web app know how to get this json and import all scripts (if web app made with react, react-helmet could be used)
-   - if offline first, all scripts must be cached in some way
+  The best aproach to this is to build your modules separated before mounting your final folder.
 
-Pros:
- 
-   - Simple way of isolating parts of your system
-   - Each frontend can be self hosted in any desired place
+  First step:
+   - Build each module
+   - Save your build folder from each module
 
-Cons:
+  Second step:
+   - Get all your build folder and setup on a `builds` folder
+   ```
+     - project
+     -- src
+        ...
+     -- builds
+     --- webapp
+     ---- index.html
+           ...
+     --- microfrontend1
+           ...
+     --- microfrontend2
+           ...
+   ```
+   - Run `microfrontend-controller build-all` and `build` folder is made <3
 
-   - 
+  This is strategy is recommended to avoid building modules with no changes.
+
+
+
+

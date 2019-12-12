@@ -1,17 +1,28 @@
 const { getAppFile, isDirectory, getDirectories, promiseWriteFile, resolveApp } = require('../utils/fs');
 const { promiseExec, execSync } = require('../utils/process');
 
-const startReactApp = async (pathToPackage, port) => {
-	await promiseExec(`PORT=${port} npm run --prefix ${pathToPackage} start`);
+const startReactApp = async (pathToPackage, port, isMicro) => {
+	await promiseExec(`PORT=${port} ${isMicro ? 'IS_MICROFRONTEND=true' : ''} npm run --prefix ${pathToPackage} start`);
 }
 const microfrontendFolderName = 'microfrontends';
 
 const REPOS = getAppFile('microfrontend-repos.json');
-if (!REPOS) throw new Error('microfrontend-repos.json is required');
+if (!REPOS) console.warn('"microfrontend-repos.json" not specified, assuming all microfrontends are located on ./packages');
+
+const APP_DEFAULT_PATH = 'webapp';
+
 const {
 	microfrontends,
 	app
-} = REPOS;
+} = (REPOS || ({
+	app: `./packages/${APP_DEFAULT_PATH}`,
+	microfrontends: getDirectories('./packages')
+		.map(dir => {
+			const parts = dir.split('/');
+			return parts[parts.length - 1];
+		}).filter(a => a.slice(a.length - APP_DEFAULT_PATH.length) !== APP_DEFAULT_PATH)
+		.reduce((agg, package) => Object.assign(agg, { [package]: `./packages/${package}` }), {})
+}));
 
 const startAll = async () => {
 	const INITIAL_PORT = 3001;
@@ -29,7 +40,7 @@ const startAll = async () => {
 
 	await Promise.all(
 		[
-			...(Object.keys(microfrontends).map((package, i) => startReactApp(microfrontends[package], INITIAL_PORT + i))),
+			...(Object.keys(microfrontends).map((package, i) => startReactApp(microfrontends[package], INITIAL_PORT + i, true))),
 			startReactApp(app, 3000)
 		]
 	)
