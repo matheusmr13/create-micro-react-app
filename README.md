@@ -17,6 +17,21 @@ Create simple microfrontend architecture with tools like [Create React App](http
 
   It helps you create a simple application with microfrontend architecture with no build configuration.
 
+  ### Core Features
+  
+  - Microfrontend development made easy:
+
+    * Boilerplate and pre configured architecture;
+
+    * Mock all other microfrontends (refering to a stable environment) combined with hotreload on current microfrontend, allowing you to see the changes you make as you develop new feature on a specific module;
+
+    * Choose to split microfrontends into multiple repositories;
+  
+  - You just need something to host your files and you are ready to go with a microfrontend app;
+
+  - All of this with [Create React App](https://github.com/facebook/create-react-app) beautiful configuration.
+   
+
 ## CLI Docs
 
 ### build
@@ -55,6 +70,23 @@ Create simple microfrontend architecture with tools like [Create React App](http
 
 ### start-with-repo
 
+  Do you want to create your microfrontends in separated git repository?
+  You can!
+
+   - Create a `microfrontend-repos.json` with something like:
+
+  ```
+    {
+      "microfrontends": {
+        "my-microfrontend1": "/path/to/microfrontend1/root",
+        "my-microfrontend2": "/path/to/microfrontend2/root"
+      },
+      "app": "/path/to/app/root"
+    }
+  ```
+
+    - Execute `microfrontend-controller start-with-repo` and everything is done.
+
 ### create-app
 
   Create a new app with one microfrontend.
@@ -83,7 +115,7 @@ Create simple microfrontend architecture with tools like [Create React App](http
 
  ### shouldBuildPackages
 
-  If set `true`, `build-all` will build all microfrontends in `./packaged`. This is recommended only if you want to build a quick application.
+  If set `true`, `build-all` will build all microfrontends in `./packages`. This is recommended only if you want to build a quick application.
 
   The best aproach to this is to build your modules separated before mounting your final folder.
 
