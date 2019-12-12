@@ -11,12 +11,12 @@ class Shared {
 
   constructor(sharedName) {
     this.sharedName = sharedName;
-    const orderManagerShared = window.__shared__ || {};
-    this.shared = orderManagerShared[sharedName] || {};
+    const allShared = window.__shared__ || {};
+    this.shared = allShared[sharedName] || {};
 
 
-    orderManagerShared[sharedName] = this.shared;
-    window.__shared__ = orderManagerShared;
+    allShared[sharedName] = this.shared;
+    window.__shared__ = allShared;
   }
 
   // registerGetter(name, getState) {
