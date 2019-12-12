@@ -1,6 +1,6 @@
 {
   "name": "microfrontend-controller",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Microfrontend ruler",
   "main:src": "src/index.js",
   "main": "index.js",
