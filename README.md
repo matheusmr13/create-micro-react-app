@@ -7,8 +7,9 @@ Create simple microfrontend architecture with tools like [Create React App](http
 ## Quick Overview
 
   ```
-    npx microfrontend-controller create-app my-app
-    npx microfrontend-controller create-microfrontend my-micro ./my-app
+    npm i -g microfrontend-controller
+    microfrontend-controller create-app my-app
+    microfrontend-controller create-microfrontend my-micro ./my-app
     cd my-app
     npm start
   ```
