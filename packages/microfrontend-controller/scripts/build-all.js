@@ -1,4 +1,4 @@
-const { getAppFile, isDirectory, getDirectories, promiseWriteFile, promiseReadJson } = require('../utils/fs');
+const { isDirectory, getDirectories, promiseWriteFile, promiseReadJson } = require('../utils/fs');
 const { promiseExec, execSync } = require('../utils/process');
 const generateServiceWorker = require('../utils/create-sw');
 const semver = require('semver');
@@ -10,7 +10,8 @@ const {
 	packagesFolder,
 	microfrontendFolderName,
 	allBuildsFolder,
-	distFolder
+	distFolder,
+	shouldBuildPackages
 } = projectConfigurations;
 
 let microfrontends;
