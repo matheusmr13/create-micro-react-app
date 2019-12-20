@@ -28,18 +28,11 @@ class App extends React.Component {
         </div>
         <div className="App__menu">
           {
-            Object.keys(microfrontends).map(microfrontend => (
-              <button onClick={this.handleMicrofrontendClick(microfrontend)}>
-                {microfrontend}
-              </button>
-            ))
-          }
-          {
-            MicrofrontendComponent && (
+            Object.values(microfrontends).map(microfrontend => (
               <div className="App_microfrontend-container">
-                <MicrofrontendComponent />
+                <microfrontend.content />
               </div>
-            )
+            ))
           }
         </div>
       </div>
