@@ -16,7 +16,7 @@
     "express-http-proxy": "^1.6.0",
     "fs-extra": "^8.1.0",
     "react-app-rewired": "^2.1.4",
-    "react-scripts": "^3.2.0",
+    "react-scripts": "^3.3.0",
     "semver": "^6.3.0",
     "sw-precache": "^5.2.1",
     "uglify-js": "^3.6.7"

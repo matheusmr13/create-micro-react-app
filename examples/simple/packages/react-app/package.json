@@ -8,7 +8,7 @@
     "react-dom": "^16.10.2",
     "react-helmet": "^5.2.1",
     "react-microfrontend": "^1.5.2",
-    "react-scripts": "3.2.0"
+    "react-scripts": "3.3.0"
   },
   "scripts": {
     "start": "REACT_APP_MY_COOL_ENV_TITLE=envTitle microfrontend-controller start",
