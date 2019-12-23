@@ -24,10 +24,20 @@ const {
 		.reduce((agg, package) => Object.assign(agg, { [package]: `./packages/${package}` }), {})
 }));
 
+const getRealName = (path) => {
+	const pkg = getAppFile(`${path}/package.json`);
+
+	return pkg.name;
+}
+
+const microfrontendsWithRealNames = Object.values(microfrontends).reduce((agg, microfrontendPath) =>  Object.assign(agg, {
+	[getRealName(microfrontendPath)]: microfrontendPath
+}), {});
+
 const startAll = async () => {
 	const INITIAL_PORT = 3001;
 
-	const metaJson = Object.keys(microfrontends).reduce((agg, package, i) => ({
+	const metaJson = Object.keys(microfrontendsWithRealNames).reduce((agg, package, i) => ({
 		[package]: {
 			js: [],
 			css: [],
@@ -40,7 +50,7 @@ const startAll = async () => {
 
 	await Promise.all(
 		[
-			...(Object.keys(microfrontends).map((package, i) => startReactApp(microfrontends[package], INITIAL_PORT + i, true))),
+			...(Object.values(microfrontends).map((packagePath, i) => startReactApp(packagePath, INITIAL_PORT + i, true))),
 			startReactApp(app, 3000)
 		]
 	)

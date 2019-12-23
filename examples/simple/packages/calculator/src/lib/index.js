@@ -1,17 +1,18 @@
 import { CALCULATOR_SHARED, VALUE, ON_RESET_VALUE } from './shared-constants';
 
-import { Shared } from 'react-microfrontend';
+import { Shared, Observable } from 'react-microfrontend';
 
-const shared = new Shared(CALCULATOR_SHARED);
+const calculatorObservable = new Observable(CALCULATOR_SHARED);
+const resetObservable = new Observable(ON_RESET_VALUE);
 
-class CalculatorClient {
+class CalculatorObservable {
 	static subscribeToValue(subscribe) {
-		shared.set(VALUE, subscribe);
+		calculatorObservable.subscribe(subscribe);
 	}
 
 	static resetValue() {
-		shared.get(ON_RESET_VALUE)();
+		resetObservable.dispatch(ON_RESET_VALUE);
 	}
 }
 
-export default CalculatorClient;
+export default CalculatorObservable;

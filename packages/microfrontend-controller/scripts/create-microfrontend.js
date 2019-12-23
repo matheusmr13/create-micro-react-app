@@ -12,7 +12,7 @@ const createMicrofrontend = async (name, folder = '.') => {
 	const newAppPath = folder;
 	const exec = (command, path) => promiseExec(command, { cwd: `${newAppPath}/packages/${path || ''}` });
 
-	await exec(`npx create-react-app ${name}`);
+	await exec(`npx create-react-app ${name} --template typescript`);
 	await mergeDirs(`${__dirname}/../templates/microfrontend`, `${newAppPath}/packages/${name}`);
 	await exec(`yarn add microfrontend-controller`, `/${name}`);
 	await exec(`yarn add react-microfrontend`, `/${name}`);

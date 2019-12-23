@@ -66,6 +66,11 @@ class Observable {
   unsubscribe(observer) {
     this.observers = this.observers.filter(atualObserver => atualObserver !== observer);
   }
+
+  clear() {
+    this.events = [];
+    this.observers = [];
+  }
 }
 
 export default Observable;

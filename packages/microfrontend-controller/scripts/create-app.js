@@ -33,7 +33,7 @@ const createApp = async (name) => {
 	rootPackageJson.scripts = Object.assign({}, rootPackageJson.scripts, newScripts);
 	await promiseWriteFile(rootPackageJsonPath, JSON.stringify(rootPackageJson, null, 2));
 
-	await exec(`npx create-react-app webapp`, '/packages');
+	await exec(`npx create-react-app webapp --template typescript`, '/packages');
 	await mergeDirs(`${__dirname}/../templates/webapp`, `${newAppPath}/packages/webapp`);
 	await exec(`yarn add microfrontend-controller`, '/packages/webapp');
 	await exec(`yarn add react-microfrontend`, '/packages/webapp');

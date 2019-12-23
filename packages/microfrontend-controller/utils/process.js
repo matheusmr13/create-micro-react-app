@@ -26,7 +26,7 @@ const getEnvString = () => {
 	const envs = Object.keys(process.env)
 		.filter(key => REACT_APP.test(key))
 		.reduce((env, key) => Object.assign(env, { [key]: process.env[key] }), {
-			...(process.env.IS_MICROFRONTEND ? { REACT_APP_IS_MICROFRONTEND : true } : {}),
+			...(process.env.IS_MICROFRONTEND ? { REACT_APP_IS_MICROFRONTEND : true } : { REACT_APP_IS_CONTAINER: true }),
 			...(process.env.IS_MICROFRONTEND ? { BROWSER : 'none' } : {}),
 			PORT: process.env.PORT || 3000,
 			REACT_APP_PACKAGE_NAME: package.name,
