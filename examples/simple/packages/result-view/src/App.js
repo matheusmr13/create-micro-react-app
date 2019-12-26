@@ -1,11 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 import calculator from 'calculator';
 
 const CalculatorClient = calculator.api;
 
+console.info(CalculatorClient)
 class App extends React.Component {
   state = {
     result: 0
@@ -18,7 +18,9 @@ class App extends React.Component {
   }
 
   handleClick = () => {
-    CalculatorClient.triggerResetValue();
+    CalculatorClient.callScheduleResetValue().then((myResult) => {
+      console.info('apagou mesmo ein', myResult);
+    });
   }
 
   render() {
@@ -26,7 +28,7 @@ class App extends React.Component {
       <div className="MyAnotherMicrofrontend">
         {this.state.result}
         |||
-        <button onClick={this.handleClick}>APAGAR TUDO</button>
+        <button onClick={this.handleClick}>APAGAR TUDO JAJA</button>
       </div>
     );
   }

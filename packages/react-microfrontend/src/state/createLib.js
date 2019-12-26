@@ -1,7 +1,5 @@
 import Shared from '../shared';
 
-const EMPTY_FUNCTION = () => null;
-
 const ACCESS = {
   PUBLIC: 'PUBLIC',
   PRIVATE: 'PRIVATE'
@@ -9,7 +7,8 @@ const ACCESS = {
 
 const TYPE = {
   PROPERTY: 'PUBLIC',
-  TRIGGER: 'TRIGGER'
+  TRIGGER: 'TRIGGER',
+  FUNCTION: 'FUNCTION'
 }
 
 const BUILD_TYPE = {
@@ -45,6 +44,10 @@ const createLib = (toExport, apiAccess = BUILD_TYPE.PRIVATE_API) => {
       [TYPE.TRIGGER]: {
         right: `trigger${nameCapitalized}`,
         subscribe: `on${nameCapitalized}Triggered`
+      },
+      [TYPE.FUNCTION]: {
+        right: `call${nameCapitalized}`,
+        subscribe: `on${nameCapitalized}Called`
       }
     }[type]);
 
@@ -59,19 +62,29 @@ const createLib = (toExport, apiAccess = BUILD_TYPE.PRIVATE_API) => {
     stareShared.set(subscribeFunctionName, []);
 
     const rightApi = {
-      [rightFunctionName]: (newValue) => {
-        currentState = newValue;
-        const dispatch = stareShared.get('store').dispatch;
+      [rightFunctionName]: (...args) => {
+        currentState = args[0];
+        // const dispatch = stareShared.get('store').dispatch;
 
-        dispatch(actions[rightFunctionName](currentState));
-        stareShared.get(subscribeFunctionName).forEach(subscription => subscription(currentState));
-        dispatch(actions[subscribeFunctionName]());
+        // dispatch(actions[rightFunctionName](currentState));
+
+        const subscriptions = stareShared.get(subscribeFunctionName);
+        if (type === TYPE.FUNCTION) {
+          const [currentListener] = subscriptions;
+          return (currentListener && currentListener.apply(null, args));
+        }
+          subscriptions.forEach(subscription => subscription(currentState));
+        // dispatch(actions[subscribeFunctionName]());
+
       }
     };
 
     const readApi = {
       [subscribeFunctionName]: (callback) => {
         const subscriptions = stareShared.get(subscribeFunctionName);
+        if (type === TYPE.FUNCTION && subscriptions.length > 0) {
+          throw new Error(`API typed as "${TYPE.FUNCTION}" cannot have more than one listener!`);
+        }
         subscriptions.push(callback);
         stareShared.set(subscribeFunctionName, subscriptions);
       },
@@ -82,23 +95,26 @@ const createLib = (toExport, apiAccess = BUILD_TYPE.PRIVATE_API) => {
       }: {})
     };
 
-    const api = {
+    const privateApi = {
       ...readApi,
       ...rightApi
+    }
+
+    const publicApi = {
+      ...readApi,
+      ...((type === TYPE.FUNCTION || access === ACCESS.PUBLIC) ? privateApi : readApi)
     }
 
     return {
       name,
       actions,
-      privateApi: api,
-      publicApi: {
-        ...(access === ACCESS.PUBLIC ? api : readApi)
-      },
+      privateApi,
+      publicApi,
       reducers: {
-        [rightFunctionName]: (state, { payload }) => ({
-          ...state,
-          [name]: payload
-        })
+        // [rightFunctionName]: (state, { payload }) => ({
+        //   ...state,
+        //   [name]: payload
+        // })
       }
     };
   }
@@ -112,18 +128,21 @@ const createLib = (toExport, apiAccess = BUILD_TYPE.PRIVATE_API) => {
 
   const aggregatedActions = aggregateKindFromApi('actions');
 
-  if (apiAccess === BUILD_TYPE.INTERNAL) {
-    return {
+
+  return ({
+    [BUILD_TYPE.INTERNAL]: {
       reducers: aggregateKindFromApi('reducers'),
+      actions: aggregatedActions
+    },
+    [BUILD_TYPE.PRIVATE_API]: {
+      api: aggregateKindFromApi('privateApi'),
+      actions: aggregatedActions
+    },
+    [BUILD_TYPE.PUBLIC_API]: {
       api: aggregateKindFromApi('publicApi'),
       actions: aggregatedActions
-    };
-  }
-
-  return {
-    api: aggregateKindFromApi('privateApi'),
-    actions: aggregatedActions
-  };
+    }
+  })[apiAccess];
 }
 
 createLib.ACCESS = ACCESS;

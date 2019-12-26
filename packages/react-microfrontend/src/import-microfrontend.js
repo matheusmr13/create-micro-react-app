@@ -1,7 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import Controller from './controller';
-import createStore from './state/redux';
+// import createStore from './state/redux';
 
 const iframeStyle = {
   position: 'absolute',
@@ -74,12 +74,12 @@ class ReactMicrofrontend extends React.Component {
         })
       })
       .onMicrofrontendsInitialized((microfrontends) => {
-        const store = createStore();
-        Object.values(microfrontends).forEach(microfrontend => {
-          if (microfrontend.lib) {
-            store.injectReducer(microfrontend.name, microfrontend.lib.reducers);
-          }
-        })
+        // const store = createStore();
+        // Object.values(microfrontends).forEach(microfrontend => {
+        //   if (microfrontend.lib) {
+        //     store.injectReducer(microfrontend.name, microfrontend.lib.reducers);
+        //   }
+        // })
 
         this.setState({
           microfrontends

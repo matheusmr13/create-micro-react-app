@@ -1,6 +1,6 @@
 import { CreateLib } from 'react-microfrontend';
 
-export const api = {
+export default {
 	properties: {
 		value: {
 			initialState: 0
@@ -9,11 +9,9 @@ export const api = {
 			access: CreateLib.ACCESS.PUBLIC,
 			type: CreateLib.TYPE.TRIGGER
 		},
-		sumFiveToCounter: {
-			access: CreateLib.ACCESS.PUBLIC,
-			type: CreateLib.TYPE.TRIGGER
+		scheduleResetValue: {
+			type: CreateLib.TYPE.FUNCTION
 		}
 	}
 };
 
-export default CreateLib(api, CreateLib.BUILD_TYPE.PUBLIC_API);
