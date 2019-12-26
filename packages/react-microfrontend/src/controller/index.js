@@ -14,7 +14,6 @@ class Controller {
 
   handleLoadMessage = message => () => {
     const messageMicrofrontend = this.microfrontends[message.origin];
-    console.info(this.microfrontends, message)
     if (messageMicrofrontend.hasBeenLoaded()) {
       this.__onMicrofrontendHotReload();
     }

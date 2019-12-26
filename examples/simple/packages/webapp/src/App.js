@@ -17,10 +17,7 @@ class App extends React.Component {
 
   render() {
     const { microfrontends } = this.props;
-    const { selectedMicrofrontend } = this.state;
 
-    const MicrofrontendComponent = selectedMicrofrontend && microfrontends[selectedMicrofrontend].content;
-    
     return (
       <div className="App">
         <div className="App__title">
@@ -29,7 +26,7 @@ class App extends React.Component {
         <div className="App__menu">
           {
             Object.values(microfrontends).map(microfrontend => (
-              <div className="App_microfrontend-container">
+              <div className="App_microfrontend-container" key={microfrontend.name}>
                 <microfrontend.content />
               </div>
             ))

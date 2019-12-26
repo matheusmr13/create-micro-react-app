@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build-all": "microfrontend-controller build-all",
-    "start-with-repo": "microfrontend-controller start-with-repo"
+    "start": "microfrontend-controller start-with-repo"
   },
   "dependencies": {
     "lerna": "^3.16.4"

@@ -1,3 +1,5 @@
+import CreateLib from '../state/createLib';
+
 class Microfrontend {
   static STATUS = {
     DISCOVERED: 'DISCOVERED',
@@ -31,9 +33,12 @@ class Microfrontend {
     }
   }
 
-  register(content) {
+  register(shared) {
     this.status = Microfrontend.STATUS.REGISTERED;
-    this.content = content;
+    this.content = shared.content;
+    if (shared.api) {
+      this.lib = CreateLib(shared.api, 'INTERNAL');
+    }
   }
 
   loaded() {

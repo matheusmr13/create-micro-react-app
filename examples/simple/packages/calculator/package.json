@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "homepage": ".",
-  "main": "./src/lib/index.js",
+  "main": "./src/lib-refact/index.js",
   "dependencies": {
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-microfrontend": "1.7.0",
-    "react-scripts": "3.3.0"
+    "react-scripts": "3.3.0",
+    "redux-actions": "^2.6.5"
   },
   "scripts": {
     "start": "REACT_APP_MY_COOL_ENV=envValue IS_MICROFRONTEND=true microfrontend-controller start",

@@ -10,11 +10,14 @@ const getScriptSrcs = () => {
 }
 
 const shared = new Shared('__core__');
-const ExportMicrofrontend = (objectToExport) => {
+const ExportMicrofrontend = (objectToExport, { api } = {}) => {
   const registerMicrofrontend = shared.get('registerMicrofrontend');
 
   if (registerMicrofrontend) {
-    registerMicrofrontend(process.env.REACT_APP_PACKAGE_NAME, objectToExport);
+    registerMicrofrontend(process.env.REACT_APP_PACKAGE_NAME, {
+      content: objectToExport,
+      api
+    });
   } else {
     const communicate = new Communication();
     communicate.send(Communication.TYPE.LOAD);

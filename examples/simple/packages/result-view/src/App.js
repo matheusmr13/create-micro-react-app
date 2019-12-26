@@ -2,8 +2,9 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import CalculatorClient from 'calculator';
+import calculator from 'calculator';
 
+const CalculatorClient = calculator.api;
 
 class App extends React.Component {
   state = {
@@ -11,13 +12,13 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    CalculatorClient.subscribeToValue((newResult) => {
+    CalculatorClient.onValueChange((newResult) => {
       this.setState({ result: newResult });
     });
   }
 
   handleClick = () => {
-    CalculatorClient.resetValue();
+    CalculatorClient.triggerResetValue();
   }
 
   render() {

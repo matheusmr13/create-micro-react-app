@@ -1,24 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-import CalculatorDispatch from './lib/internal';
+import Lib from './lib-refact/new-lib';
 
+const API = Lib.api;
 
 class App extends React.Component {
-  count = 0
-
   componentDidMount() {
-    CalculatorDispatch.onResetValue(() => {
-      this.count = 0;
-      CalculatorDispatch.changeValue(this.count);
+    API.onResetValueTriggered(() => {
+      API.setValue(0);
     });
   }
 
   handleClick = (value) => () => {
-    this.count += value;
-    console.info('sending ' + this.count)
-    CalculatorDispatch.changeValue(this.count);
+    API.setValue(value + API.getValue());
   }
 
   render() {

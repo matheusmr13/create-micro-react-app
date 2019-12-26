@@ -1,4 +1,3 @@
-import "reflect-metadata";
 import { Shared } from 'react-microfrontend';
 import Cart from './Cart';
 
