@@ -17,6 +17,7 @@ class App extends React.Component {
 
   render() {
     const { microfrontends } = this.props;
+    console.info(microfrontends);
 
     return (
       <div className="App">
@@ -27,7 +28,7 @@ class App extends React.Component {
           {
             Object.values(microfrontends).map(microfrontend => (
               <div className="App_microfrontend-container" key={microfrontend.name}>
-                <microfrontend.content />
+                { microfrontend.view && <microfrontend.view.App /> }
               </div>
             ))
           }

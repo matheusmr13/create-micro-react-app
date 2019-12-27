@@ -35,10 +35,22 @@ class Microfrontend {
 
   register(shared) {
     this.status = Microfrontend.STATUS.REGISTERED;
-    this.content = shared.content;
-    if (shared.api) {
-      this.lib = CreateLib(shared.api, 'INTERNAL');
+    this.view = shared.view;
+
+    if (shared.interface) {
+      this.lib = CreateLib(shared, CreateLib.BUILD_TYPE.PRIVATE_API);
     }
+
+    const emptyFunc = () => Promise.resolve();
+    this.initialize = shared.initialize ? () => shared.initialize(this.lib) : emptyFunc;
+    this.prepare = shared.prepare ? () => shared.prepare(this.lib) : emptyFunc;
+  }
+
+  trackError(type, error) {
+    this.errorInitializing = {
+      type,
+      error
+    };
   }
 
   loaded() {

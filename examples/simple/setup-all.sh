@@ -1,3 +1,4 @@
+lerna clean
 lerna bootstrap
 yarn
 

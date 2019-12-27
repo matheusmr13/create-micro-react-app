@@ -25,7 +25,7 @@ class Controller {
 
     messageMicrofrontend.importScript(event.data.payload);
     if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.IMPORTED)) {
-      this.__onMicrofrontendsLoaded(this.microfrontends);
+      this.__onMicrofrontendsInfosLoaded(this.microfrontends);
     }
   }
 
@@ -42,8 +42,23 @@ class Controller {
   }
 
   initialize() {
-    shared.set('registerMicrofrontend', (name, microfrontendShared) => {
+    shared.set('registerMicrofrontend', async (name, microfrontendShared) => {
       this.microfrontends[name].register(microfrontendShared);
+
+      const setupMicrofrontend = (method) => Promise.all(Object.values(this.microfrontends).map(async (micro) => {
+        try {
+          const promise = micro[method]() || Promise.resolve();
+
+          if (promise instanceof Promise) {
+            await promise;
+          }
+        } catch (e) {
+          micro.trackError(method, e);
+        }
+      }));
+
+      await setupMicrofrontend('prepare');
+      await setupMicrofrontend('initialize');
 
       if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.REGISTERED)) {
         this.__onMicrofrontendsInitialized(this.microfrontends);
@@ -67,20 +82,20 @@ class Controller {
 
       shared.set('microfrontends', this.microfrontends);
 
-      this.__onMicrofrontendsDiscovered(this.getMicrofrontendsOnStatus(Microfrontend.STATUS.CREATED));
+      this.__onMicrofrontendsInfosDiscovered(this.getMicrofrontendsOnStatus(Microfrontend.STATUS.CREATED));
 
       if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.IMPORTED)) {
-        this.__onMicrofrontendsLoaded(this.microfrontends);
+        this.__onMicrofrontendsInfosLoaded(this.microfrontends);
       }
     });
   }
 
-  onMicrofrontendsDiscovered(callback) {
-    this.__onMicrofrontendsDiscovered = callback;
+  onMicrofrontendsInfosDiscovered(callback) {
+    this.__onMicrofrontendsInfosDiscovered = callback;
     return this;
   }
-  onMicrofrontendsLoaded(callback) {
-    this.__onMicrofrontendsLoaded = callback;
+  onMicrofrontendsInfosLoaded(callback) {
+    this.__onMicrofrontendsInfosLoaded = callback;
     return this;
   }
   onMicrofrontendHotReload(callback) {

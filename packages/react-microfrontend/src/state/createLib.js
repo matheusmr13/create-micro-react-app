@@ -109,18 +109,12 @@ const createLib = (toExport, apiAccess = BUILD_TYPE.PRIVATE_API) => {
       name,
       actions,
       privateApi,
-      publicApi,
-      reducers: {
-        // [rightFunctionName]: (state, { payload }) => ({
-        //   ...state,
-        //   [name]: payload
-        // })
-      }
+      publicApi
     };
   }
 
-  const apiProps = Object.keys(toExport.properties).map(propName => createPropApi({
-    ...(toExport.properties[propName]),
+  const apiProps = Object.keys(toExport.interface).map(propName => createPropApi({
+    ...(toExport.interface[propName]),
     name: propName
   })).reduce((agg, propApi) => Object.assign(agg, { [propApi.name] : propApi }), {})
 
@@ -131,7 +125,6 @@ const createLib = (toExport, apiAccess = BUILD_TYPE.PRIVATE_API) => {
 
   return ({
     [BUILD_TYPE.INTERNAL]: {
-      reducers: aggregateKindFromApi('reducers'),
       actions: aggregatedActions
     },
     [BUILD_TYPE.PRIVATE_API]: {

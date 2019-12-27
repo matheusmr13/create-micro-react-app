@@ -2,6 +2,11 @@
   "result-view": {
     "js": [],
     "css": [],
+    "host": "http://localhost:3003"
+  },
+  "clock": {
+    "js": [],
+    "css": [],
     "host": "http://localhost:3002"
   },
   "calculator": {

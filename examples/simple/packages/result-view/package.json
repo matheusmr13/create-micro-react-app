@@ -8,7 +8,8 @@
     "react-dom": "^16.10.2",
     "react-microfrontend": "1.7.0",
     "react-scripts": "3.3.0",
-    "calculator": "*"
+    "calculator": "*",
+    "clock": "*"
   },
   "scripts": {
     "start": "IS_MICROFRONTEND=true microfrontend-controller start",

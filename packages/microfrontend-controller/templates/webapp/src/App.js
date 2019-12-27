@@ -18,7 +18,7 @@ class App extends React.Component {
     const { microfrontends } = this.props;
     const { selectedMicrofrontend } = this.state;
 
-    const MicrofrontendComponent = selectedMicrofrontend && microfrontends[selectedMicrofrontend].content;
+    const MicrofrontendComponent = selectedMicrofrontend && microfrontends[selectedMicrofrontend].view;
     
     return (
       <div className="App">
