@@ -1,3 +1,4 @@
 module.exports = () => ({
-	shouldBuildPackages: true
+	shouldBuildPackages: true,
+	microfrontendsToBuild: ['calculator', 'clock', 'result-view']
 });
