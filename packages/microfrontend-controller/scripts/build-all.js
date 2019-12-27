@@ -108,31 +108,31 @@ const buildAll = async () => {
 
 	await promiseExec(`rm -rf ${distFolder} || true 2> /dev/null `);
 
-	if (shouldBuildPackages) {
-		if (!microfrontendsToBuild) throw new Error('Configuration "microfrontendsToBuild" is required.');
-
-		await promiseExec(`rm -rf ${allBuildsFolder} || true 2> /dev/null `);
-		await promiseExec(`mkdir ${allBuildsFolder}`);
-		await Promise.all(
-			[
-				...(microfrontendsToBuild),
-				app
-			].map(package => buildPackage(package))
-		)
-
-		const packages = [...microfrontendsToBuild, app];
-		for (let i=0; i < packages.length;i++) {
-			const package = packages[i];
-			await promiseExec(`cp -r ./${packagesFolder}/${package}/build ./${allBuildsFolder}/${package}`);
-		}
-	}
-
 	microfrontends = getDirectories(`./${allBuildsFolder}`)
 		.map(dir => {
 			const parts = dir.split('/');
 			return parts[parts.length - 1];
 		})
 		.filter(moduleName => moduleName !== app);
+
+	if (shouldBuildPackages) {
+		await promiseExec(`rm -rf ${allBuildsFolder} || true 2> /dev/null `);
+		await promiseExec(`mkdir ${allBuildsFolder}`);
+		await Promise.all(
+			[
+				...(microfrontends),
+				app
+			].map(package => buildPackage(package))
+		)
+
+		const packages = [...microfrontends, app];
+		for (let i=0; i < packages.length;i++) {
+			const package = packages[i];
+			await promiseExec(`cp -r ./${packagesFolder}/${package}/build ./${allBuildsFolder}/${package}`);
+		}
+	}
+
+	
 	await depsCheck();
 	
 	await promiseExec(`cp -r ./${allBuildsFolder}/${app} ./${distFolder}`);

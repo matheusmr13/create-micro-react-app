@@ -4,9 +4,6 @@ import './App.css';
 import calculator from 'calculator';
 import clock from 'clock';
 
-const CalculatorClient = calculator.api;
-const ClockApi = clock.api;
-
 function formatDate(date) {
   var monthNames = [
     "January", "February", "March",
@@ -25,20 +22,20 @@ function formatDate(date) {
 class App extends React.Component {
   state = {
     result: 0,
-    clock: ClockApi.getCurrentTime()
+    clock: clock.getCurrentTime()
   }
 
   componentDidMount() {
-    CalculatorClient.onValueChange((newResult) => {
+    calculator.onValueChange((newResult) => {
       this.setState({ result: newResult });
     });
-    ClockApi.onCurrentTimeChange((newClock) => {
+    clock.onCurrentTimeChange((newClock) => {
       this.setState({ clock: newClock });
     });
   }
 
   handleClick = () => {
-    CalculatorClient.callScheduleResetValue().then((myResult) => {
+    calculator.callScheduleResetValue().then((myResult) => {
       console.info('apagou mesmo ein', myResult);
     });
   }

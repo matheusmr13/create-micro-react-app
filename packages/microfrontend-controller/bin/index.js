@@ -23,7 +23,8 @@ const script = args[0];
 	},
 	"build-lib": async () => {
 		const buildLib = require('../scripts/build-lib');
-		await buildLib();
+		const fileToBuild = args[1];
+		await buildLib(fileToBuild);
 	},
 	"start-all": async () => {
 		const startAll = require('../scripts/start-all');

@@ -120,21 +120,9 @@ const createLib = (toExport, apiAccess = BUILD_TYPE.PRIVATE_API) => {
 
   const aggregateKindFromApi = (kind) => Object.values(apiProps).reduce((agg, propApi) => Object.assign(agg, propApi[kind]), {});
 
-  const aggregatedActions = aggregateKindFromApi('actions');
-
-
   return ({
-    [BUILD_TYPE.INTERNAL]: {
-      actions: aggregatedActions
-    },
-    [BUILD_TYPE.PRIVATE_API]: {
-      api: aggregateKindFromApi('privateApi'),
-      actions: aggregatedActions
-    },
-    [BUILD_TYPE.PUBLIC_API]: {
-      api: aggregateKindFromApi('publicApi'),
-      actions: aggregatedActions
-    }
+    [BUILD_TYPE.PRIVATE_API]: aggregateKindFromApi('privateApi'),
+    [BUILD_TYPE.PUBLIC_API]: aggregateKindFromApi('publicApi')
   })[apiAccess];
 }
 

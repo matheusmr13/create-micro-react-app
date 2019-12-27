@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "homepage": ".",
-  "main": "./src/lib/public.js",
+  "main": "./build-lib/index.js",
   "dependencies": {
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
@@ -16,6 +16,7 @@
     "start-standalone": "microfrontend-controller start",
     "build": "REACT_APP_MY_COOL_ENV=envValue IS_MICROFRONTEND=true microfrontend-controller build",
     "build-standalone": "microfrontend-controller build",
+    "build-lib": "microfrontend-controller build-lib ./src/lib/schema.js",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject"
   },

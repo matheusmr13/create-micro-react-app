@@ -1,26 +1,24 @@
 import React from 'react';
 import './App.css';
 
-import Lib from './lib/private';
-
-const API = Lib.api;
+import api from './lib';
 
 class App extends React.Component {
   componentDidMount() {
-    API.onResetValueTriggered(() => {
-      API.setValue(0);
+    api.onResetValueTriggered(() => {
+      api.setValue(0);
     });
 
-    API.onScheduleResetValueCalled(() => new Promise((resolve) => {
+    api.onScheduleResetValueCalled(() => new Promise((resolve) => {
       setTimeout(() => {
-        API.setValue(0);
-        resolve('LAU');
+        api.setValue(0);
+        resolve();
       }, 2000);
     }))
   }
 
   handleClick = (value) => () => {
-    API.setValue(value + API.getValue());
+    api.setValue(value + api.getValue());
   }
 
   render() {

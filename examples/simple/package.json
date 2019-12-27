@@ -8,6 +8,7 @@
     "start": "microfrontend-controller start-with-repo"
   },
   "dependencies": {
-    "lerna": "^3.16.4"
+    "lerna": "^3.16.4",
+    "microfrontend-controller": "^1.5.1"
   }
 }

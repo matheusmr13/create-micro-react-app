@@ -17,7 +17,6 @@ class App extends React.Component {
 
   render() {
     const { microfrontends } = this.props;
-    console.info(microfrontends);
 
     return (
       <div className="App">
