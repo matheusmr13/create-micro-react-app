@@ -92,7 +92,6 @@ class ReactMicrofrontend extends React.Component {
 
   render() {
     const { iframesToLoad, jsToLoad, cssToLoad, styleToLoad, microfrontends } = this.state;
-    console.info(this.store, microfrontends);
     return (
       <React.Fragment>
         { microfrontends && ((

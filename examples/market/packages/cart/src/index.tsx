@@ -1,12 +1,13 @@
-// import App from './App';
-import Widget from './Widget';
+import Cart from './pages/Cart';
+import Widget from './pages/Widget';
+
 import schema from './lib/schema';
 import { ExportMicrofrontend } from 'react-microfrontend';
 
 ExportMicrofrontend({
   ...schema,
 	view: {
-    // App,
+    Cart,
     Widget
   },
 });

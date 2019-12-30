@@ -1,11 +1,10 @@
 import React from 'react';
 import './Widget.css';
-import CartApi from './lib';
-import Cart from './Cart';
+import CartApi from 'lib';
+import Cart from 'models/Cart';
 
 class Widget extends React.Component<{
-  cart: Cart,
-  isLoaded: boolean
+  cart: Cart
 }> {
   // componentDidMount() {
   //   setInterval(() => {
@@ -21,9 +20,8 @@ class Widget extends React.Component<{
   // }
 
   render() {
-    const { cart, isLoaded } = this.props;
+    const { cart } = this.props;
 
-    console.info({ cart, isLoaded })
     if (!cart) return null
     return (
       <div className="Widget">

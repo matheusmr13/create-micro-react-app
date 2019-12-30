@@ -18,15 +18,12 @@ function configureStore() {
   store.asyncReducers = {}
 
   store.injectReducer = (key, asyncReducer) => {
-    console.info(key, asyncReducer)
     store.asyncReducers[key] = handleActions(asyncReducer, {}) //TODO: initialState
     store.replaceReducer(createReducer(store.asyncReducers))
   }
 
-  console.info(shared);
-
   shared.set('store', store);
-  shared.get('connectSet')(connect);
+  (shared.get('connectSet') || []).forEach((func) => func(connect));
   return store
 }
 function createReducer(asyncReducers) {

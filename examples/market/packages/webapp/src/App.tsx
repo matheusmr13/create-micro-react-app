@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import { withMicrofrontend } from 'react-microfrontend';
 import Home from './home';
+import CartApi from '@market/cart';
 
 import {
   BrowserRouter as Router,
@@ -37,7 +38,7 @@ const App: React.FC<{
             renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/cart">
-            {/* <CartView /> */}
+          { CartView.Cart && <CartView.Cart /> }
           </Route>
           <Route path="/">
             <Home />
@@ -48,4 +49,4 @@ const App: React.FC<{
   );
 }
 
-export default withMicrofrontend(App, { microfrontendKey: '@market/cart' });
+export default withMicrofrontend(App, { microfrontendKey: CartApi.get() });

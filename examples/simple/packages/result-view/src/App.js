@@ -35,9 +35,7 @@ class App extends React.Component {
   }
 
   handleClick = () => {
-    calculator.callScheduleResetValue().then((myResult) => {
-      console.info('apagou mesmo ein', myResult);
-    });
+    calculator.callScheduleResetValue();
   }
 
   render() {

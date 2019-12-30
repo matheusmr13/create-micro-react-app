@@ -76,6 +76,7 @@ const createLib = (toExport, meta = {}) => {
         currentState = args[0];
 
         const dispatch = stareShared.get('store').dispatch;
+        console.info(actions[rightFunctionName](currentState));
         dispatch(actions[rightFunctionName](currentState));
 
         const subscriptions = stareShared.get(subscribeFunctionName) || [];
@@ -103,26 +104,28 @@ const createLib = (toExport, meta = {}) => {
         },
         [`with${nameCapitalized}`]: (Component) => {
           const mapStateToProps = (state) => {
-            console.info(state);
             return {
               [name]: state[packageName][name]
             };
           }
 
           let myConnect
-          stareShared.set('connectSet', (connect) => {
+          const list = stareShared.get('connectSet') || [];
+          list.push((connect) => {
+            console.info('connectSet', connect)
             myConnect = connect
-          })
+          });
+          stareShared.set('connectSet', list);
           // console.info('CONNECT', stareShared.get('connect'));
 
           const mapDispatchToProps = {}//{ increment, decrement, reset }
 
           return class MyComponent extends React.Component {
             state = {
-              Component: null,
-              loaded: false
+              Component: null
             }
             componentDidMount() {
+              console.info('did mount')
               this.setState({
                 Component: myConnect(
                   mapStateToProps,
@@ -134,7 +137,8 @@ const createLib = (toExport, meta = {}) => {
             render() {
               console.info('my component', this.state.Component);
               if (!this.state.Component) return null;
-              return <this.state.Component isLoaded={this.state.loaded} />
+              console.info('chegou')
+              return <this.state.Component />;
             }
           }
         }

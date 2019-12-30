@@ -54,7 +54,7 @@ const Home: React.FC<RouteComponentProps> = ({ history, microfrontend }) => {
 			<Product
 				key={product.id}
 				product={product}
-				onBuy={() => { console.info('clicou'); CartApi.callAddProductToCard(product) }}
+				onBuy={() => CartApi.callAddProductToCard(product)}
 				onDetails={() => history.push(`/product/${product.id}`)}
 			/>
 		))}
