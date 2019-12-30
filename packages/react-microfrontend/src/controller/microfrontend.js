@@ -38,12 +38,14 @@ class Microfrontend {
     this.view = shared.view;
 
     if (shared.interface) {
-      this.lib = CreateLib(shared, CreateLib.BUILD_TYPE.PRIVATE_API);
+      this.lib = CreateLib(shared, { apiAccess: CreateLib.BUILD_TYPE.INTERNAL, packageName: this.name });
+      this.initialize = this.lib.initialize;
+      this.prepare = this.lib.prepare;
     }
+  }
 
-    const emptyFunc = () => Promise.resolve();
-    this.initialize = shared.initialize ? () => shared.initialize(this.lib) : emptyFunc;
-    this.prepare = shared.prepare ? () => shared.prepare(this.lib) : emptyFunc;
+  setAsInitialized() {
+    this.status = Microfrontend.STATUS.INITIALIZED;
   }
 
   trackError(type, error) {

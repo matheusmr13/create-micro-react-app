@@ -59,5 +59,6 @@ module.exports = {
 	getReactAppRewiredPath,
 	promiseReadJson,
 	promiseDeleteFile: fse.remove,
-	mergeDirs
+	mergeDirs,
+	promiseFileExists: fse.exists
 }

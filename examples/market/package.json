@@ -1,15 +1,14 @@
 {
-  "name": "example",
+  "name": "market",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "dependencies": {
+    "lerna": "<4.0.0",
+    "microfrontend-controller": "^1.5.1"
+  },
   "scripts": {
     "build": "microfrontend-controller build-all",
-    "start": "microfrontend-controller start-all"
-  },
-  "dependencies": {
-    "react-microfrontend": "file:../../packages/react-microfrontend",
-    "microfrontend-controller": "file:../../packages/microfrontend-controller",
-    "lerna": "^3.16.4"
+    "start": "microfrontend-controller start -f"
   }
 }

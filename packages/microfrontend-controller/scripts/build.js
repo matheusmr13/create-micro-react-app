@@ -1,4 +1,4 @@
-const { getAppFile, promiseWriteFile, getReactAppRewiredPath } = require('../utils/fs');
+const { getAppFile, promiseWriteFile, getReactAppRewiredPath, promiseFileExists } = require('../utils/fs');
 const { promiseExec, getEnvString } = require('../utils/process');
 
 const package = getAppFile('package.json');

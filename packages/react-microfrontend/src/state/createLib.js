@@ -1,4 +1,5 @@
 import Shared from '../shared';
+import redux from 'redux';
 
 const ACCESS = {
   PUBLIC: 'PUBLIC',
@@ -17,8 +18,16 @@ const BUILD_TYPE = {
   PRIVATE_API: 'PRIVATE_API'
 }
 
-const createLib = (toExport, apiAccess = BUILD_TYPE.PRIVATE_API) => {
+const createLib = (toExport, meta = {}) => {
+  const {
+    apiAccess = BUILD_TYPE.PRIVATE_API,
+    packageName
+  } = meta;
+
+  if (!packageName) throw new Error('Something went wrong');
+
   const stareShared = new Shared('__state__');
+  const moduleShared = new Shared(packageName);
 
   const createActionCreator = (type) => (payload) => ({ type, payload });
 
@@ -59,29 +68,28 @@ const createLib = (toExport, apiAccess = BUILD_TYPE.PRIVATE_API) => {
       ...(hasGetter ? { [readFunctionName]: createActionCreator(readFunctionName) } : {})
     };
 
-    stareShared.set(subscribeFunctionName, []);
+    // stareShared.set(subscribeFunctionName, []); TODO: check if this is the best way
 
     const rightApi = {
       [rightFunctionName]: (...args) => {
         currentState = args[0];
-        // const dispatch = stareShared.get('store').dispatch;
 
-        // dispatch(actions[rightFunctionName](currentState));
+        const dispatch = stareShared.get('store').dispatch;
+        dispatch(actions[rightFunctionName](currentState));
 
-        const subscriptions = stareShared.get(subscribeFunctionName);
+        const subscriptions = stareShared.get(subscribeFunctionName) || [];
         if (type === TYPE.FUNCTION) {
           const [currentListener] = subscriptions;
           return (currentListener && currentListener.apply(null, args));
         }
-          subscriptions.forEach(subscription => subscription(currentState));
+        subscriptions.forEach(subscription => subscription(currentState));
         // dispatch(actions[subscribeFunctionName]());
-
       }
     };
 
     const readApi = {
       [subscribeFunctionName]: (callback) => {
-        const subscriptions = stareShared.get(subscribeFunctionName);
+        const subscriptions = stareShared.get(subscribeFunctionName) || [];
         if (type === TYPE.FUNCTION && subscriptions.length > 0) {
           throw new Error(`API typed as "${TYPE.FUNCTION}" cannot have more than one listener!`);
         }
@@ -109,7 +117,13 @@ const createLib = (toExport, apiAccess = BUILD_TYPE.PRIVATE_API) => {
       name,
       actions,
       privateApi,
-      publicApi
+      publicApi,
+      reducers: {
+        [rightFunctionName]: (state, { payload } = {}) => ({
+          ...state,
+          [name]: payload
+        })
+      }
     };
   }
 
@@ -118,11 +132,35 @@ const createLib = (toExport, apiAccess = BUILD_TYPE.PRIVATE_API) => {
     name: propName
   })).reduce((agg, propApi) => Object.assign(agg, { [propApi.name] : propApi }), {})
 
-  const aggregateKindFromApi = (kind) => Object.values(apiProps).reduce((agg, propApi) => Object.assign(agg, propApi[kind]), {});
+  const globalApi = {
+    get: () => packageName,
+  };
 
+  const aggregateKindFromApi = (kind) => Object.values(apiProps).reduce((agg, propApi) => Object.assign(agg, propApi[kind]), { ...globalApi });
+
+
+  const getAndExec = (key) => {
+    const func = moduleShared.get(key);
+    return func && func();
+  }
   return ({
-    [BUILD_TYPE.PRIVATE_API]: aggregateKindFromApi('privateApi'),
-    [BUILD_TYPE.PUBLIC_API]: aggregateKindFromApi('publicApi')
+    [BUILD_TYPE.PRIVATE_API]: {
+      ...{
+        onPrepare: callback => { moduleShared.set('__onPrepare__', callback); },
+        onInitialize: callback => { moduleShared.set('__onInitialize__', callback); }
+      },
+      ...aggregateKindFromApi('privateApi')
+    },
+    [BUILD_TYPE.PUBLIC_API]: {
+      ...aggregateKindFromApi('publicApi')
+    },
+    [BUILD_TYPE.INTERNAL]: {
+      ...{
+        prepare: () => getAndExec('__onPrepare__'),
+        initialize: () => getAndExec('__onInitialize__')
+      },
+      reducers: aggregateKindFromApi('reducers')
+    }
   })[apiAccess];
 }
 

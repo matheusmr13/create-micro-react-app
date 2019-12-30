@@ -1,7 +1,8 @@
 {
-  "name": "@market/webapp",
+  "name": "@market/cart",
   "version": "0.1.0",
   "private": true,
+  "main": "./build-lib/index.js",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -14,13 +15,12 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-microfrontend": "^1.7.0",
-    "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
-    "typescript": "~3.7.2",
-    "@market/cart": "*"
+    "typescript": "~3.7.2"
   },
   "scripts": {
     "build": "microfrontend-controller build",
+    "build-lib": "microfrontend-controller build -l ./src/lib/schema.ts",
     "start": "microfrontend-controller start"
   },
   "eslintConfig": {

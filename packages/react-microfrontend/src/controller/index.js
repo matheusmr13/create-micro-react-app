@@ -45,23 +45,28 @@ class Controller {
     shared.set('registerMicrofrontend', async (name, microfrontendShared) => {
       this.microfrontends[name].register(microfrontendShared);
 
-      const setupMicrofrontend = (method) => Promise.all(Object.values(this.microfrontends).map(async (micro) => {
-        try {
-          const promise = micro[method]() || Promise.resolve();
-
-          if (promise instanceof Promise) {
-            await promise;
-          }
-        } catch (e) {
-          micro.trackError(method, e);
-        }
-      }));
-
-      await setupMicrofrontend('prepare');
-      await setupMicrofrontend('initialize');
-
       if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.REGISTERED)) {
-        this.__onMicrofrontendsInitialized(this.microfrontends);
+        this.__onMicrofrontendsRegistered(this.microfrontends);
+
+        const setupMicrofrontend = (method) => Promise.all(Object.values(this.microfrontends).map(async (micro) => {
+          try {
+            const promise = micro[method]() || Promise.resolve();
+
+            if (promise instanceof Promise) {
+              await promise;
+              micro.setAsInitialized();
+            }
+          } catch (e) {
+            micro.trackError(method, e);
+          }
+        }));
+
+        await setupMicrofrontend('prepare');
+        await setupMicrofrontend('initialize');
+
+        if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.INITIALIZED)) {
+          this.__onMicrofrontendsInitialized(this.microfrontends);
+        }
       }
     });
 
@@ -104,6 +109,11 @@ class Controller {
   }
   onMicrofrontendStyleChange(callback) {
     this.__onMicrofrontendStyleChange = callback;
+    return this;
+  }
+
+  onMicrofrontendsRegistered(callback) {
+    this.__onMicrofrontendsRegistered = callback;
     return this;
   }
   onMicrofrontendsInitialized(callback) {

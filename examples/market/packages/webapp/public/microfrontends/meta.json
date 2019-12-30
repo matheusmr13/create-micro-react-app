@@ -1,10 +1,5 @@
 {
-  "react-market-list": {
-    "js": [],
-    "css": [],
-    "host": "http://localhost:3002"
-  },
-  "react-market-cart": {
+  "@market/cart": {
     "js": [],
     "css": [],
     "host": "http://localhost:3001"
