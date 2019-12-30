@@ -1,6 +1,7 @@
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { handleActions } from 'redux-actions';
 import Shared from './../shared';
+import { connect } from 'react-redux';
 
 import thunk from 'redux-thunk';
 
@@ -25,6 +26,7 @@ function configureStore() {
   console.info(shared);
 
   shared.set('store', store);
+  shared.get('connectSet')(connect);
   return store
 }
 function createReducer(asyncReducers) {

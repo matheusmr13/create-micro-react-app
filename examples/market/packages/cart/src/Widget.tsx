@@ -3,26 +3,27 @@ import './Widget.css';
 import CartApi from './lib';
 import Cart from './Cart';
 
-class Widget extends React.Component {
-  state = {
-    cart: null,
-  }
-
-  componentDidMount() {
-    setInterval(() => {
-      this.setState({
-        cart: CartApi.getCart()
-      });
-    }, 2000);
-    // onCartChange = (cart) => {
-    //   this.setState({
-    //     cart
-    //   });
-    // };
-  }
+class Widget extends React.Component<{
+  cart: Cart,
+  isLoaded: boolean
+}> {
+  // componentDidMount() {
+  //   setInterval(() => {
+  //     this.setState({
+  //       cart: CartApi.getCart()
+  //     });
+  //   }, 2000);
+  //   // onCartChange = (cart) => {
+  //   //   this.setState({
+  //   //     cart
+  //   //   });
+  //   // };
+  // }
 
   render() {
-    const { cart } = this.state;
+    const { cart, isLoaded } = this.props;
+
+    console.info({ cart, isLoaded })
     if (!cart) return null
     return (
       <div className="Widget">
@@ -32,4 +33,4 @@ class Widget extends React.Component {
   }
 }
 
-export default Widget;
+export default CartApi.withCart(Widget);

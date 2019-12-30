@@ -1,5 +1,6 @@
+import React from 'react';
 import Shared from '../shared';
-import redux from 'redux';
+// import { connect } from 'react-redux';
 
 const ACCESS = {
   PUBLIC: 'PUBLIC',
@@ -99,6 +100,43 @@ const createLib = (toExport, meta = {}) => {
       ...(hasGetter ? {
         [readFunctionName]: () => {
           return currentState;
+        },
+        [`with${nameCapitalized}`]: (Component) => {
+          const mapStateToProps = (state) => {
+            console.info(state);
+            return {
+              [name]: state[packageName][name]
+            };
+          }
+
+          let myConnect
+          stareShared.set('connectSet', (connect) => {
+            myConnect = connect
+          })
+          // console.info('CONNECT', stareShared.get('connect'));
+
+          const mapDispatchToProps = {}//{ increment, decrement, reset }
+
+          return class MyComponent extends React.Component {
+            state = {
+              Component: null,
+              loaded: false
+            }
+            componentDidMount() {
+              this.setState({
+                Component: myConnect(
+                  mapStateToProps,
+                  null
+                )(Component)
+              })
+            }
+
+            render() {
+              console.info('my component', this.state.Component);
+              if (!this.state.Component) return null;
+              return <this.state.Component isLoaded={this.state.loaded} />
+            }
+          }
         }
       }: {})
     };

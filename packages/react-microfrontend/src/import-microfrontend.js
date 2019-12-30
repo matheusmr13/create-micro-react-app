@@ -2,6 +2,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import Controller from './controller';
 import createStore from './state/redux';
+import { Provider } from 'react-redux';
 
 const iframeStyle = {
   position: 'absolute',
@@ -41,7 +42,7 @@ class ReactMicrofrontend extends React.Component {
       cssToLoad: null,
       jsToLoad: null,
       styleToLoad: {},
-      microfrontends: {}
+      microfrontends: null
     };
   }
 
@@ -74,10 +75,10 @@ class ReactMicrofrontend extends React.Component {
         })
       })
       .onMicrofrontendsRegistered((microfrontends) => {
-        const store = createStore();
+        this.store = createStore();
         Object.values(microfrontends).forEach(microfrontend => {
           if (microfrontend.lib) {
-            store.injectReducer(microfrontend.name, microfrontend.lib.reducers);
+            this.store.injectReducer(microfrontend.name, microfrontend.lib.reducers);
           }
         });
       })
@@ -91,11 +92,16 @@ class ReactMicrofrontend extends React.Component {
 
   render() {
     const { iframesToLoad, jsToLoad, cssToLoad, styleToLoad, microfrontends } = this.state;
+    console.info(this.store, microfrontends);
     return (
       <React.Fragment>
-        <MicrofrontendContext.Provider value={microfrontends} >
-          {this.props.children}
-        </MicrofrontendContext.Provider>
+        { microfrontends && ((
+          <MicrofrontendContext.Provider value={microfrontends} >
+            <Provider store={this.store}>
+              {this.props.children}
+            </Provider>
+          </MicrofrontendContext.Provider>
+        )) }
         <Helmet>
           { jsToLoad && jsToLoad.map((url) => <script key={url} src={url} type="text/javascript" /> )}
           { cssToLoad && cssToLoad.map((url) => <link key={url} href={url} type="text/css" rel="stylesheet" /> )}

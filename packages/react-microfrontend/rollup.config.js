@@ -7,6 +7,8 @@ import url from 'rollup-plugin-url'
 import svgr from '@svgr/rollup'
 
 import pkg from './package.json'
+// import react from 'react';
+// import reactDom from 'react-dom';
 
 export default {
   input: 'src/index.js',
@@ -36,7 +38,9 @@ export default {
     commonjs({
       include: 'node_modules/**',
       namedExports: {
-        'node_modules/react-is/index.js': ['isValidElementType']
+        'node_modules/react-is/index.js': ['isValidElementType', 'isContextConsumer'],
+      //   react: Object.keys(react),
+      //  'react-dom': Object.keys(reactDom)
       }
     })
   ]
