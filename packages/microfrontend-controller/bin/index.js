@@ -1,37 +1,45 @@
 #!/usr/bin/env node
 
-const packageJson = require('./../package.json');
 const chalk = require('chalk');
 const program = require('commander');
+const packageJson = require('./../package.json');
 
 program
   .name(Object.keys(packageJson.bin)[0])
-  .version(packageJson.version)
+  .version(packageJson.version);
 
 program
   .command('start')
   .description(chalk.bold.green('Start your application'))
-  .option('-f, --configuration-file <configuration_file>', `
-  Specify a file that has all microfrontend paths to start. All applications will run on development mode with hotreload.
-
-  Example:
-
-    {
-      "microfrontends": {
-        "first-microfrontend": "/path/to/first/microfrontend/project"
-        "second-microfrontend": "/path/to/second/microfrontend/project"
-      },
-      "app": "/path/to/project/container"
-    }
-  `)
-  .option('-p, --proxy <url>', ``)
+  .option('-f, --configuration-file <configuration_file>', '')
+  .option('-p, --proxy <url>', '')
+  .option('-l, --local <webapp_package_name>', '')
   .action((options) => {
+    const startApp = require('../scripts/start');
+
+    const opts = {};
+    let type = startApp.TYPE.SINGLE;
+    if (options.configurationFile) {
+      type = startApp.TYPE.LOCAL;
+      opts.configurationFile = options.configurationFile;
+    } else if (options.proxy) {
+      type = startApp.TYPE.PROXY;
+      opts.url = options.proxy;
+    } else if (options.local) {
+      type = startApp.TYPE.LOCAL;
+      opts.webappName = options.local;
+    }
+
+    startApp(type, opts);
+
+    return;
+    console.info('locaaaal', options);
     if (options.proxy) {
       require('../scripts/start-mock')(options.proxy);
-    } else if (options.configurationFile) {
+    } else if (options.configurationFile || options.local) {
       require('../scripts/start-with-repo')();
     } else {
-      require('../scripts/start')()
+      require('../scripts/start')();
     }
   });
 
@@ -56,11 +64,26 @@ program
   .option('-l, --library', 'lib')
   .option('-a, --app', 'application')
   .option('-m, --microfrontend', 'application')
+  .option('-t, --template', 'create react app template')
   .action((name, pathToFolder, options) => {
+    const CreateApp = require('../scripts/create');
+
+    const opts = {
+      template: options.template,
+    };
+
+    const types = [];
+    if (options.microfrontend) types.push(CreateApp.TYPE.MICROFRONTEND);
+    if (options.library) types.push(CreateApp.TYPE.LIBRARY);
+    if (options.app || types.length === 0) types.push(CreateApp.TYPE.APP);
+
+    CreateApp.create(types, name, opts);
+
+    return;
     if (options.app) {
-      require('../scripts/create-app')(name);
+      require('../scripts/create-app')(name, opts);
     } else if (options.microfrontend) {
-      require('../scripts/create-microfrontend')(name, pathToFolder);
+      require('../scripts/create-microfrontend')(name, pathToFolder, opts);
     } else if (options.library) {
       console.info('not implemented yet');
     }

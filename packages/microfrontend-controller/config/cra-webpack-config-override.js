@@ -1,46 +1,40 @@
 
-
-const { getAppFile } = require('../utils/fs');
-
-const package = getAppFile('package.json');
-
-const MICROFRONTEND_FOLDER_NAME = 'microfrontends'; // TODO: get from build-configuration.js
 const { override, overrideDevServer } = require('customize-cra');
+const { microfrontendFolderName } = require('../scripts/utils/config');
+const { appPackageJson } = require('../scripts/utils/paths');
 
-const overrideWebpackConfigs = () => config => {
-	config.output.jsonpFunction = package.name;
+// eslint-disable-next-line
+const packageJson = require(appPackageJson);
 
-	if (process.env.NODE_ENV === 'production') {
-		if (process.env.IS_MICROFRONTEND) {
-			config.output.publicPath = `./${MICROFRONTEND_FOLDER_NAME}/${package.name}/`;
-		}
-	} else {
-		if (process.env.IS_MICROFRONTEND) {
-			config.output.publicPath = `http://localhost:${process.env.PORT}/`;
-		}
-	}
+const overrideWebpackConfigs = () => (config) => {
+  const newConfig = { ...config };
+  newConfig.output.jsonpFunction = packageJson.name;
 
-	return config;
+  if (process.env.NODE_ENV === 'production') {
+    if (process.env.IS_MICROFRONTEND) {
+      newConfig.output.publicPath = `./${microfrontendFolderName}/${packageJson.name}/`;
+    }
+  } else if (process.env.IS_MICROFRONTEND) {
+    newConfig.output.publicPath = `http://localhost:${process.env.PORT}/`;
+  }
+
+  return newConfig;
 };
 
-const overrideDevServerConfigs  = () => config => {
-	if (process.env.IS_MICROFRONTEND) {
-		config.headers = {
-			"Access-Control-Allow-Origin": "http://localhost:3000",
-			"Access-Control-Allow-Credentials": "true",
-			"Access-Control-Allow-Headers": "Content-Type, Authorization, x-id, Content-Length, X-Requested-With",
-			"Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
-		}
-	}
-	return config;
+const overrideDevServerConfigs = () => (config) => {
+  const newConfig = { ...config };
+  if (process.env.IS_MICROFRONTEND) {
+    newConfig.headers = {
+      'Access-Control-Allow-Origin': 'http://localhost:3000',
+      'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-id, Content-Length, X-Requested-With',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+    };
+  }
+  return newConfig;
 };
 
 module.exports = {
-	webpack: override(
-		overrideWebpackConfigs()
-	),
-	devServer: overrideDevServer(
-		// dev server plugin
-		overrideDevServerConfigs()
-	  )
-}
+  webpack: override(overrideWebpackConfigs()),
+  devServer: overrideDevServer(overrideDevServerConfigs()),
+};

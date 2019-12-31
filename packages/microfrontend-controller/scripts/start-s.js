@@ -7,4 +7,5 @@ const start = async () => {
 	await promiseExec(`${getEnvString()} ${getReactAppRewiredPath()} start --config-overrides ${__dirname}/../config/cra-webpack-config-override.js`);
 }
 
+
 module.exports = start;
