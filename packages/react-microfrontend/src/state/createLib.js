@@ -169,7 +169,7 @@ const createLib = (toExport, meta = {}) => {
   })).reduce((agg, propApi) => Object.assign(agg, { [propApi.name] : propApi }), {})
 
   const globalApi = {
-    get: () => packageName,
+    getPackageName: () => packageName,
   };
 
   const aggregateKindFromApi = (kind) => Object.values(apiProps).reduce((agg, propApi) => Object.assign(agg, propApi[kind]), { ...globalApi });
