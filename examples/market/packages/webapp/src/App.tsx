@@ -4,6 +4,7 @@ import './App.css';
 import { withMicrofrontend } from 'react-microfrontend';
 import Home from './home';
 import CartApi from '@market/cart';
+import QuickCartApi from '@market/quick-cart';
 
 import {
   BrowserRouter as Router,
@@ -13,9 +14,10 @@ import {
 } from 'react-router-dom';
 
 const App: React.FC<{
-  microfrontend: any
+  microfrontends: any
 }> = (props) => {
-  const CartView: any = props.microfrontend;
+  const CartView: any = props.microfrontends[CartApi.getPackageName()].view;
+  const QuickCartView: any = props.microfrontends[QuickCartApi.getPackageName()].view;
 
   return (
     <Router>
@@ -34,6 +36,10 @@ const App: React.FC<{
           {CartView.Widget && <CartView.Widget />}
         </div>
 
+        <div>
+          {QuickCartView.QuickCart && <QuickCartView.QuickCart />}
+        </div>
+
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
@@ -49,4 +55,4 @@ const App: React.FC<{
   );
 }
 
-export default withMicrofrontend(App, { microfrontendKey: CartApi.getPackageName() });
+export default withMicrofrontend(App);
