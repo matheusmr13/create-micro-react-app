@@ -1,5 +1,8 @@
 {
   "@market/cart": {
     "host": "http://localhost:3001"
+  },
+  "@market/quick-cart": {
+    "host": "http://localhost:3002"
   }
 }
