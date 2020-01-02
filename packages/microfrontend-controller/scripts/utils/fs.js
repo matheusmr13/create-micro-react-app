@@ -11,21 +11,25 @@ const copyFile = async (file, location) => {
   await fs.copyFile(file, location);
 };
 
-const mergeDirs = async (src, dest) => {
+const copyFolder = async (src, dest) => {
+  try {
+    await isDirectory(dest);
+  } catch (e) {
+    await mkdir(dest);
+  }
+
   const files = await fs.readdir(src);
 
-  return Promise.all(files.map(file => async (resolve) => {
+  return Promise.all(files.map(async (file) => {
     const srcFile = `${src}/${file}`;
     const destFile = `${dest}/${file}`;
 
     const isDir = await isDirectory(srcFile);
     if (isDir) {
-      await mergeDirs(srcFile, destFile);
+      await copyFolder(srcFile, destFile);
     } else {
-      await copyFile(destFile, srcFile);
+      await copyFile(srcFile, destFile);
     }
-
-    resolve();
   }));
 };
 
@@ -34,12 +38,14 @@ const readJson = async (pathToFile) => {
   return JSON.parse(data);
 };
 
-const writeJson = async (pathToFile, json) => {
-  await fs.writeFile(pathToFile, JSON.stringify(json, null, 2));
+const writeFile = async (pathToFile, content) => {
+  await fs.writeFile(pathToFile, content);
 };
 
+const writeJson = async (pathToFile, json) => writeFile(pathToFile, JSON.stringify(json, null, 2));
+
 const copyTemplateTo = async (template, pathToFolder) => {
-  await mergeDirs(`${__dirname}/../../templates/${template}`, pathToFolder);
+  await copyFolder(`${__dirname}/../../templates/${template}`, pathToFolder);
 };
 
 const getDirsFrom = async (source) => {
@@ -68,11 +74,17 @@ const getReactAppRewiredPath = async () => {
   return libInfos.find(lib => lib.exists).option;
 };
 
+const rm = pathTo => fs.rmdir(pathTo, { recursive: true });
+
 module.exports = {
   mkdir,
   copyTemplateTo,
   writeJson,
+  writeFile,
   readJson,
   getDirsFrom,
   getReactAppRewiredPath,
+  rm,
+  copyFile,
+  copyFolder,
 };
