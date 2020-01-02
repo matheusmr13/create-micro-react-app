@@ -9,6 +9,6 @@
   },
   "scripts": {
     "build": "microfrontend-controller build-all",
-    "start": "microfrontend-controller start -f"
+    "start": "microfrontend-controller start -l @market/webapp"
   }
 }
