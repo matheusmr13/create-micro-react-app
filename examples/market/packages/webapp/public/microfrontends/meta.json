@@ -2,7 +2,7 @@
   "market_cart": {
     "host": "http://localhost:3001"
   },
-  "@market/quick-cart": {
+  "market_quick-cart": {
     "host": "http://localhost:3002"
   }
 }
