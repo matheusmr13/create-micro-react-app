@@ -49,4 +49,4 @@ const App: React.FC<{
   );
 }
 
-export default withMicrofrontend(App, { microfrontendKey: CartApi.get() });
+export default withMicrofrontend(App, { microfrontendKey: CartApi.getPackageName() });

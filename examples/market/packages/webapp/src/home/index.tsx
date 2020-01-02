@@ -62,4 +62,4 @@ const Home: React.FC<RouteComponentProps> = ({ history, microfrontend }) => {
   );
 }
 
-export default withMicrofrontend(withRouter(Home), { microfrontendKey: CartApi.get() });
+export default withMicrofrontend(withRouter(Home), { microfrontendKey: CartApi.getPackageName() });
