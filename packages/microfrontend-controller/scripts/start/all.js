@@ -1,6 +1,7 @@
 
 const { microfrontendFolderName, getPackagesFromConfig } = require('../utils/config');
 const { writeJson } = require('../utils/fs');
+const { escapePackageName } = require('../utils/paths');
 const startSingleApp = require('./single');
 
 
@@ -13,12 +14,14 @@ const startMultipleLocations = async (configurationFilePath, opts = {}) => {
   const INITIAL_PORT = 3001;
 
   const metaJson = Object.keys(microfrontends).reduce((agg, packageName, i) => Object.assign(agg, {
-    [packageName]: {
+    [escapePackageName(packageName)]: {
       host: `http://localhost:${INITIAL_PORT + i}`,
     },
   }), {});
 
-  await writeJson(`${app}/public/${microfrontendFolderName}/meta.json`, metaJson);
+  const pathToAppPackage = Object.values(app)[0];
+
+  await writeJson(`${pathToAppPackage}/public/${microfrontendFolderName}/meta.json`, metaJson);
 
   Object.values(microfrontends)
     .forEach((packagePath, i) => startSingleApp({
@@ -29,7 +32,7 @@ const startMultipleLocations = async (configurationFilePath, opts = {}) => {
     }));
 
   startSingleApp({
-    pathToPackage: app,
+    pathToPackage: pathToAppPackage,
     port: 3000,
     isRunningAll: true,
   });

@@ -1,5 +1,6 @@
 const { resolveApp } = require('../utils/paths');
 const { readJson, getDirsFrom } = require('../utils/fs');
+const { escapePackageName } = require('./paths');
 
 const defaults = {
   microfrontendFolderName: 'microfrontends',

@@ -1,4 +1,5 @@
 const { resolveApp, appPackageJson } = require('../utils/paths');
+const { escapePackageName } = require('../utils/paths');
 const {
   readJson, rm, mkdir, copyFile, writeFile,
 } = require('../utils/fs');
@@ -11,6 +12,7 @@ const getExtension = (file) => {
 const build = async (fileToBuild) => {
   const buildLibFolder = resolveApp('build-lib');
   const packageJson = await readJson(appPackageJson);
+  const escapedPackageName = escapePackageName(packageJson.name);
 
   await rm(buildLibFolder);
   await mkdir(buildLibFolder);
@@ -23,7 +25,7 @@ const build = async (fileToBuild) => {
 
     export default CreateLib(schema, {
       apiAccess: CreateLib.BUILD_TYPE.PUBLIC_API,
-      packageName: "${packageJson.name}"
+      packageName: "${escapedPackageName}"
     });
   `);
 };

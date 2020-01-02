@@ -1,5 +1,5 @@
 {
-  "@market/cart": {
+  "market_cart": {
     "host": "http://localhost:3001"
   }
 }

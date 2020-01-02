@@ -1,3 +1,5 @@
+const { escapePackageName } = require('./paths');
+
 const REACT_APP = /^REACT_APP_/i;
 
 const MICROFRONTEND_ENV = {
@@ -13,7 +15,7 @@ const getEnvString = ({ packageJson, isMicrofrontend }) => {
     .reduce((env, key) => Object.assign(env, { [key]: process.env[key] }), {
       ...(isMicrofrontend ? MICROFRONTEND_ENV : WEBAPP_ENV),
       PORT: process.env.PORT || 3000,
-      REACT_APP_PACKAGE_NAME: packageJson.name,
+      REACT_APP_PACKAGE_NAME: escapePackageName(packageJson.name),
       SKIP_PREFLIGHT_CHECK: true,
     });
 

@@ -1,8 +1,8 @@
 const proxy = require('express-http-proxy');
 const express = require('express');
-
-
 const axios = require('axios');
+const { escapePackageName } = require('../utils/paths');
+
 
 const { getAppFile } = require('../../utils/fs');
 
@@ -11,6 +11,7 @@ const packageJson = getAppFile('package.json');
 const startProxyServer = (proxyUrl, opts) => {
   const app = express();
   const PORT = 3000;
+  const escapedPackageName = escapePackageName(packageJson.name);
 
   const url = new URL(proxyUrl);
   const namespace = url.pathname;
@@ -19,7 +20,7 @@ const startProxyServer = (proxyUrl, opts) => {
     axios.get(`${proxyUrl}microfrontends/meta.json`).then(response => response.data).then((json) => {
       res.json({
         ...json,
-        [packageJson.name]: { host: 'http://localhost:3001' },
+        [escapedPackageName]: { host: 'http://localhost:3001' },
       });
     });
   });
