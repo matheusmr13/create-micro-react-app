@@ -1,6 +1,6 @@
 const buildAll = require('./all');
 const buildLibrary = require('./library');
-// const packageAll = require('./package');
+const packageAll = require('./package');
 const buildSingle = require('./single');
 
 const TYPE = {
@@ -18,7 +18,7 @@ const start = (type, opts) => {
       buildLibrary(pathToSchema);
     },
     [TYPE.ALL]: () => buildAll(opts),
-    // [TYPE.PACKAGE]: () => packageAll(opts),
+    [TYPE.PACKAGE]: () => packageAll(opts),
   }[type])();
 };
 

@@ -76,6 +76,33 @@ const getReactAppRewiredPath = async () => {
 
 const rm = pathTo => fs.rmdir(pathTo, { recursive: true });
 
+const getDirectories = async (source) => {
+  const all = await fs.readdir(source);
+  const mappedFolders = await Promise.all(all.map(async fileOrFolder => ({
+    fileOrFolder,
+    isDirectory: await isDirectory(path.join(source, fileOrFolder)),
+  })));
+
+  return mappedFolders
+    .filter(({ isDirectory: isDir }) => isDir)
+    .map(({ fileOrFolder: folder }) => folder);
+};
+
+const getAllFilesFromDir = async (dir, allFiles = []) => {
+  const all = await fs.readdir(dir);
+
+  await Promise.all(all.map(async (fileOrFolder) => {
+    const fullDir = `${dir}/${fileOrFolder}`;
+    const isDir = await isDirectory(fullDir);
+    if (isDir) {
+      await getAllFilesFromDir(fullDir, allFiles);
+    } else {
+      allFiles.push(fullDir);
+    }
+  }));
+  return allFiles;
+};
+
 module.exports = {
   mkdir,
   copyTemplateTo,
@@ -84,7 +111,9 @@ module.exports = {
   readJson,
   getDirsFrom,
   getReactAppRewiredPath,
+  getAllFilesFromDir,
   rm,
   copyFile,
   copyFolder,
+  getDirectories,
 };

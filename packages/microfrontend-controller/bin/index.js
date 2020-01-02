@@ -39,7 +39,7 @@ program
   .command('build')
   .description('build your application')
   .option('-l, --library [library_path]', 'lib')
-  .option('-p, --package', 'package')
+  .option('-p, --package <webapp_package_name>', 'package')
   .option('-a, --all <webapp_package_name>', 'mode')
   .option('-c, --configuration-file <configuration_file>', '')
   .option('-m, --microfrontend', 'microfrontend')
@@ -57,6 +57,7 @@ program
       opts.pathToSchema = options.library;
     } else if (options.package) {
       type = build.TYPE.PACKAGE;
+      opts.webappName = options.package;
     }
 
     build(type, opts);

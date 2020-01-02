@@ -13,8 +13,6 @@ const buildAll = async (opts) => {
     microfrontends,
     app,
   } = await getPackagesFromConfig(opts.configurationFile, opts);
-  console.info(app, microfrontends);
-
 
   await rm(allBuildsFolder);
   await mkdir(allBuildsFolder);

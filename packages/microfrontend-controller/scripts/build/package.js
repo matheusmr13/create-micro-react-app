@@ -1,33 +1,22 @@
-const { isDirectory, getDirectories, promiseWriteFile, promiseReadJson } = require('../utils/fs');
-const { promiseExec, execSync } = require('../utils/process');
+const { copyFolder, rm, mkdir,writeJson, getDirectories, readJson, getAllFilesFromDir } = require('../utils/fs');
+const { exec } = require('../utils/process');
+const { escapePackageName, resolveApp } = require('../utils/paths');
 const generateServiceWorker = require('../utils/create-sw');
+
 const semver = require('semver');
-const projectConfigurations = require('../config/project-configs');
 
-const {
-	app,
-	microfrontendsToBuild,
-	packagesFolder,
-	microfrontendFolderName,
-	allBuildsFolder,
-	distFolder,
-	shouldBuildPackages
-} = projectConfigurations;
+const distFolder = 'build';
+const	microfrontendFolderName = 'microfrontends';
+const allBuildsFolder = 'builds';
 
-let microfrontends;
-const mapMicrofrontend = async (folder) => {
-	if (!isDirectory(folder)) throw new Error('Specified path is not a folder');
 
-	const microfrontendsDirs = getDirectories(folder);
+const mapMicrofrontend = async (microfrontends) => {
+	const meta = await Promise.all(microfrontends.map(async (moduleName) => {
 
-	const meta = microfrontendsDirs.reduce((agg, dir) => {
-		const parts = dir.split('/');
-		const moduleName = parts[parts.length - 1];
-		const findResult = execSync(`find ${dir}`);
+    const dir = resolveApp(`./${allBuildsFolder}/${moduleName}`);
+    const findResult = await getAllFilesFromDir(dir);
 
 		const files = findResult
-			.toString()
-			.split('\n')
 			.map(f => f.replace(dir, ''))
 			.filter(f => !!f && f.indexOf('.') > -1)
 			.reduce((fileTypes, file) => {
@@ -37,21 +26,22 @@ const mapMicrofrontend = async (folder) => {
 					fileTypes.css.push(`./${microfrontendFolderName}/${moduleName}${file}`);
 				}
 				return fileTypes;
-			}, { js: [], css: []});
+      }, { js: [], css: []});
 
-		agg[moduleName] = files;
-		return agg;
-	}, {});
+    return {
+      files,
+      moduleName
+    }
+  }));
 
-	return meta;
+  return meta.reduce((agg, { moduleName, files }) => Object.assign(agg, {[moduleName]: files}), {});
 };
 
-const depsCheck = async () => {
-	const allPackages = [app, ...microfrontends];
+const depsCheck = async (allPackages) => {
 	const depsPerPackage = {};
 	for (let i=0; i < allPackages.length;i++) {
-		const package = allPackages[i];
-		depsPerPackage[package] = await promiseReadJson(`./${allBuildsFolder}/${package}/deps.json`);
+		const packageName = allPackages[i];
+		depsPerPackage[packageName] = await readJson(`./${allBuildsFolder}/${packageName}/deps.json`);
 	}
 
 	const allDepsObj = Object.values(depsPerPackage).reduce((distinct, deps) => Object.assign(distinct, deps), {});
@@ -102,34 +92,43 @@ const depsCheck = async () => {
 }
 
 
-const { copyFolder, rm, mkdir } = require('../utils/fs');
 
-const distFolder = 'builds';
+const packageAll = async (opts) => {
+  const {
+    webappName = 'webapp'
+  } = opts;
 
-const packageAll = async () => {
-	await rm(distFolder);
+  const escapedWebappPackageName = escapePackageName(webappName);
+  await rm(distFolder);
 
-	microfrontends = getDirectories(`./${allBuildsFolder}`)
-		.map(dir => {
-			const parts = dir.split('/');
-			return parts[parts.length - 1];
-		})
-		.filter(moduleName => moduleName !== app);
-	await depsCheck();
+  const allPackages = await getDirectories(`./${allBuildsFolder}`);
+	microfrontends = allPackages.filter(moduleName => moduleName !== escapedWebappPackageName);
 
-	await promiseExec(`cp -r ./${allBuildsFolder}/${app} ./${distFolder}`);
-	await promiseExec(`rm ./${distFolder}/deps.json`);
-	await promiseExec(`mkdir -p ./${distFolder}/${microfrontendFolderName}`);
+	await depsCheck(allPackages);
+
+	await copyFolder(`./${allBuildsFolder}/${escapedWebappPackageName}`, `./${distFolder}`);
+  await rm(`./${distFolder}/deps.json`);
+  await rm(`./${distFolder}/service-worker.js`);
+	await mkdir(`./${distFolder}/${microfrontendFolderName}`);
 
 	for (let i=0; i < microfrontends.length;i++) {
-		const package = microfrontends[i];
-		await promiseExec(`cp -r ./${allBuildsFolder}/${package} ./${distFolder}/${microfrontendFolderName}/${package}`);
-		await promiseExec(`rm ./${distFolder}/${microfrontendFolderName}/${package}/deps.json`);
+    const package = microfrontends[i];
+
+    await Promise.all([
+      'asset-manifest.json',
+      'index.html',
+      'manifest.json',
+      'precache-manifest*',
+      'robots.txt',
+      'service-worker.js',
+      'deps.json'
+    ].map(file => rm(`./${allBuildsFolder}/${package}/${file}`)));
+
+    await copyFolder(`./${allBuildsFolder}/${package}`, `./${distFolder}/${microfrontendFolderName}/${package}`);
 	}
 
-	const metaMicrofrontend = await mapMicrofrontend(`./${distFolder}/${microfrontendFolderName}`);
-	await promiseWriteFile(`./${distFolder}/${microfrontendFolderName}/meta.json`, JSON.stringify(metaMicrofrontend, null, 2));
-	await promiseExec(`rm -rf ${distFolder}/service-worker.js || true 2> /dev/null `);
+	const metaMicrofrontend = await mapMicrofrontend(microfrontends);
+	await writeJson(`./${distFolder}/${microfrontendFolderName}/meta.json`, metaMicrofrontend);
 	await generateServiceWorker(distFolder);
 }
 
