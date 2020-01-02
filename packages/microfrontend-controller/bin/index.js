@@ -4,6 +4,10 @@ const chalk = require('chalk');
 const program = require('commander');
 const packageJson = require('./../package.json');
 
+const create = require('../scripts/create');
+const start = require('../scripts/start');
+const build = require('../scripts/build');
+
 program
   .name(Object.keys(packageJson.bin)[0])
   .version(packageJson.version);
@@ -11,51 +15,52 @@ program
 program
   .command('start')
   .description(chalk.bold.green('Start your application'))
-  .option('-f, --configuration-file <configuration_file>', '')
+  .option('-c, --configuration-file <configuration_file>', '')
   .option('-p, --proxy <url>', '')
-  .option('-l, --local <webapp_package_name>', '')
+  .option('-a, --all <webapp_package_name>', '')
   .action((options) => {
-    const startApp = require('../scripts/start');
-
     const opts = {};
-    let type = startApp.TYPE.SINGLE;
+    let type = start.TYPE.SINGLE;
     if (options.configurationFile) {
-      type = startApp.TYPE.LOCAL;
+      type = start.TYPE.LOCAL;
       opts.configurationFile = options.configurationFile;
     } else if (options.proxy) {
-      type = startApp.TYPE.PROXY;
+      type = start.TYPE.PROXY;
       opts.url = options.proxy;
-    } else if (options.local) {
-      type = startApp.TYPE.LOCAL;
-      opts.webappName = options.local;
+    } else if (options.all) {
+      type = start.TYPE.LOCAL;
+      opts.webappName = options.all;
     }
 
-    startApp(type, opts);
-
-    return;
-    console.info('locaaaal', options);
-    if (options.proxy) {
-      require('../scripts/start-mock')(options.proxy);
-    } else if (options.configurationFile || options.local) {
-      require('../scripts/start-with-repo')();
-    } else {
-      require('../scripts/start')();
-    }
+    start(type, opts);
   });
 
 program
   .command('build')
   .description('build your application')
-  .option('-l, --library <library_path>', 'lib')
-  .option('-a, --all', 'mode')
+  .option('-l, --library [library_path]', 'lib')
+  .option('-p, --package <webapp_package_name>', 'package')
+  .option('-a, --all <webapp_package_name>', 'mode')
+  .option('-c, --configuration-file <configuration_file>', '')
+  .option('-m, --microfrontend', 'microfrontend')
   .action((options) => {
-    if (options.all) {
-      require('../scripts/build-all')();
+    let type = build.TYPE.SINGLE;
+    const opts = {};
+    if (options.configurationFile) {
+      type = build.TYPE.ALL;
+      opts.configurationFile = options.configurationFile;
+    } else if (options.all) {
+      type = build.TYPE.ALL;
+      opts.webappName = options.all;
     } else if (options.library) {
-      require('../scripts/build-lib')(options.library);
-    } else {
-      require('../scripts/build')();
+      type = build.TYPE.LIBRARY;
+      opts.pathToSchema = options.library;
+    } else if (options.package) {
+      type = build.TYPE.PACKAGE;
+      opts.webappName = options.package;
     }
+
+    build(type, opts);
   });
 
 program
@@ -66,27 +71,16 @@ program
   .option('-m, --microfrontend', 'application')
   .option('-t, --template', 'create react app template')
   .action((name, pathToFolder, options) => {
-    const CreateApp = require('../scripts/create');
-
     const opts = {
       template: options.template,
     };
 
     const types = [];
-    if (options.microfrontend) types.push(CreateApp.TYPE.MICROFRONTEND);
-    if (options.library) types.push(CreateApp.TYPE.LIBRARY);
-    if (options.app || types.length === 0) types.push(CreateApp.TYPE.APP);
+    if (options.microfrontend) types.push(create.TYPE.MICROFRONTEND);
+    if (options.library) types.push(create.TYPE.LIBRARY);
+    if (options.app || types.length === 0) types.push(create.TYPE.APP);
 
-    CreateApp.create(types, name, opts);
-
-    return;
-    if (options.app) {
-      require('../scripts/create-app')(name, opts);
-    } else if (options.microfrontend) {
-      require('../scripts/create-microfrontend')(name, pathToFolder, opts);
-    } else if (options.library) {
-      console.info('not implemented yet');
-    }
+    create(types, name, opts);
   });
 
 program.parse(process.argv);

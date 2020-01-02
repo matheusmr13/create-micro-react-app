@@ -1,30 +1,7 @@
 const { getReactAppRewiredPath, readJson } = require('../utils/fs');
 const { exec } = require('../utils/process');
 const { appPackageJson } = require('../utils/paths');
-
-const REACT_APP = /^REACT_APP_/i;
-
-const MICROFRONTEND_ENV = {
-  REACT_APP_IS_MICROFRONTEND: true,
-  BROWSER: 'none',
-};
-
-const WEBAPP_ENV = {
-  REACT_APP_IS_CONTAINER: true,
-};
-
-const getEnvString = (packageJson) => {
-  const envs = Object.keys(process.env)
-    .filter(key => REACT_APP.test(key))
-    .reduce((env, key) => Object.assign(env, { [key]: process.env[key] }), {
-      ...(process.env.IS_MICROFRONTEND ? MICROFRONTEND_ENV : WEBAPP_ENV),
-      PORT: process.env.PORT || 3000,
-      REACT_APP_PACKAGE_NAME: packageJson.name,
-      SKIP_PREFLIGHT_CHECK: true,
-    });
-
-  return Object.keys(envs).map(env => `${env}=${envs[env]}`).join(' ');
-};
+const { getEnvString } = require('../utils/env');
 
 const startSingle = async (opts = {}) => {
   const {
@@ -56,7 +33,7 @@ const startSingle = async (opts = {}) => {
     });
   } else {
     const packageJson = await readJson(appPackageJson);
-    const envString = getEnvString(packageJson);
+    const envString = getEnvString({ packageJson, isMicrofrontend: process.env.IS_MICROFRONTEND });
     const reactAppRewiredPath = await getReactAppRewiredPath();
     await exec(`${envString} ${reactAppRewiredPath} start --config-overrides ${__dirname}/../../config/cra-webpack-config-override.js`, {
       onStdout: data => process.stdout.write(data),

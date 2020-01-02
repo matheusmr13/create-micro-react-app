@@ -2,17 +2,19 @@
 const { override, overrideDevServer } = require('customize-cra');
 const { microfrontendFolderName } = require('../scripts/utils/config');
 const { appPackageJson } = require('../scripts/utils/paths');
+const { escapePackageName } = require('../scripts/utils/paths');
 
 // eslint-disable-next-line
 const packageJson = require(appPackageJson);
 
 const overrideWebpackConfigs = () => (config) => {
   const newConfig = { ...config };
-  newConfig.output.jsonpFunction = packageJson.name;
+  const escapedPackageName = escapePackageName(packageJson.name);
+  newConfig.output.jsonpFunction = escapedPackageName;
 
   if (process.env.NODE_ENV === 'production') {
     if (process.env.IS_MICROFRONTEND) {
-      newConfig.output.publicPath = `./${microfrontendFolderName}/${packageJson.name}/`;
+      newConfig.output.publicPath = `./${microfrontendFolderName}/${escapedPackageName}/`;
     }
   } else if (process.env.IS_MICROFRONTEND) {
     newConfig.output.publicPath = `http://localhost:${process.env.PORT}/`;
