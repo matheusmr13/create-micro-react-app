@@ -1,14 +1,11 @@
 const proxy = require('express-http-proxy');
 const express = require('express');
 const axios = require('axios');
-const { escapePackageName } = require('../utils/paths');
+const { readJson } = require('../utils/fs');
+const { escapePackageName, appPackageJson } = require('../utils/paths');
 
-
-const { getAppFile } = require('../../utils/fs');
-
-const packageJson = getAppFile('package.json');
-
-const startProxyServer = (proxyUrl, opts) => {
+const startProxyServer = async (proxyUrl) => {
+  const packageJson = await readJson(appPackageJson);
   const app = express();
   const PORT = 3000;
   const escapedPackageName = escapePackageName(packageJson.name);
