@@ -64,7 +64,7 @@ class Observable {
   }
 
   unsubscribe(observer) {
-    this.observers = this.observers.filter(atualObserver => atualObserver !== observer);
+    this.observers = this.observers.filter(actualObserver => actualObserver !== observer);
   }
 
   clear() {

@@ -10,18 +10,23 @@ class Microfrontend {
     INITIALIZED: 'INITIALIZED'
   };
 
-  name
-  status;
-  host
+  name: any
+  status: string;
+  host: any
   files = {
     js: null,
     css: null
   };
   style = []
-  content
+  content: any
   isLoaded = false
+  view: any
+  lib: { initialize: any; prepare: any; }
+  initialize: any
+  prepare: any
+  errorInitializing: { type: any; error: any; };
 
-  constructor(name, metaInfo) {
+  constructor(name: string, metaInfo: { host: any; js: any; css: any; }) {
     this.name = name;
     this.host = metaInfo.host;
     this.files.js = metaInfo.js;
@@ -34,7 +39,7 @@ class Microfrontend {
     }
   }
 
-  register(shared) {
+  register(shared: { view: any; interface: any; }) {
     this.status = Microfrontend.STATUS.REGISTERED;
     this.view = shared.view;
 
@@ -49,7 +54,7 @@ class Microfrontend {
     this.status = Microfrontend.STATUS.INITIALIZED;
   }
 
-  trackError(type, error) {
+  trackError(type: string, error: any) {
     this.errorInitializing = {
       type,
       error
@@ -61,7 +66,7 @@ class Microfrontend {
     this.isLoaded = true;
   }
 
-  importScript(jsScripts) {
+  importScript(jsScripts: any) {
     this.files.js = jsScripts;
     this.status = Microfrontend.STATUS.IMPORTED;
   }
@@ -74,7 +79,7 @@ class Microfrontend {
     return this.status === Microfrontend.STATUS.REGISTERED;
   }
 
-  setStyle(style) {
+  setStyle(style: any[]) {
     this.style = style;
   }
 }
