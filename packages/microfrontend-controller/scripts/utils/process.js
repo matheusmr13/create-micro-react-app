@@ -7,6 +7,7 @@ const exec = (command, {
   onStderr,
   debug = false,
 } = {}) => new Promise((resolve, reject) => {
+  console.info('debug', debug);
   const spawnProcess = spawn(command, [], { shell: true, cwd });
 
   if (onStdout || debug) spawnProcess.stdout.on('data', onStdout || (data => process.stdout.write(data)));
@@ -21,8 +22,8 @@ const exec = (command, {
   });
 });
 
-const createExecutionContext = (rootAppPath, appName) => {
-  const execInFolder = path => command => exec(command, { cwd: `${rootAppPath}${path || ''}` });
+const createExecutionContext = (rootAppPath, appName, opts) => {
+  const execInFolder = path => command => exec(command, { ...opts, cwd: `${rootAppPath}${path || ''}` });
   return {
     execInRoot: execInFolder('/'),
     execInPackages: execInFolder('/packages'),

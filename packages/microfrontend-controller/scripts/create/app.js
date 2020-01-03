@@ -5,10 +5,10 @@ const { mkdir, copyTemplateTo } = require('../utils/fs');
 const { resolveApp } = require('../utils/paths');
 const { createExecutionContext } = require('../utils/process');
 
-const rootAppScripts = {
-  build: 'microfrontend-controller build -a',
-  start: 'microfrontend-controller start -a',
-};
+const rootAppScripts = webappName => ({
+  build: `microfrontend-controller build -a ${webappName}`,
+  start: `microfrontend-controller start -a ${webappName}`,
+});
 
 const createApp = async (name, opts = {}) => {
   const {
@@ -26,7 +26,7 @@ const createApp = async (name, opts = {}) => {
     await execInRoot('yarn add lerna@"<4.0.0"');
     await execInRoot('yarn add microfrontend-controller');
 
-    await addScriptsToPackageJson(`${rootAppPath}/package.json`, rootAppScripts);
+    await addScriptsToPackageJson(`${rootAppPath}/package.json`, rootAppScripts(webappName));
   };
 
   await explain(

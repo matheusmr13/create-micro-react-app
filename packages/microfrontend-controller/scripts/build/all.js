@@ -6,7 +6,7 @@ const { exec } = require('../utils/process');
 
 const allBuildsFolder = 'builds';
 
-const buildPackage = async packageToBuild => exec(`npm run --prefix ${packageToBuild} build`, { debug: true });
+const buildPackage = async packageToBuild => exec(`npm run --prefix ${packageToBuild} build`);
 
 const buildAll = async (opts) => {
   const {

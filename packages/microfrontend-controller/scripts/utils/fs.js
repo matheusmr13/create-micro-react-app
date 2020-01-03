@@ -39,6 +39,8 @@ const readJson = async (pathToFile) => {
 };
 
 const writeFile = async (pathToFile, content) => {
+  const dirname = path.dirname(pathToFile);
+  await mkdir(dirname);
   await fs.writeFile(pathToFile, content);
 };
 
