@@ -69,13 +69,13 @@ const depsCheck = async (allPackages) => {
 
   const errorMessages = [];
 
-  Object.keys(allPackagesPerVersion).forEach((package) => {
-    const packagesPerMajorVersion = allPackagesPerVersion[package];
+  Object.keys(allPackagesPerVersion).forEach((packageModule) => {
+    const packagesPerMajorVersion = allPackagesPerVersion[packageModule];
 
     const majorVersions = Object.keys(packagesPerMajorVersion);
 
     if (majorVersions.length > 1) {
-      errorMessages.push(`Multiple major versions (with breaking changes) from "${package}" found:`);
+      errorMessages.push(`Multiple major versions (with breaking changes) from "${packageModule}" found:`);
       majorVersions.forEach((majorVersion) => {
         errorMessages.push(`   Major version "${majorVersion}" on your project "${packagesPerMajorVersion[majorVersion]}".`);
       })
