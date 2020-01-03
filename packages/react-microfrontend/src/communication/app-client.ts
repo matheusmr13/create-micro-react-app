@@ -1,6 +1,11 @@
 import Communication from './communication';
+import { Callback } from '../interfaces';
 
 class AppClient extends Communication {
+  from: string;
+  to: string;
+  callback?: Callback = undefined;
+
   constructor() {
     super();
     this.from = process.env.REACT_APP_PACKAGE_NAME;

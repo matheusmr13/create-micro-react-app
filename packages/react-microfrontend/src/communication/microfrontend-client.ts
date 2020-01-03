@@ -1,6 +1,9 @@
 import Communication from './communication';
 
 class MicrofrontendClient extends Communication {
+  from: string;
+  to: string;
+
   constructor() {
     super();
     this.from = process.env.REACT_APP_PACKAGE_NAME;

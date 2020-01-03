@@ -3,6 +3,7 @@ import CreateLib from '../state/createLib';
 class Microfrontend {
   static STATUS = {
     DISCOVERED: 'DISCOVERED',
+    CREATED: 'CREATED',
     LOADED: 'LOADED',
     IMPORTED: 'IMPORTED',
     REGISTERED: 'REGISTERED',
