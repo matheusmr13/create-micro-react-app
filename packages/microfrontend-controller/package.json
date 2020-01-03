@@ -1,6 +1,6 @@
 {
   "name": "microfrontend-controller",
-  "version": "1.5.1",
+  "version": "2.0.0",
   "description": "Microfrontend ruler",
   "main:src": "src/index.js",
   "main": "index.js",
@@ -33,8 +33,7 @@
     "tslib": "^1.10.0",
     "typescript": "^3.7.4"
   },
-  "engines" : {
-    "node" : ">=12.10"
+  "engines": {
+    "node": ">=12.10"
   }
-
 }
