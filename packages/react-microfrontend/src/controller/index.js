@@ -1,11 +1,16 @@
 import Shared from './../shared';
 import Communication from './../communication/app-client';
 import Microfrontend from './microfrontend';
+import CreateLib from '../state/createLib';
 
 const shared = new Shared('__core__');
 const microfrontendFolderName = 'microfrontends';
 
 class Controller {
+  constructor(containerSchema) {
+    this.containerLib = containerSchema && CreateLib(containerSchema, { apiAccess: CreateLib.BUILD_TYPE.INTERNAL });
+  }
+
   microfrontends = null;
 
   areAllMicrofrontendsOnStatus(status) {
@@ -41,33 +46,42 @@ class Controller {
       .reduce((agg, micro) => Object.assign(agg, {[micro.name]: micro } ), {});
   }
 
+  async setupAllMicrofrontends() {
+    this.containerLib.prepare && this.containerLib.prepare();
+    this.containerLib.initialize && this.containerLib.initialize();
+
+    const setupMicrofrontend = (method) => Promise.all(Object.values(this.microfrontends).map(async (micro) => {
+      try {
+        const s = Promise.resolve();
+        const promise = (micro[method] || (() => s))() || s;
+
+        if (promise instanceof Promise) {
+          await promise;
+          micro.setAsInitialized();
+        }
+      } catch (e) {
+        micro.trackError(method, e);
+      }
+    }));
+
+    await setupMicrofrontend('prepare');
+    await setupMicrofrontend('initialize');
+
+    if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.INITIALIZED)) {
+      this.__onMicrofrontendsInitialized(this.microfrontends);
+    }
+  }
+
   initialize() {
     shared.set('registerMicrofrontend', async (name, microfrontendShared) => {
-      this.microfrontends[name].register(microfrontendShared);
+
+      const lib = microfrontendShared && CreateLib(microfrontendShared, { apiAccess: CreateLib.BUILD_TYPE.INTERNAL, packageName: name });
+      this.microfrontends[name].register(lib);
 
       if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.REGISTERED)) {
         this.__onMicrofrontendsRegistered(this.microfrontends);
 
-        const setupMicrofrontend = (method) => Promise.all(Object.values(this.microfrontends).map(async (micro) => {
-          try {
-            const s = Promise.resolve();
-            const promise = (micro[method] || (() => s))() || s;
-
-            if (promise instanceof Promise) {
-              await promise;
-              micro.setAsInitialized();
-            }
-          } catch (e) {
-            micro.trackError(method, e);
-          }
-        }));
-
-        await setupMicrofrontend('prepare');
-        await setupMicrofrontend('initialize');
-
-        if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.INITIALIZED)) {
-          this.__onMicrofrontendsInitialized(this.microfrontends);
-        }
+        await this.setupAllMicrofrontends();
       }
     });
 

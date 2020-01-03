@@ -17,7 +17,7 @@ const iframeStyle = {
 
 const MicrofrontendContext = React.createContext({});
 
-export const withMicrofrontend = (WrappedComponent, { microfrontendKey } = {}) => props => (
+export const withMicrofrontend = (WrappedComponent, { microfrontendKey } = {}) => props => console.info(props) || (
   <MicrofrontendContext.Consumer>
     { microfrontends => {
       return (
@@ -47,7 +47,7 @@ class ReactMicrofrontend extends React.Component {
   }
 
   componentDidMount() {
-    const controller = new Controller();
+    const controller = new Controller(this.props.opts);
     controller
       .onMicrofrontendsInfosDiscovered((microfrontends) => {
         this.setState({

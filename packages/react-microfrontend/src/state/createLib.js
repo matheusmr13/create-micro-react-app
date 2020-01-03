@@ -22,7 +22,7 @@ const BUILD_TYPE = {
 const createLib = (toExport, meta = {}) => {
   const {
     apiAccess = BUILD_TYPE.PRIVATE_API,
-    packageName
+    packageName = toExport.packageName
   } = meta;
 
   if (!packageName) throw new Error('Something went wrong');
@@ -69,11 +69,11 @@ const createLib = (toExport, meta = {}) => {
       ...(hasGetter ? { [readFunctionName]: createActionCreator(readFunctionName) } : {})
     };
 
-    // stareShared.set(subscribeFunctionName, []); TODO: check if this is the best way
-
     const rightApi = {
       [rightFunctionName]: (...args) => {
         currentState = args[0];
+
+        moduleShared.set(name, currentState);
 
         const dispatch = stareShared.get('store').dispatch;
         dispatch(actions[rightFunctionName](currentState));
@@ -84,7 +84,6 @@ const createLib = (toExport, meta = {}) => {
           return (currentListener && currentListener.apply(null, args));
         }
         subscriptions.forEach(subscription => subscription(currentState));
-        // dispatch(actions[subscribeFunctionName]());
       }
     };
 
@@ -99,7 +98,7 @@ const createLib = (toExport, meta = {}) => {
       },
       ...(hasGetter ? {
         [readFunctionName]: () => {
-          return currentState;
+          return moduleShared.get(name);
         },
         [`with${nameCapitalized}`]: (Component) => {
           const mapStateToProps = (state) => {
@@ -163,8 +162,9 @@ const createLib = (toExport, meta = {}) => {
     };
   }
 
-  const apiProps = Object.keys(toExport.interface).map(propName => createPropApi({
-    ...(toExport.interface[propName]),
+  const propInterface = toExport.interface || {};
+  const apiProps = Object.keys(propInterface).map(propName => createPropApi({
+    ...(propInterface[propName]),
     name: propName
   })).reduce((agg, propApi) => Object.assign(agg, { [propApi.name] : propApi }), {})
 
@@ -195,7 +195,8 @@ const createLib = (toExport, meta = {}) => {
         prepare: () => getAndExec('__onPrepare__'),
         initialize: () => getAndExec('__onInitialize__')
       },
-      reducers: aggregateKindFromApi('reducers')
+      reducers: aggregateKindFromApi('reducers'),
+      view: toExport.view
     }
   })[apiAccess];
 }

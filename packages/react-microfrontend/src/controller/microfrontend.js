@@ -1,4 +1,4 @@
-import CreateLib from '../state/createLib';
+
 
 class Microfrontend {
   static STATUS = {
@@ -33,15 +33,12 @@ class Microfrontend {
     }
   }
 
-  register(shared) {
+  register(lib) {
     this.status = Microfrontend.STATUS.REGISTERED;
-    this.view = shared.view;
 
-    if (shared.interface) {
-      this.lib = CreateLib(shared, { apiAccess: CreateLib.BUILD_TYPE.INTERNAL, packageName: this.name });
-      this.initialize = this.lib.initialize;
-      this.prepare = this.lib.prepare;
-    }
+    console.info('lib', lib)
+    this.lib = lib;
+    this.view = lib.view;
   }
 
   setAsInitialized() {
