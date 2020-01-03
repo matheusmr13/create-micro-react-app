@@ -15,7 +15,7 @@ program
 program
   .command('start')
   .description('Start your application')
-  .option(chalk.green('-c, --configuration-file <configuration_file>'), `
+  .option('-c, --configuration-file <configuration_file>', `
     This should be used if you want to start an app where your modules/microfrontends are located on multiple repositories.
 
     File example "${chalk.italic('my-config.json')}":
@@ -29,7 +29,7 @@ program
       }
     `)}
   `)
-  .option(chalk.green('-p, --proxy <url>'), `
+  .option('-p, --proxy <url>', `
     Start your specific module simulating deployed environment.
 
     Let's say your application is already deployed to https://my-app.xyz and it has a webapp and 3 other microfrontends.
@@ -44,7 +44,7 @@ program
     - current 2 other microservices versions
     - a devserver running just with your current microfrontend (where you started this command) in development
   `)
-  .option(chalk.green('-a, --all <webapp_package_name>'), `
+  .option('-a, --all <webapp_package_name>', `
     Similar to --configuration-file param but this assumes that all your modules are on same folder in mono repo structure like:
     ${chalk.bold(`
       - package.json
@@ -77,7 +77,7 @@ program
 program
   .command('build')
   .description('Build your application')
-  .option(chalk.green('-p, --package <webapp_package_name>'), `
+  .option('-p, --package <webapp_package_name>', `
     Assumes that all modules that you want to package with are located on ./builds like:
 
     ${chalk.bold(`
@@ -93,17 +93,17 @@ program
     This command package together this folders together to create a deployable package that can be served statically.
     You must specify wich package is the webapp container.
   `)
-  .option(chalk.green('-l, --library [library_path]'), `
+  .option('-l, --library [library_path]', `
     Build your library to export it.
     ${chalk.black.bgWhite(' > microfrontend-controller build ./src/lib/index.js -l ')}
   `)
-  .option(chalk.green('-a, --all <webapp_package_name>'), `
+  .option('-a, --all <webapp_package_name>', `
     Build all modules assuming they are located at ./packges, generating all resourcers at ./builds
     Combined with --package can create a ready to deploy application
 
     ${chalk.black.bgWhite(' > microfrontend-controller build -a my-webapp && microfrontend-controller build -p my-webapp ')}
   `)
-  .option(chalk.green('-c, --configuration-file <configuration_file>'), `
+  .option('-c, --configuration-file <configuration_file>', `
     This should be used if you want to build an app where your modules/microfrontends are located on multiple repositories.
 
     File example "${chalk.italic('my-config.json')}":
@@ -140,13 +140,13 @@ program
 program
   .command('create <name>')
   .description('create your application')
-  .option(chalk.green('-a, --app'), `
+  .option('-a, --app', `
     Default option if none specified.
     Creates a monorepo application with a webapp template (created with cra)
 
     ${chalk.black.bgWhite(' > microfrontend-controller create my-app -a ')}
   `)
-  .option(chalk.green('-m, --microfrontend'), `
+  .option('-m, --microfrontend', `
     Creates a microfrontend application to be used/imported by a webapp.
 
     ${chalk.black.bgWhite(' > microfrontend-controller create my-microfrontend -m ')}
@@ -154,7 +154,7 @@ program
     Can be used beside --app parameter to create a webapp with an initial microfrontend like
     ${chalk.black.bgWhite(' > microfrontend-controller create my-app -am ')}
   `)
-  .option(chalk.green('-l, --library'), `
+  .option('-l, --library', `
     Creates a library that can be used by another module. This way you can create a library that has its own deploy or create an api to comunicate with your current microfrontends.
 
     Example:
@@ -183,7 +183,7 @@ program
         CartApi.callAddProductToCart(Product.fetchProduct(1234));
     `)}
   `)
-  .option(chalk.green('-t, --template <template>'), `
+  .option('-t, --template <template>', `
     Specified a template to use when creating a microfrontend or an application
 
     ${chalk.black.bgWhite(' > microfrontend-controller create my-app -a --template typescript ')}

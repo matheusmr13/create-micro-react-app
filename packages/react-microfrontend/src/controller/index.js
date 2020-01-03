@@ -50,7 +50,8 @@ class Controller {
 
         const setupMicrofrontend = (method) => Promise.all(Object.values(this.microfrontends).map(async (micro) => {
           try {
-            const promise = micro[method]() || Promise.resolve();
+            const s = Promise.resolve();
+            const promise = (micro[method] || (() => s))() || s;
 
             if (promise instanceof Promise) {
               await promise;

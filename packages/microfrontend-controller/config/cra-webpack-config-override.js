@@ -7,7 +7,7 @@ const { escapePackageName } = require('../scripts/utils/paths');
 // eslint-disable-next-line
 const packageJson = require(appPackageJson);
 
-const overrideWebpackConfigs = () => (config) => {
+const overrideWebpackConfigs = () => (config, env) => {
   const newConfig = { ...config };
   const escapedPackageName = escapePackageName(packageJson.name);
   newConfig.output.jsonpFunction = escapedPackageName;
