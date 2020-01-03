@@ -1,5 +1,6 @@
-const createMicrofrontend = require('./microfrontend');
+const { createMicrofrontend, createMicrofrontendWithLibrary } = require('./microfrontend');
 const createApp = require('./app');
+const createLibrary = require('./library');
 
 const TYPE = {
   APP: 'APP',
@@ -24,11 +25,17 @@ const create = async (types, name, opts) => {
   if (shouldCreateMicro) {
     const microfrontendName = shouldCreateApp ? 'microfrontend' : name;
     const pathToCreateMicro = shouldCreateApp ? name : pathToCreate;
-    await createMicrofrontend(microfrontendName, pathToCreateMicro);
+    if (shouldCreateLib) {
+      await createMicrofrontendWithLibrary(microfrontendName, pathToCreateMicro);
+    } else {
+      await createMicrofrontend(microfrontendName, pathToCreateMicro);
+    }
   }
-  if (shouldCreateLib) {
-    console.info('create lib');
-  }
+  // if (shouldCreateLib) {
+  //   const libName = (shouldCreateApp || shouldCreateMicro) ? 'library' : name;
+  //   const pathToCreateLib = (shouldCreateApp || shouldCreateMicro) ? name : pathToCreate;
+  //   await createLibrary(libName, pathToCreateLib);
+  // }
 };
 
 create.TYPE = TYPE;

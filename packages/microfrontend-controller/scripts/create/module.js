@@ -6,13 +6,18 @@ const moduleScripts = {
   start: 'microfrontend-controller start',
 };
 
+const moduleLibScripts = {
+  ...moduleScripts,
+  'build-lib': 'microfrontend-controller build -l ./src/lib/schema.js',
+};
+
 const addScriptsToPackageJson = async (packageJsonPath, scripts) => {
   const packageJson = await readJson(packageJsonPath);
   packageJson.scripts = { ...packageJson.scripts, ...scripts };
   await writeJson(packageJsonPath, packageJson);
 };
 
-const createModule = async (name, template, rootAppPath) => {
+const createModule = async (name, template, rootAppPath, isLib = false) => {
   const { execInPackages, execInApp } = createExecutionContext(rootAppPath, name);
 
   await execInPackages(`npx create-react-app ${name}`);
@@ -21,7 +26,8 @@ const createModule = async (name, template, rootAppPath) => {
   await execInApp('yarn add microfrontend-controller');
   await execInApp('yarn add react-microfrontend');
 
-  await addScriptsToPackageJson(`${rootAppPath}/packages/${name}/package.json`, moduleScripts);
+  const scripts = isLib ? moduleLibScripts : moduleScripts;
+  await addScriptsToPackageJson(`${rootAppPath}/packages/${name}/package.json`, scripts);
 };
 
 module.exports = {
