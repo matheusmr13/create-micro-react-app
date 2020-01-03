@@ -21,7 +21,7 @@ const createApp = async (name, opts = {}) => {
 
   const configureRootApp = async () => {
     await execInRoot('yarn init --yes');
-    await copyTemplateTo('app', rootAppPath);
+    // await copyTemplateTo('app', rootAppPath);
 
     await execInRoot('yarn add lerna@"<4.0.0"');
     await execInRoot('yarn add microfrontend-controller');
