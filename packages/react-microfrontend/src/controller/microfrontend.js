@@ -36,7 +36,6 @@ class Microfrontend {
   register(lib) {
     this.status = Microfrontend.STATUS.REGISTERED;
 
-    console.info('lib', lib)
     this.lib = lib;
     this.view = lib.view;
   }

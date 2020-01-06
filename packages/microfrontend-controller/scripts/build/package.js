@@ -1,4 +1,4 @@
-const { copyFolder, rm, mkdir,writeJson, getDirectories, readJson, getAllFilesFromDir } = require('../utils/fs');
+const { copyFolder, rm, mkdir,writeJson, getDirsFrom, readJson, getAllFilesFromDir } = require('../utils/fs');
 const { exec } = require('../utils/process');
 const { escapePackageName, resolveApp } = require('../utils/paths');
 const generateServiceWorker = require('../utils/create-sw');
@@ -101,7 +101,7 @@ const packageAll = async (opts) => {
   const escapedWebappPackageName = escapePackageName(webappName);
   await rm(distFolder);
 
-  const allPackages = await getDirectories(`./${allBuildsFolder}`);
+  const allPackages = (await getDirsFrom(`./${allBuildsFolder}`)).map(folder => folder.split('/')[1]);
   microfrontends = allPackages.filter(moduleName => moduleName !== escapedWebappPackageName);
 
   await depsCheck(allPackages);

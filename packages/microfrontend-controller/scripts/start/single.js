@@ -34,7 +34,6 @@ const startSingle = async (opts = {}) => {
       onStderr: data => process.stderr.write(data),
     });
   } else {
-    console.info('asd');
     const packageJson = await readJson(appPackageJson);
     const envString = getEnvString({ packageJson, isMicrofrontend: process.env.IS_MICROFRONTEND });
     const reactAppRewiredPath = await getReactAppRewiredPath();

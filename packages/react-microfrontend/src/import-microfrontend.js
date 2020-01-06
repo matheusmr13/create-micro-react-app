@@ -17,7 +17,7 @@ const iframeStyle = {
 
 const MicrofrontendContext = React.createContext({});
 
-export const withMicrofrontend = (WrappedComponent, { microfrontendKey } = {}) => props => console.info(props) || (
+export const withMicrofrontend = (WrappedComponent, { microfrontendKey } = {}) => props => (
   <MicrofrontendContext.Consumer>
     { microfrontends => {
       return (
