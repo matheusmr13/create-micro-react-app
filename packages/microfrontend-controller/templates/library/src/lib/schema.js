@@ -1,13 +1,12 @@
 import { CreateLib } from 'react-microfrontend';
 
 export default {
-	interface: {
-		example: {
-			initialState: null
+  interface: {
+    examples: {
+      initialState: null,
     },
     addExample: {
-      type: CreateLib.TYPE.FUNCTION
-    }
-	}
+      type: CreateLib.TYPE.FUNCTION,
+    },
+  },
 };
-
