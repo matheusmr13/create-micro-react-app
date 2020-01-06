@@ -7,7 +7,6 @@ const exec = (command, {
   onStderr,
   debug = false,
 } = {}) => new Promise((resolve, reject) => {
-  console.info('debug', debug);
   const spawnProcess = spawn(command, [], { shell: true, cwd });
 
   if (onStdout || debug) spawnProcess.stdout.on('data', onStdout || (data => process.stdout.write(data)));
