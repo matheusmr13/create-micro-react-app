@@ -9,6 +9,7 @@ const microfrontendFolderName = 'microfrontends';
 class Controller {
   constructor(containerSchema) {
     this.containerLib = containerSchema && CreateLib(containerSchema, { apiAccess: CreateLib.BUILD_TYPE.INTERNAL });
+    this.containerLib.name = containerSchema.packageName;
   }
 
   microfrontends = null;
@@ -79,7 +80,8 @@ class Controller {
       this.microfrontends[name].register(lib);
 
       if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.REGISTERED)) {
-        this.__onMicrofrontendsRegistered(this.microfrontends);
+        const store = this.__onMicrofrontendsRegistered(this.microfrontends);
+        store.injectReducer(this.containerLib.name, this.containerLib.reducers)
 
         await this.setupAllMicrofrontends();
       }

@@ -81,6 +81,8 @@ class ReactMicrofrontend extends React.Component {
             this.store.injectReducer(microfrontend.name, microfrontend.lib.reducers);
           }
         });
+
+        return this.store;
       })
       .onMicrofrontendsInitialized((microfrontends) => {
         this.setState({
