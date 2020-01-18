@@ -1,3 +1,5 @@
+
+
 class Microfrontend {
   static STATUS = {
     DISCOVERED: 'DISCOVERED',
@@ -31,9 +33,22 @@ class Microfrontend {
     }
   }
 
-  register(content) {
+  register(lib) {
     this.status = Microfrontend.STATUS.REGISTERED;
-    this.content = content;
+
+    this.lib = lib;
+    this.view = lib.view;
+  }
+
+  setAsInitialized() {
+    this.status = Microfrontend.STATUS.INITIALIZED;
+  }
+
+  trackError(type, error) {
+    this.errorInitializing = {
+      type,
+      error
+    };
   }
 
   loaded() {

@@ -1,4 +1,6 @@
-import App from './App';
 import { ExportMicrofrontend } from 'react-microfrontend';
+import App from './App';
 
-ExportMicrofrontend(App);
+ExportMicrofrontend({
+  view: App,
+});

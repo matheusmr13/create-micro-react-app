@@ -1,7 +1,8 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import Controller from './controller';
-// import MicrofrontendRenderer from './renderer';
+import createStore from './state/redux';
+import { Provider } from 'react-redux';
 
 const iframeStyle = {
   position: 'absolute',
@@ -23,7 +24,7 @@ export const withMicrofrontend = (WrappedComponent, { microfrontendKey } = {}) =
         <WrappedComponent
           {...props}
           microfrontend={
-            microfrontends[microfrontendKey] ? microfrontends[microfrontendKey].content : microfrontends
+            microfrontends[microfrontendKey] ? microfrontends[microfrontendKey].view : microfrontends
           }
           microfrontends={microfrontends}
         />
@@ -41,19 +42,19 @@ class ReactMicrofrontend extends React.Component {
       cssToLoad: null,
       jsToLoad: null,
       styleToLoad: {},
-      microfrontends: {}
+      microfrontends: null
     };
   }
 
   componentDidMount() {
-    const controller = new Controller();
+    const controller = new Controller(this.props.opts);
     controller
-      .onMicrofrontendsDiscovered((microfrontends) => {
+      .onMicrofrontendsInfosDiscovered((microfrontends) => {
         this.setState({
           iframesToLoad: Object.values(microfrontends).map(microfrontend => microfrontend.host)
         });
       })
-      .onMicrofrontendsLoaded((microfrontends) => {
+      .onMicrofrontendsInfosLoaded((microfrontends) => {
         const allJsFiles = [].concat.apply([], Object.values(microfrontends).map(microfrontends => microfrontends.files.js));
         const allCssFiles = [].concat.apply([], Object.values(microfrontends).map(microfrontends => microfrontends.files.css || []));
         this.setState({
@@ -73,10 +74,20 @@ class ReactMicrofrontend extends React.Component {
           }
         })
       })
+      .onMicrofrontendsRegistered((microfrontends) => {
+        this.store = createStore();
+        Object.values(microfrontends).forEach(microfrontend => {
+          if (microfrontend.lib) {
+            this.store.injectReducer(microfrontend.name, microfrontend.lib.reducers);
+          }
+        });
+
+        return this.store;
+      })
       .onMicrofrontendsInitialized((microfrontends) => {
         this.setState({
           microfrontends
-        })
+        });
       })
       .initialize()
   }
@@ -85,9 +96,13 @@ class ReactMicrofrontend extends React.Component {
     const { iframesToLoad, jsToLoad, cssToLoad, styleToLoad, microfrontends } = this.state;
     return (
       <React.Fragment>
-        <MicrofrontendContext.Provider value={microfrontends} >
-          {this.props.children}
-        </MicrofrontendContext.Provider>
+        { microfrontends && ((
+          <MicrofrontendContext.Provider value={microfrontends} >
+            <Provider store={this.store}>
+              {this.props.children}
+            </Provider>
+          </MicrofrontendContext.Provider>
+        )) }
         <Helmet>
           { jsToLoad && jsToLoad.map((url) => <script key={url} src={url} type="text/javascript" /> )}
           { cssToLoad && cssToLoad.map((url) => <link key={url} href={url} type="text/css" rel="stylesheet" /> )}
@@ -103,7 +118,7 @@ class ReactMicrofrontend extends React.Component {
             />
           ))
         }
-      </ React.Fragment>
+      </React.Fragment>
     );
   }
 }

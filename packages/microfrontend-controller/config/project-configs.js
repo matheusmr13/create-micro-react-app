@@ -1,3 +1,5 @@
+const { getAppFile } = require('../utils/fs');
+
 const buildAllConfigurationsFile = getAppFile('build-configuration.js');
 const buildAllConfigurations = buildAllConfigurationsFile();
 

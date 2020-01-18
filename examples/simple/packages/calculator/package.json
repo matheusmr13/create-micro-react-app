@@ -1,0 +1,43 @@
+{
+  "name": "calculator",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": ".",
+  "main": "./build-lib/index.js",
+  "dependencies": {
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
+    "react-microfrontend": "1.7.0",
+    "react-scripts": "3.3.0",
+    "redux-actions": "^2.6.5"
+  },
+  "scripts": {
+    "start": "REACT_APP_MY_COOL_ENV=envValue IS_MICROFRONTEND=true microfrontend-controller start",
+    "start-standalone": "microfrontend-controller start",
+    "build": "REACT_APP_MY_COOL_ENV=envValue IS_MICROFRONTEND=true microfrontend-controller build",
+    "build-standalone": "microfrontend-controller build",
+    "build-lib": "microfrontend-controller build-lib ./src/lib/schema.js",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "archiver": "^3.1.1",
+    "customize-cra": "^0.8.0",
+    "microfrontend-controller": "1.5.1"
+  }
+}

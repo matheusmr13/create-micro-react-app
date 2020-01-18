@@ -1,11 +1,17 @@
 import Shared from './../shared';
 import Communication from './../communication/app-client';
 import Microfrontend from './microfrontend';
+import CreateLib from '../state/createLib';
 
 const shared = new Shared('__core__');
 const microfrontendFolderName = 'microfrontends';
 
 class Controller {
+  constructor(containerSchema) {
+    this.containerLib = containerSchema && CreateLib(containerSchema, { apiAccess: CreateLib.BUILD_TYPE.INTERNAL });
+    this.containerLib.name = containerSchema.packageName;
+  }
+
   microfrontends = null;
 
   areAllMicrofrontendsOnStatus(status) {
@@ -25,7 +31,7 @@ class Controller {
 
     messageMicrofrontend.importScript(event.data.payload);
     if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.IMPORTED)) {
-      this.__onMicrofrontendsLoaded(this.microfrontends);
+      this.__onMicrofrontendsInfosLoaded(this.microfrontends);
     }
   }
 
@@ -41,12 +47,43 @@ class Controller {
       .reduce((agg, micro) => Object.assign(agg, {[micro.name]: micro } ), {});
   }
 
+  async setupAllMicrofrontends() {
+    this.containerLib.prepare && this.containerLib.prepare();
+    this.containerLib.initialize && this.containerLib.initialize();
+
+    const setupMicrofrontend = (method) => Promise.all(Object.values(this.microfrontends).map(async (micro) => {
+      try {
+        const s = Promise.resolve();
+        const promise = (micro[method] || (() => s))() || s;
+
+        if (promise instanceof Promise) {
+          await promise;
+          micro.setAsInitialized();
+        }
+      } catch (e) {
+        micro.trackError(method, e);
+      }
+    }));
+
+    await setupMicrofrontend('prepare');
+    await setupMicrofrontend('initialize');
+
+    if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.INITIALIZED)) {
+      this.__onMicrofrontendsInitialized(this.microfrontends);
+    }
+  }
+
   initialize() {
-    shared.set('registerMicrofrontend', (name, microfrontendShared) => {
-      this.microfrontends[name].register(microfrontendShared);
+    shared.set('registerMicrofrontend', async (name, microfrontendShared) => {
+
+      const lib = microfrontendShared && CreateLib(microfrontendShared, { apiAccess: CreateLib.BUILD_TYPE.INTERNAL, packageName: name });
+      this.microfrontends[name].register(lib);
 
       if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.REGISTERED)) {
-        this.__onMicrofrontendsInitialized(this.microfrontends);
+        const store = this.__onMicrofrontendsRegistered(this.microfrontends);
+        store.injectReducer(this.containerLib.name, this.containerLib.reducers)
+
+        await this.setupAllMicrofrontends();
       }
     });
 
@@ -67,20 +104,20 @@ class Controller {
 
       shared.set('microfrontends', this.microfrontends);
 
-      this.__onMicrofrontendsDiscovered(this.getMicrofrontendsOnStatus(Microfrontend.STATUS.CREATED));
+      this.__onMicrofrontendsInfosDiscovered(this.getMicrofrontendsOnStatus(Microfrontend.STATUS.CREATED));
 
       if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.IMPORTED)) {
-        this.__onMicrofrontendsLoaded(this.microfrontends);
+        this.__onMicrofrontendsInfosLoaded(this.microfrontends);
       }
     });
   }
 
-  onMicrofrontendsDiscovered(callback) {
-    this.__onMicrofrontendsDiscovered = callback;
+  onMicrofrontendsInfosDiscovered(callback) {
+    this.__onMicrofrontendsInfosDiscovered = callback;
     return this;
   }
-  onMicrofrontendsLoaded(callback) {
-    this.__onMicrofrontendsLoaded = callback;
+  onMicrofrontendsInfosLoaded(callback) {
+    this.__onMicrofrontendsInfosLoaded = callback;
     return this;
   }
   onMicrofrontendHotReload(callback) {
@@ -89,6 +126,11 @@ class Controller {
   }
   onMicrofrontendStyleChange(callback) {
     this.__onMicrofrontendStyleChange = callback;
+    return this;
+  }
+
+  onMicrofrontendsRegistered(callback) {
+    this.__onMicrofrontendsRegistered = callback;
     return this;
   }
   onMicrofrontendsInitialized(callback) {
