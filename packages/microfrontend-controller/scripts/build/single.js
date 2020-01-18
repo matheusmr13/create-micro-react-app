@@ -3,10 +3,14 @@ const { exec } = require('../utils/process');
 const { appPackageJson } = require('../utils/paths');
 const { getEnvString } = require('../utils/env');
 
-const build = async () => {
+const build = async (shouldBuildStandalone) => {
   const packageJson = await readJson(appPackageJson);
 
-  const env = getEnvString({ packageJson });
+  console.info({ shouldBuildStandalone });
+  const env = getEnvString({
+    packageJson,
+    isMicrofrontend: !shouldBuildStandalone
+  });
   const reactAppRewiredPath = await getReactAppRewiredPath();
 
   await exec(`${env} ${reactAppRewiredPath} build --config-overrides ${__dirname}/../../config/cra-webpack-config-override.js`);

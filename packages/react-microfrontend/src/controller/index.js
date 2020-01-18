@@ -8,8 +8,10 @@ const microfrontendFolderName = 'microfrontends';
 
 class Controller {
   constructor(containerSchema) {
-    this.containerLib = containerSchema && CreateLib(containerSchema, { apiAccess: CreateLib.BUILD_TYPE.INTERNAL });
-    this.containerLib.name = containerSchema.packageName;
+    if (containerSchema) {
+      this.containerLib = CreateLib(containerSchema, { apiAccess: CreateLib.BUILD_TYPE.INTERNAL });
+      this.containerLib.name = containerSchema.packageName;
+    }
   }
 
   microfrontends = null;
@@ -48,8 +50,10 @@ class Controller {
   }
 
   async setupAllMicrofrontends() {
-    this.containerLib.prepare && this.containerLib.prepare();
-    this.containerLib.initialize && this.containerLib.initialize();
+    if (this.containerLib) {
+      this.containerLib.prepare && this.containerLib.prepare();
+      this.containerLib.initialize && this.containerLib.initialize();
+    }
 
     const setupMicrofrontend = (method) => Promise.all(Object.values(this.microfrontends).map(async (micro) => {
       try {
@@ -81,7 +85,10 @@ class Controller {
 
       if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.REGISTERED)) {
         const store = this.__onMicrofrontendsRegistered(this.microfrontends);
-        store.injectReducer(this.containerLib.name, this.containerLib.reducers)
+
+        if (this.containerLib) {
+          store.injectReducer(this.containerLib.name, this.containerLib.reducers)
+        }
 
         await this.setupAllMicrofrontends();
       }

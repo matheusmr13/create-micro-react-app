@@ -1,12 +1,14 @@
 const { createModule, addScriptsToPackageJson } = require('./module');
 
 const { explain } = require('../utils/log');
-const { mkdir, copyTemplateTo } = require('../utils/fs');
+const { mkdir } = require('../utils/fs');
 const { resolveApp } = require('../utils/paths');
 const { createExecutionContext } = require('../utils/process');
 
 const rootAppScripts = webappName => ({
-  build: `microfrontend-controller build -a ${webappName}`,
+  build: 'yarn build:packages && yarn package',
+  'build:packages': `microfrontend-controller build -a ${webappName}`,
+  package: `microfrontend-controller build -p ${webappName}`,
   start: `microfrontend-controller start -a ${webappName}`,
 });
 

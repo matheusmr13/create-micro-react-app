@@ -12,7 +12,10 @@ const TYPE = {
 
 const start = (type, opts) => {
   ({
-    [TYPE.SINGLE]: () => buildSingle(),
+    [TYPE.SINGLE]: () => {
+      const { shouldBuildStandalone } = opts;
+      buildSingle(shouldBuildStandalone);
+    },
     [TYPE.LIBRARY]: () => {
       const { pathToSchema } = opts;
       buildLibrary(pathToSchema);

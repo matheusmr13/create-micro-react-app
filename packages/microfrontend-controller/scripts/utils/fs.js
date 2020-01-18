@@ -118,4 +118,6 @@ module.exports = {
   copyFile,
   copyFolder,
   getDirectories,
+  symlink: fs.symlink,
+  isDirectory
 };

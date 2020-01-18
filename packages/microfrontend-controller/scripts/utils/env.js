@@ -4,6 +4,7 @@ const REACT_APP = /^REACT_APP_/i;
 
 const MICROFRONTEND_ENV = {
   BROWSER: 'none',
+  IS_MICROFRONTEND: true
 };
 
 const WEBAPP_ENV = {

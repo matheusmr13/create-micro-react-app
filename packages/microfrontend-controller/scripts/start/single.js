@@ -16,7 +16,9 @@ const startSingle = async (opts = {}) => {
       port,
       isMicro,
     } = opts;
-    await exec(`PORT=${port} ${isMicro ? 'IS_MICROFRONTEND=true' : ''} npm run --prefix ${pathToPackage} start`, {
+    const envString = getEnvString({ isMicrofrontend: isMicro });
+
+    await exec(`${envString} npm run --prefix ${pathToPackage} start`, {
       onStdout: (data) => {
         console.info(data.toString());
         if (data.toString().indexOf('Starting the development server') > -1) {

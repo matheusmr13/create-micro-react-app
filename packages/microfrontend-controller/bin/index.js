@@ -97,6 +97,12 @@ program
     Build your library to export it.
     ${chalk.black.bgWhite(' > microfrontend-controller build ./src/lib/index.js -l ')}
   `)
+  .option('-m, --microfrontend', `
+    Build a single module that will become a microfrontend.
+  `)
+  .option('-s, --stand-alone', `
+    Build a single module in stand alone mode. You should also use this for building webapp container module.
+  `)
   .option('-a, --all <webapp_package_name>', `
     Build all modules assuming they are located at ./packges, generating all resourcers at ./builds
     Combined with --package can create a ready to deploy application
@@ -133,6 +139,8 @@ program
       type = build.TYPE.PACKAGE;
       opts.webappName = options.package;
     }
+
+    opts.shouldBuildStandalone = options.standAlone || !options.microfrontend;
 
     build(type, opts);
   });
