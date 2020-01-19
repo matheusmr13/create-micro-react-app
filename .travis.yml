@@ -7,13 +7,15 @@ cache:
     - "node_modules"
 before_script:
   - yarn lerna-bootstrap
-deploy:
-  provider: script
-  script: "lerna publish from-git --yes"
-  skip_cleanup: true
-  email: matheusmr00@gmail.com
-  api_key:
-    secure: DISsh07rLMl/oh9vUwFRJJKAZAARM73fuPCm/QFOhjF0tW4KBakquWIF+B/rNNPfXxfJx4BYaxzQfXQlSD6YB+T7OrWMkBGZITyjY3WCAePNg7x6kwWaYsL2CHz0wh6F3pFQtu+WKXqXV4CMG6Rw6/njR1iyAGrw+eVzfJFE32i3r1jrpj64aVTPBfeDoFkkoPPaqtsfI/lGmrlBeAmRqR6FxY6LQDF9q2KvQMWEY0zAB12i3NOBSfC1CFoaP7+/dr6pwZA/O3IR4ZZRof3Qvbw6p5ZU8UWnNgFvWkP+poXr6K+TFcMWr6Xc1kRnOitvSOvg9HBlmGivQPF41MftYXvikHH47jPVp3byPxK9oZLmc8H28JO9f2IEyInqJ9E4Ir1Kc4kJXFmOhskQoboZgmqAYEl37a9rkUAAepj7QqwTGlrfWqRjIMVAZf7Pm8K4l/tuOTwfz5vYsrunh1JGSu1QoGVtT25hfhFpox/2H4G00pg2DhvGyTejv1q/2QDIFrVxCNx3fa+vJxHCmhYx3y+niKApgI3hdMzTV9n7tNvh/+m+YqxNn5u3awS8UZOPFyQUXh+ZI+wC4LWNby0RbDjH5ybyEsjS8d3cSpOoseiulvxHZubqFrD7Ks0s0JM4s5sIogPOoBjTEXXZ1XHdkDpW9P2S/HnsPoTfm33zruY=
-  on:
-    repo: matheusmr13/cra-microfrontend
-    tags: true
+script:
+  - yarn test
+# deploy:
+#   provider: script
+#   script: "lerna publish from-git --yes"
+#   skip_cleanup: true
+#   email: matheusmr00@gmail.com
+#   api_key:
+#     secure: DISsh07rLMl/oh9vUwFRJJKAZAARM73fuPCm/QFOhjF0tW4KBakquWIF+B/rNNPfXxfJx4BYaxzQfXQlSD6YB+T7OrWMkBGZITyjY3WCAePNg7x6kwWaYsL2CHz0wh6F3pFQtu+WKXqXV4CMG6Rw6/njR1iyAGrw+eVzfJFE32i3r1jrpj64aVTPBfeDoFkkoPPaqtsfI/lGmrlBeAmRqR6FxY6LQDF9q2KvQMWEY0zAB12i3NOBSfC1CFoaP7+/dr6pwZA/O3IR4ZZRof3Qvbw6p5ZU8UWnNgFvWkP+poXr6K+TFcMWr6Xc1kRnOitvSOvg9HBlmGivQPF41MftYXvikHH47jPVp3byPxK9oZLmc8H28JO9f2IEyInqJ9E4Ir1Kc4kJXFmOhskQoboZgmqAYEl37a9rkUAAepj7QqwTGlrfWqRjIMVAZf7Pm8K4l/tuOTwfz5vYsrunh1JGSu1QoGVtT25hfhFpox/2H4G00pg2DhvGyTejv1q/2QDIFrVxCNx3fa+vJxHCmhYx3y+niKApgI3hdMzTV9n7tNvh/+m+YqxNn5u3awS8UZOPFyQUXh+ZI+wC4LWNby0RbDjH5ybyEsjS8d3cSpOoseiulvxHZubqFrD7Ks0s0JM4s5sIogPOoBjTEXXZ1XHdkDpW9P2S/HnsPoTfm33zruY=
+#   on:
+#     repo: matheusmr13/cra-microfrontend
+#     tags: true
