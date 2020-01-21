@@ -10,12 +10,12 @@ const MICROFRONTEND_ENV = {
 const WEBAPP_ENV = {
 };
 
-const getEnvString = ({ packageJson, isMicrofrontend }) => {
+const getEnvString = ({ packageJson, isMicrofrontend, port }) => {
   const envs = Object.keys(process.env)
     .filter(key => REACT_APP.test(key))
     .reduce((env, key) => Object.assign(env, { [key]: process.env[key] }), {
       ...(isMicrofrontend ? MICROFRONTEND_ENV : WEBAPP_ENV),
-      PORT: process.env.PORT || 3000,
+      PORT: port || process.env.PORT || 3000,
       ...(packageJson && { REACT_APP_PACKAGE_NAME: escapePackageName(packageJson.name) }),
       SKIP_PREFLIGHT_CHECK: true,
     });

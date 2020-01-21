@@ -6,10 +6,9 @@ const { getEnvString } = require('../utils/env');
 const build = async (shouldBuildStandalone) => {
   const packageJson = await readJson(appPackageJson);
 
-  console.info({ shouldBuildStandalone });
   const env = getEnvString({
     packageJson,
-    isMicrofrontend: !shouldBuildStandalone
+    isMicrofrontend: !shouldBuildStandalone,
   });
   const reactAppRewiredPath = await getReactAppRewiredPath();
 

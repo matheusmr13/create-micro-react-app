@@ -16,11 +16,10 @@ const startSingle = async (opts = {}) => {
       port,
       isMicro,
     } = opts;
-    const envString = getEnvString({ isMicrofrontend: isMicro });
+    const envString = getEnvString({ isMicrofrontend: isMicro, port });
 
     await exec(`${envString} npm run --prefix ${pathToPackage} start`, {
       onStdout: (data) => {
-        console.info(data.toString());
         if (data.toString().indexOf('Starting the development server') > -1) {
           console.info(`Startando ${pathToPackage}`);
         } else if (data.toString().indexOf('Compiled') > -1) {

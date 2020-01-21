@@ -5,7 +5,7 @@ const exec = (command, {
   cwd,
   onStdout,
   onStderr,
-  debug = false,
+  debug = true,
 } = {}) => new Promise((resolve, reject) => {
   const spawnProcess = spawn(command, [], { shell: true, cwd });
 

@@ -1,11 +1,12 @@
 const { createModule, addScriptsToPackageJson } = require('./module');
 
 const { explain } = require('../utils/log');
-const { mkdir, writeFile } = require('../utils/fs');
+const { mkdir, copyTemplateTo } = require('../utils/fs');
 const { resolveApp } = require('../utils/paths');
 const { createExecutionContext } = require('../utils/process');
 
 const rootAppScripts = webappName => ({
+  postinstall: 'lerna bootstrap',
   build: 'yarn build:packages && yarn package',
   'build:packages': `microfrontend-controller build -a ${webappName}`,
   package: `microfrontend-controller build -p ${webappName}`,
@@ -23,14 +24,12 @@ const createApp = async (name, opts = {}) => {
 
   const configureRootApp = async () => {
     await execInRoot('yarn init --yes');
-    // await copyTemplateTo('app', rootAppPath);
+    await copyTemplateTo('app', rootAppPath);
 
     await execInRoot('yarn add lerna@"<4.0.0"');
     await execInRoot('yarn add microfrontend-controller');
 
     await addScriptsToPackageJson(`${rootAppPath}/package.json`, rootAppScripts(webappName));
-
-    await writeFile(`${rootAppPath}/.gitignore`, 'node_modules/');
   };
 
   await explain(
