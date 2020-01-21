@@ -1,10 +1,10 @@
 const { copyTemplateTo, writeJson, readJson } = require('../utils/fs');
 const { createExecutionContext } = require('../utils/process');
 
-const getModuleScripts = (isMicrofrontend) => ({
-  ...( isMicrofrontend ? {
+const getModuleScripts = isMicrofrontend => ({
+  ...(isMicrofrontend ? {
     build: 'microfrontend-controller build -m',
-    'build:standalone': 'microfrontend-controller build -s'
+    'build:standalone': 'microfrontend-controller build -s',
   } : {
     build: 'microfrontend-controller build -s',
   }),
