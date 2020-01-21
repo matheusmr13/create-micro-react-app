@@ -1,7 +1,7 @@
 const { createModule, addScriptsToPackageJson } = require('./module');
 
 const { explain } = require('../utils/log');
-const { mkdir } = require('../utils/fs');
+const { mkdir, writeFile } = require('../utils/fs');
 const { resolveApp } = require('../utils/paths');
 const { createExecutionContext } = require('../utils/process');
 
@@ -29,6 +29,8 @@ const createApp = async (name, opts = {}) => {
     await execInRoot('yarn add microfrontend-controller');
 
     await addScriptsToPackageJson(`${rootAppPath}/package.json`, rootAppScripts(webappName));
+
+    await writeFile(`${rootAppPath}/.gitignore`, 'node_modules/');
   };
 
   await explain(
