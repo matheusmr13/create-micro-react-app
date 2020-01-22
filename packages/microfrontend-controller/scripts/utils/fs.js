@@ -55,6 +55,16 @@ const getDirsFrom = async (source) => {
   return paths.map(name => path.join(source, name)).filter(isDirectory);
 };
 
+const exists = async opts => async () => {
+  try {
+    await fs.access(opts);
+
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
 const getReactAppRewiredPath = async () => {
   const options = [
     `${__dirname}/../../../react-app-rewired/bin/index.js`,
@@ -76,7 +86,12 @@ const getReactAppRewiredPath = async () => {
   return libInfos.find(lib => lib.exists).option;
 };
 
-const rm = pathTo => fs.rmdir(pathTo, { recursive: true });
+const rm = async (pathTo) => {
+  const existsPath = await exists(pathTo);
+  if (!existsPath) return Promise.resolve();
+
+  return fs.rmdir(pathTo, { recursive: true });
+};
 
 const getDirectories = async (source) => {
   const all = await fs.readdir(source);
@@ -119,5 +134,6 @@ module.exports = {
   copyFolder,
   getDirectories,
   symlink: fs.symlink,
-  isDirectory
+  isDirectory,
+  exists,
 };
