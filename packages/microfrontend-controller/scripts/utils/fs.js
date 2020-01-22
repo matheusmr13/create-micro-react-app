@@ -1,4 +1,4 @@
-const fs = require('fs').promises;
+const { promises: fs, existsSync } = require('fs');
 const path = require('path');
 
 const mkdir = dir => fs.mkdir(dir, { recursive: true });
@@ -55,16 +55,6 @@ const getDirsFrom = async (source) => {
   return paths.map(name => path.join(source, name)).filter(isDirectory);
 };
 
-const exists = async opts => async () => {
-  try {
-    await fs.access(opts);
-
-    return true;
-  } catch (e) {
-    return false;
-  }
-};
-
 const getReactAppRewiredPath = async () => {
   const options = [
     `${__dirname}/../../../react-app-rewired/bin/index.js`,
@@ -87,8 +77,7 @@ const getReactAppRewiredPath = async () => {
 };
 
 const rm = async (pathTo) => {
-  const existsPath = await exists(pathTo);
-  if (!existsPath) return Promise.resolve();
+  if (!existsSync(pathTo)) return Promise.resolve();
 
   return fs.rmdir(pathTo, { recursive: true });
 };
@@ -135,5 +124,4 @@ module.exports = {
   getDirectories,
   symlink: fs.symlink,
   isDirectory,
-  exists,
 };
