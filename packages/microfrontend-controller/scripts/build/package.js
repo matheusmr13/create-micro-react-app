@@ -107,9 +107,18 @@ const packageAll = async (opts) => {
   await depsCheck(allPackages);
 
   await copyFolder(`./${allBuildsFolder}/${escapedWebappPackageName}`, `./${distFolder}`);
-  await rm(`./${distFolder}/deps.json`);
-  await rm(`./${distFolder}/service-worker.js`);
-  await mkdir(`./${distFolder}/${microfrontendFolderName}`);
+
+  try {
+    await rm(`./${distFolder}/deps.json`);
+    await rm(`./${distFolder}/service-worker.js`);
+    await mkdir(`./${distFolder}/${microfrontendFolderName}`);
+  } catch (error) {
+    console.error(error);
+
+    exec(`rm ./${distFolder}/deps.json`);
+    exec(`rm ./${distFolder}/service-worker.js`);
+    exec(`mkdir ./${distFolder}/${microfrontendFolderName}`);
+  }
 
   for (let i=0; i < microfrontends.length;i++) {
     const package = microfrontends[i];

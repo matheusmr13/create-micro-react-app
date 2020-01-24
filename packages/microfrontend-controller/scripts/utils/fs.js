@@ -1,4 +1,4 @@
-const { promises: fs, existsSync } = require('fs');
+const { promises: fs, existsSync, rmdirSync } = require('fs');
 const path = require('path');
 
 const mkdir = dir => fs.mkdir(dir, { recursive: true });
@@ -79,7 +79,13 @@ const getReactAppRewiredPath = async () => {
 const rm = async (pathTo) => {
   if (!existsSync(pathTo)) return Promise.resolve();
 
-  return fs.rmdir(pathTo, { recursive: true });
+  try {
+    return fs.rmdir(pathTo, { recursive: true });
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(error);
+    return rmdirSync(pathTo, { recursive: true });
+  }
 };
 
 const getDirectories = async (source) => {
