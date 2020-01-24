@@ -1,9 +1,12 @@
-const { copyFolder, rm, mkdir,writeJson, getDirsFrom, readJson, getAllFilesFromDir } = require('../utils/fs');
+/* eslint-disable no-await-in-loop */
+const semver = require('semver');
+const {
+  copyFolder, rm, mkdir, writeJson, getDirsFrom, readJson, getAllFilesFromDir,
+} = require('../utils/fs');
 const { exec, rmSync } = require('../utils/process');
 const { escapePackageName, resolveApp } = require('../utils/paths');
 const generateServiceWorker = require('../utils/create-sw');
 
-const semver = require('semver');
 
 const distFolder = 'build';
 const	microfrontendFolderName = 'microfrontends';
@@ -12,7 +15,6 @@ const allBuildsFolder = 'builds';
 
 const mapMicrofrontend = async (microfrontends) => {
   const meta = await Promise.all(microfrontends.map(async (moduleName) => {
-
     const dir = resolveApp(`./${allBuildsFolder}/${moduleName}`);
     const findResult = await getAllFilesFromDir(dir);
 
@@ -26,20 +28,20 @@ const mapMicrofrontend = async (microfrontends) => {
           fileTypes.css.push(`./${microfrontendFolderName}/${moduleName}${file}`);
         }
         return fileTypes;
-      }, { js: [], css: []});
+      }, { js: [], css: [] });
 
     return {
       files,
-      moduleName
-    }
+      moduleName,
+    };
   }));
 
-  return meta.reduce((agg, { moduleName, files }) => Object.assign(agg, {[moduleName]: files}), {});
+  return meta.reduce((agg, { moduleName, files }) => Object.assign(agg, { [moduleName]: files }), {});
 };
 
 const depsCheck = async (allPackages) => {
   const depsPerPackage = {};
-  for (let i=0; i < allPackages.length;i++) {
+  for (let i = 0; i < allPackages.length; i++) {
     const packageName = allPackages[i];
     depsPerPackage[packageName] = await readJson(`./${allBuildsFolder}/${packageName}/deps.json`);
   }
@@ -48,7 +50,7 @@ const depsCheck = async (allPackages) => {
   const allDepsList = Object.keys(allDepsObj);
 
   const allPackagesPerVersion = {};
-  for (let i=0; i < allDepsList.length;i++) {
+  for (let i = 0; i < allDepsList.length; i++) {
     const dep = allDepsList[i];
 
     packagesPerVersion = {};
@@ -78,7 +80,7 @@ const depsCheck = async (allPackages) => {
       errorMessages.push(`Multiple major versions (with breaking changes) from "${packageModule}" found:`);
       majorVersions.forEach((majorVersion) => {
         errorMessages.push(`   Major version "${majorVersion}" on your project "${packagesPerMajorVersion[majorVersion]}".`);
-      })
+      });
     }
   });
 
@@ -89,18 +91,18 @@ const depsCheck = async (allPackages) => {
       ${errorMessages.join('\n')}
     `);
   }
-}
+};
 
 const packageAll = async (opts) => {
   const {
-    webappName = 'webapp'
+    webappName = 'webapp',
   } = opts;
 
   const escapedWebappPackageName = escapePackageName(webappName);
   await rm(distFolder);
 
   const allPackages = (await getDirsFrom(`./${allBuildsFolder}`)).map(folder => folder.split('/')[1]);
-  microfrontends = allPackages.filter(moduleName => moduleName !== escapedWebappPackageName);
+  const microfrontends = allPackages.filter(moduleName => moduleName !== escapedWebappPackageName);
 
   await depsCheck(allPackages);
 
@@ -115,7 +117,7 @@ const packageAll = async (opts) => {
     exec(`mkdir ./${distFolder}/${microfrontendFolderName}`);
   }
 
-  for (let i=0; i < microfrontends.length;i++) {
+  for (let i = 0; i < microfrontends.length; i++) {
     const actualPackage = microfrontends[i];
 
     [
@@ -125,19 +127,20 @@ const packageAll = async (opts) => {
       'precache-manifest*',
       'robots.txt',
       'service-worker.js',
-      'deps.json'
-    ].forEach(file => rmSync(`./${allBuildsFolder}/${actualPackage}/${file}`)));
+      'deps.json',
+    ].forEach((file) => {
+      rmSync(`./${allBuildsFolder}/${actualPackage}/${file}`);
+    });
 
-  try {
-    await copyFolder(`./${allBuildsFolder}/${actualPackage}`, `./${distFolder}/${microfrontendFolderName}/${actualPackage}`);
-  } catch (_e) {
-    exec(`cp ./${allBuildsFolder}/${actualPackage} ./${distFolder}/${microfrontendFolderName}/${actualPackage}`);
-  }
+    await copyFolder(
+      `./${allBuildsFolder}/${actualPackage}`,
+      `./${distFolder}/${microfrontendFolderName}/${actualPackage}`,
+    );
   }
 
   const metaMicrofrontend = await mapMicrofrontend(microfrontends);
   await writeJson(`./${distFolder}/${microfrontendFolderName}/meta.json`, metaMicrofrontend);
   await generateServiceWorker(distFolder);
-}
+};
 
 module.exports = packageAll;
