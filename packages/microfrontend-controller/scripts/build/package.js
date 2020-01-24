@@ -1,5 +1,5 @@
 const { copyFolder, rm, mkdir,writeJson, getDirsFrom, readJson, getAllFilesFromDir } = require('../utils/fs');
-const { exec } = require('../utils/process');
+const { exec, rmSync } = require('../utils/process');
 const { escapePackageName, resolveApp } = require('../utils/paths');
 const generateServiceWorker = require('../utils/create-sw');
 
@@ -91,8 +91,6 @@ const depsCheck = async (allPackages) => {
   }
 }
 
-
-
 const packageAll = async (opts) => {
   const {
     webappName = 'webapp'
@@ -108,22 +106,19 @@ const packageAll = async (opts) => {
 
   await copyFolder(`./${allBuildsFolder}/${escapedWebappPackageName}`, `./${distFolder}`);
 
-  try {
-    await rm(`./${distFolder}/deps.json`);
-    await rm(`./${distFolder}/service-worker.js`);
-    await mkdir(`./${distFolder}/${microfrontendFolderName}`);
-  } catch (error) {
-    console.error(error);
+  rmSync(`./${distFolder}/deps.json`);
+  rmSync(`./${distFolder}/service-worker.js`);
 
-    exec(`rm ./${distFolder}/deps.json`);
-    exec(`rm ./${distFolder}/service-worker.js`);
+  try {
+    await mkdir(`./${distFolder}/${microfrontendFolderName}`);
+  } catch (_e) {
     exec(`mkdir ./${distFolder}/${microfrontendFolderName}`);
   }
 
   for (let i=0; i < microfrontends.length;i++) {
-    const package = microfrontends[i];
+    const actualPackage = microfrontends[i];
 
-    await Promise.all([
+    [
       'asset-manifest.json',
       'index.html',
       'manifest.json',
@@ -131,9 +126,13 @@ const packageAll = async (opts) => {
       'robots.txt',
       'service-worker.js',
       'deps.json'
-    ].map(file => rm(`./${allBuildsFolder}/${package}/${file}`)));
+    ].forEach(file => rmSync(`./${allBuildsFolder}/${actualPackage}/${file}`)));
 
-    await copyFolder(`./${allBuildsFolder}/${package}`, `./${distFolder}/${microfrontendFolderName}/${package}`);
+  try {
+    await copyFolder(`./${allBuildsFolder}/${actualPackage}`, `./${distFolder}/${microfrontendFolderName}/${actualPackage}`);
+  } catch (_e) {
+    exec(`cp ./${allBuildsFolder}/${actualPackage} ./${distFolder}/${microfrontendFolderName}/${actualPackage}`);
+  }
   }
 
   const metaMicrofrontend = await mapMicrofrontend(microfrontends);
