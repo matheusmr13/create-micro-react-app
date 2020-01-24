@@ -129,7 +129,11 @@ const packageAll = async (opts) => {
       'service-worker.js',
       'deps.json',
     ].forEach((file) => {
-      rmSync(`./${allBuildsFolder}/${actualPackage}/${file}`);
+      try {
+        rmSync(`./${allBuildsFolder}/${actualPackage}/${file}`);
+      } catch (error) {
+        console.error(error);
+      }
     });
 
     await copyFolder(

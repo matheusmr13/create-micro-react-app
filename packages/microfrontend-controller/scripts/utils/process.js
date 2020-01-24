@@ -32,7 +32,7 @@ const createExecutionContext = (rootAppPath, appName, opts) => {
 
 const rmSync = (path, opts = { recursive: true }) => {
   const { recursive } = opts;
-  exec(`rm ${recursive ? '-Rf' : ''} ${path}`);
+  exec(`[ -d ${path} ] || [ -f ${path} ] && rm ${recursive ? '-Rf' : ''} ${path}`);
 };
 
 module.exports = {
