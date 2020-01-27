@@ -142,7 +142,12 @@ program
 
     opts.shouldBuildStandalone = options.standAlone || !options.microfrontend;
 
-    build(type, opts);
+    try {
+      build(type, opts);
+    } catch (error) {
+      console.log(chalk.white.bgRedBright('Error on Build'), { type, opts });
+      console.error(error);
+    }
   });
 
 program

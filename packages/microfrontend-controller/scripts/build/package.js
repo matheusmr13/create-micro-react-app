@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable no-plusplus */
 /* eslint-disable no-await-in-loop */
 const semver = require('semver');
 const {
@@ -9,7 +11,7 @@ const generateServiceWorker = require('../utils/create-sw');
 
 
 const distFolder = 'build';
-const	microfrontendFolderName = 'microfrontends';
+const microfrontendFolderName = 'microfrontends';
 const allBuildsFolder = 'builds';
 
 
@@ -53,7 +55,7 @@ const depsCheck = async (allPackages) => {
   for (let i = 0; i < allDepsList.length; i++) {
     const dep = allDepsList[i];
 
-    packagesPerVersion = {};
+    const packagesPerVersion = {};
 
     Object.keys(depsPerPackage).forEach((packageModule) => {
       const packageDeps = depsPerPackage[packageModule];
@@ -98,53 +100,58 @@ const packageAll = async (opts) => {
     webappName = 'webapp',
   } = opts;
 
-  const escapedWebappPackageName = escapePackageName(webappName);
-  await rm(distFolder);
-
-  const allPackages = (await getDirsFrom(`./${allBuildsFolder}`)).map(folder => folder.split('/')[1]);
-  const microfrontends = allPackages.filter(moduleName => moduleName !== escapedWebappPackageName);
-
-  await depsCheck(allPackages);
-
-  await copyFolder(`./${allBuildsFolder}/${escapedWebappPackageName}`, `./${distFolder}`);
-
-  rmSync(`./${distFolder}/deps.json`);
-  rmSync(`./${distFolder}/service-worker.js`);
-
   try {
-    await mkdir(`./${distFolder}/${microfrontendFolderName}`);
-  } catch (_e) {
-    exec(`mkdir ./${distFolder}/${microfrontendFolderName}`);
+    const escapedWebappPackageName = escapePackageName(webappName);
+    await rm(distFolder);
+
+    const allPackages = (await getDirsFrom(`./${allBuildsFolder}`)).map(folder => folder.split('/')[1]);
+    const microfrontends = allPackages.filter(moduleName => moduleName !== escapedWebappPackageName);
+
+    await depsCheck(allPackages);
+
+    await copyFolder(`./${allBuildsFolder}/${escapedWebappPackageName}`, `./${distFolder}`);
+
+    rmSync(`./${distFolder}/deps.json`);
+    rmSync(`./${distFolder}/service-worker.js`);
+
+    try {
+      await mkdir(`./${distFolder}/${microfrontendFolderName}`);
+    } catch (_e) {
+      exec(`mkdir ./${distFolder}/${microfrontendFolderName}`);
+    }
+
+    for (let i = 0; i < microfrontends.length; i++) {
+      const actualPackage = microfrontends[i];
+
+      [
+        'asset-manifest.json',
+        'index.html',
+        'manifest.json',
+        'precache-manifest*',
+        'robots.txt',
+        'service-worker.js',
+        'deps.json',
+      ].forEach((file) => {
+        try {
+          rmSync(`./${allBuildsFolder}/${actualPackage}/${file}`);
+        } catch (error) {
+          console.error(error);
+        }
+      });
+
+      await copyFolder(
+        `./${allBuildsFolder}/${actualPackage}`,
+        `./${distFolder}/${microfrontendFolderName}/${actualPackage}`,
+      );
+    }
+
+    const metaMicrofrontend = await mapMicrofrontend(microfrontends);
+    await writeJson(`./${distFolder}/${microfrontendFolderName}/meta.json`, metaMicrofrontend);
+    await generateServiceWorker(distFolder);
+  } catch (error) {
+    console.log('ERROR BUILDING WITH PACKAGEALL');
+    console.error(error);
   }
-
-  for (let i = 0; i < microfrontends.length; i++) {
-    const actualPackage = microfrontends[i];
-
-    [
-      'asset-manifest.json',
-      'index.html',
-      'manifest.json',
-      'precache-manifest*',
-      'robots.txt',
-      'service-worker.js',
-      'deps.json',
-    ].forEach((file) => {
-      try {
-        rmSync(`./${allBuildsFolder}/${actualPackage}/${file}`);
-      } catch (error) {
-        console.error(error);
-      }
-    });
-
-    await copyFolder(
-      `./${allBuildsFolder}/${actualPackage}`,
-      `./${distFolder}/${microfrontendFolderName}/${actualPackage}`,
-    );
-  }
-
-  const metaMicrofrontend = await mapMicrofrontend(microfrontends);
-  await writeJson(`./${distFolder}/${microfrontendFolderName}/meta.json`, metaMicrofrontend);
-  await generateServiceWorker(distFolder);
 };
 
 module.exports = packageAll;
