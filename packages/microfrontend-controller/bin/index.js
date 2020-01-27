@@ -8,14 +8,15 @@ const create = require('../scripts/create');
 const start = require('../scripts/start');
 const build = require('../scripts/build');
 
-program
-  .name(Object.keys(packageJson.bin)[0])
-  .version(packageJson.version);
+async function main() {
+  program
+    .name(Object.keys(packageJson.bin)[0])
+    .version(packageJson.version);
 
-program
-  .command('start')
-  .description('Start your application')
-  .option('-c, --configuration-file <configuration_file>', `
+  program
+    .command('start')
+    .description('Start your application')
+    .option('-c, --configuration-file <configuration_file>', `
     This should be used if you want to start an app where your modules/microfrontends are located on multiple repositories.
 
     File example "${chalk.italic('my-config.json')}":
@@ -29,7 +30,7 @@ program
       }
     `)}
   `)
-  .option('-p, --proxy <url>', `
+    .option('-p, --proxy <url>', `
     Start your specific module simulating deployed environment.
 
     Let's say your application is already deployed to https://my-app.xyz and it has a webapp and 3 other microfrontends.
@@ -44,7 +45,7 @@ program
     - current 2 other microservices versions
     - a devserver running just with your current microfrontend (where you started this command) in development
   `)
-  .option('-a, --all <webapp_package_name>', `
+    .option('-a, --all <webapp_package_name>', `
     Similar to --configuration-file param but this assumes that all your modules are on same folder in mono repo structure like:
     ${chalk.bold(`
       - package.json
@@ -57,27 +58,27 @@ program
 
     You can run this command at your root to start this application with all modules in development mode (with hot reload)
   `)
-  .action((options) => {
-    const opts = {};
-    let type = start.TYPE.SINGLE;
-    if (options.configurationFile) {
-      type = start.TYPE.LOCAL;
-      opts.configurationFile = options.configurationFile;
-    } else if (options.proxy) {
-      type = start.TYPE.PROXY;
-      opts.url = options.proxy;
-    } else if (options.all) {
-      type = start.TYPE.LOCAL;
-      opts.webappName = options.all;
-    }
+    .action(async (options) => {
+      const opts = {};
+      let type = start.TYPE.SINGLE;
+      if (options.configurationFile) {
+        type = start.TYPE.LOCAL;
+        opts.configurationFile = options.configurationFile;
+      } else if (options.proxy) {
+        type = start.TYPE.PROXY;
+        opts.url = options.proxy;
+      } else if (options.all) {
+        type = start.TYPE.LOCAL;
+        opts.webappName = options.all;
+      }
 
-    start(type, opts);
-  });
+      await start(type, opts);
+    });
 
-program
-  .command('build')
-  .description('Build your application')
-  .option('-p, --package <webapp_package_name>', `
+  program
+    .command('build')
+    .description('Build your application')
+    .option('-p, --package <webapp_package_name>', `
     Assumes that all modules that you want to package with are located on ./builds like:
 
     ${chalk.bold(`
@@ -93,23 +94,23 @@ program
     This command package together this folders together to create a deployable package that can be served statically.
     You must specify wich package is the webapp container.
   `)
-  .option('-l, --library [library_path]', `
+    .option('-l, --library [library_path]', `
     Build your library to export it.
     ${chalk.black.bgWhite(' > microfrontend-controller build ./src/lib/index.js -l ')}
   `)
-  .option('-m, --microfrontend', `
+    .option('-m, --microfrontend', `
     Build a single module that will become a microfrontend.
   `)
-  .option('-s, --stand-alone', `
+    .option('-s, --stand-alone', `
     Build a single module in stand alone mode. You should also use this for building webapp container module.
   `)
-  .option('-a, --all <webapp_package_name>', `
+    .option('-a, --all <webapp_package_name>', `
     Build all modules assuming they are located at ./packges, generating all resourcers at ./builds
     Combined with --package can create a ready to deploy application
 
     ${chalk.black.bgWhite(' > microfrontend-controller build -a my-webapp && microfrontend-controller build -p my-webapp ')}
   `)
-  .option('-c, --configuration-file <configuration_file>', `
+    .option('-c, --configuration-file <configuration_file>', `
     This should be used if you want to build an app where your modules/microfrontends are located on multiple repositories.
 
     File example "${chalk.italic('my-config.json')}":
@@ -123,43 +124,43 @@ program
       }
     `)}
   `)
-  .action((options) => {
-    let type = build.TYPE.SINGLE;
-    const opts = {};
-    if (options.configurationFile) {
-      type = build.TYPE.ALL;
-      opts.configurationFile = options.configurationFile;
-    } else if (options.all) {
-      type = build.TYPE.ALL;
-      opts.webappName = options.all;
-    } else if (options.library) {
-      type = build.TYPE.LIBRARY;
-      opts.pathToSchema = options.library;
-    } else if (options.package) {
-      type = build.TYPE.PACKAGE;
-      opts.webappName = options.package;
-    }
+    .action(async (options) => {
+      let type = build.TYPE.SINGLE;
+      const opts = {};
+      if (options.configurationFile) {
+        type = build.TYPE.ALL;
+        opts.configurationFile = options.configurationFile;
+      } else if (options.all) {
+        type = build.TYPE.ALL;
+        opts.webappName = options.all;
+      } else if (options.library) {
+        type = build.TYPE.LIBRARY;
+        opts.pathToSchema = options.library;
+      } else if (options.package) {
+        type = build.TYPE.PACKAGE;
+        opts.webappName = options.package;
+      }
 
-    opts.shouldBuildStandalone = options.standAlone || !options.microfrontend;
+      opts.shouldBuildStandalone = options.standAlone || !options.microfrontend;
 
-    try {
-      build(type, opts);
-    } catch (error) {
-      console.log(chalk.white.bgRedBright('Error on Build'), { type, opts });
-      console.error(error);
-    }
-  });
+      try {
+        await build(type, opts);
+      } catch (error) {
+        console.log(chalk.white.bgRedBright('Error on Build'), { type, opts });
+        console.error(error);
+      }
+    });
 
-program
-  .command('create <name>')
-  .description('create your application')
-  .option('-a, --app', `
+  program
+    .command('create <name>')
+    .description('create your application')
+    .option('-a, --app', `
     Default option if none specified.
     Creates a monorepo application with a webapp template (created with cra)
 
     ${chalk.black.bgWhite(' > microfrontend-controller create my-app -a ')}
   `)
-  .option('-m, --microfrontend', `
+    .option('-m, --microfrontend', `
     Creates a microfrontend application to be used/imported by a webapp.
 
     ${chalk.black.bgWhite(' > microfrontend-controller create my-microfrontend -m ')}
@@ -167,7 +168,7 @@ program
     Can be used beside --app parameter to create a webapp with an initial microfrontend like
     ${chalk.black.bgWhite(' > microfrontend-controller create my-app -am ')}
   `)
-  .option('-l, --library', `
+    .option('-l, --library', `
     Creates a library that can be used by another module. This way you can create a library that has its own deploy or create an api to comunicate with your current microfrontends.
 
     Example:
@@ -196,22 +197,26 @@ program
         CartApi.callAddProductToCart(Product.fetchProduct(1234));
     `)}
   `)
-  .option('-t, --template <template>', `
+    .option('-t, --template <template>', `
     Specified a template to use when creating a microfrontend or an application
 
     ${chalk.black.bgWhite(' > microfrontend-controller create my-app -a --template typescript ')}
   `)
-  .action((name, options) => {
-    const opts = {
-      template: options.template,
-    };
+    .action(async (name, options) => {
+      const opts = {
+        template: options.template,
+      };
 
-    const types = [];
-    if (options.microfrontend) types.push(create.TYPE.MICROFRONTEND);
-    if (options.library) types.push(create.TYPE.LIBRARY);
-    if (options.app || types.length === 0) types.push(create.TYPE.APP);
+      const types = [];
+      if (options.microfrontend) types.push(create.TYPE.MICROFRONTEND);
+      if (options.library) types.push(create.TYPE.LIBRARY);
+      if (options.app || types.length === 0) types.push(create.TYPE.APP);
 
-    create(types, name, opts);
-  });
+      await create(types, name, opts);
+    });
 
-program.parse(process.argv);
+
+  await program.parseAsync(process.argv);
+}
+
+main();
