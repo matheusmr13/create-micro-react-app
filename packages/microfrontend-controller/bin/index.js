@@ -143,12 +143,7 @@ async function main() {
 
       opts.shouldBuildStandalone = options.standAlone || !options.microfrontend;
 
-      try {
-        await build(type, opts);
-      } catch (error) {
-        console.log(chalk.white.bgRedBright('Error on Build'), { type, opts });
-        console.error(error);
-      }
+      await build(type, opts);
     });
 
   program
@@ -219,4 +214,9 @@ async function main() {
   await program.parseAsync(process.argv);
 }
 
-main();
+try {
+  main();
+} catch (error) {
+  console.log(chalk.white.bgRedBright('Error on Build'));
+  console.error(error);
+}
