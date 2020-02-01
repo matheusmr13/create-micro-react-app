@@ -19,14 +19,11 @@ const MicrofrontendContext = React.createContext({});
 
 export const withMicrofrontend = (WrappedComponent, { microfrontendKey } = {}) => props => (
   <MicrofrontendContext.Consumer>
-    { microfrontends => {
-      return (
+    { microfrontends => (
         <WrappedComponent
           {...props}
-          microfrontend={
-            microfrontends[microfrontendKey] ? microfrontends[microfrontendKey].view : microfrontends
-          }
           microfrontends={microfrontends}
+          microfrontend={microfrontends[microfrontendKey]}
         />
       )
     }}
@@ -38,17 +35,20 @@ class ReactMicrofrontend extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      iframesToLoad: null,
-      cssToLoad: null,
-      jsToLoad: null,
+      iframesToLoad: [],
+      cssToLoad: [],
+      jsToLoad: [],
       styleToLoad: {},
       microfrontends: null
     };
   }
 
   componentDidMount() {
-    const controller = new Controller(this.props.opts);
-    controller
+    const { opts } = this.props;
+
+    const microfrontendsController = new Controller(opts);
+
+    microfrontendsController
       .onMicrofrontendsInfosDiscovered((microfrontends) => {
         this.setState({
           iframesToLoad: Object.values(microfrontends).map(microfrontend => microfrontend.host)
@@ -93,23 +93,32 @@ class ReactMicrofrontend extends React.Component {
   }
 
   render() {
-    const { iframesToLoad, jsToLoad, cssToLoad, styleToLoad, microfrontends } = this.state;
+    const {
+      jsToLoad,
+      cssToLoad,
+      styleToLoad,
+      iframesToLoad,
+      microfrontends
+    } = this.state;
+
+    const { children } = this.props;
+
     return (
       <React.Fragment>
         { microfrontends && ((
           <MicrofrontendContext.Provider value={microfrontends} >
             <Provider store={this.store}>
-              {this.props.children}
+              {children}
             </Provider>
           </MicrofrontendContext.Provider>
         )) }
         <Helmet>
-          { jsToLoad && jsToLoad.map((url) => <script key={url} src={url} type="text/javascript" /> )}
-          { cssToLoad && cssToLoad.map((url) => <link key={url} href={url} type="text/css" rel="stylesheet" /> )}
+          { !!jsToLoad.length && jsToLoad.map((url) => <script key={url} src={url} type="text/javascript" /> )}
+          { !!cssToLoad.length && cssToLoad.map((url) => <link key={url} href={url} type="text/css" rel="stylesheet" /> )}
           { Object.values(styleToLoad).length && Object.values(styleToLoad).map((styleContent) => styleContent.map(content => <style type="text/css" >{content}</style> ))}
         </Helmet>
         {
-          iframesToLoad && iframesToLoad.map((iframeSrc) => (
+          !!iframesToLoad.length && iframesToLoad.map((iframeSrc) => (
             <iframe
               key={iframeSrc}
               style={iframeStyle}
