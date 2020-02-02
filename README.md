@@ -1,8 +1,10 @@
-# Create React App Microfrontend
+# Create Microfrontend React App
 
 [![Build Status](https://travis-ci.com/matheusmr13/cra-microfrontend.svg?branch=master)](https://travis-ci.com/matheusmr13/cra-microfrontend)
 
 Create simple microfrontend architecture with tools like [Create React App](https://github.com/facebook/create-react-app).
+
+![Create Microfrontend React App](icon.svg)
 
 ## Quick Overview
 
@@ -39,3 +41,5 @@ Create simple microfrontend architecture with tools like [Create React App](http
     npx microfrontend-controller build --help
     npx microfrontend-controller create --help
   ```
+
+Icon made by [Freepik](https://www.flaticon.com/authors/freepik) from [www.flaticon.com](https://www.flaticon.com/)

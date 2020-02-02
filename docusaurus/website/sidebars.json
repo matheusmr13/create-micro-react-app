@@ -1,0 +1,8 @@
+{
+  "docs": {
+    "Getting Started": ["getting-started"],
+    "Core features": ["watch-mode"],
+    "CLI": ["start", "build", "create"],
+    "Build and deploy": ["build-and-deploy"]
+  }
+}

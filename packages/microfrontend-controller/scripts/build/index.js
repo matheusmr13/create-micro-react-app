@@ -1,5 +1,5 @@
 const buildAll = require('./all');
-const buildLibrary = require('./library');
+const buildLibrary = require('./library/create-lib');
 const packageAll = require('./package');
 const buildSingle = require('./single');
 
