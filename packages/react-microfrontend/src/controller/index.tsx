@@ -6,7 +6,24 @@ import CreateLib from '../state/createLib';
 const shared = new Shared('__core__');
 const microfrontendFolderName = 'microfrontends';
 
+declare global {
+  interface Event {
+    data?: any
+  }
+}
+
 class Controller {
+  __onMicrofrontendsInfosLoaded(microfrontends: any) {
+    throw new Error("Method not implemented.");
+  }
+  __onMicrofrontendStyleChange(name: any, style: any) {
+    throw new Error("Method not implemented.");
+  }
+  __onMicrofrontendHotReload() {
+    throw new Error("Method not implemented.");
+  }
+  containerLib: any
+
   constructor(containerSchema) {
     if (containerSchema) {
       this.containerLib = CreateLib(containerSchema, { apiAccess: CreateLib.BUILD_TYPE.INTERNAL });
@@ -17,7 +34,7 @@ class Controller {
   microfrontends = null;
 
   areAllMicrofrontendsOnStatus(status) {
-    return !Object.values(this.microfrontends).find(microfrontend => microfrontend.status !== status);
+    return !Object.values(this.microfrontends).find((microfrontend: any) => microfrontend.status !== status);
   }
 
   handleLoadMessage = message => () => {
@@ -45,8 +62,8 @@ class Controller {
 
   getMicrofrontendsOnStatus(status) {
     return Object.values(this.microfrontends)
-      .filter(micro => micro.status === status)
-      .reduce((agg, micro) => Object.assign(agg, {[micro.name]: micro } ), {});
+      .filter((micro: any) => micro.status === status)
+      .reduce((agg, micro: any) => Object.assign(agg, {[micro.name]: micro } ), {});
   }
 
   async setupAllMicrofrontends() {
@@ -55,7 +72,7 @@ class Controller {
       this.containerLib.initialize && this.containerLib.initialize();
     }
 
-    const setupMicrofrontend = (method) => Promise.all(Object.values(this.microfrontends).map(async (micro) => {
+    const setupMicrofrontend = (method) => Promise.all(Object.values(this.microfrontends).map(async (micro: any) => {
       try {
         const s = Promise.resolve();
         const promise = (micro[method] || (() => s))() || s;
@@ -76,6 +93,9 @@ class Controller {
       this.__onMicrofrontendsInitialized(this.microfrontends);
     }
   }
+  __onMicrofrontendsInitialized(microfrontends: any) {
+    throw new Error("Method not implemented.");
+  }
 
   initialize() {
     shared.set('registerMicrofrontend', async (name, microfrontendShared) => {
@@ -84,7 +104,7 @@ class Controller {
       this.microfrontends[name].register(lib);
 
       if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.REGISTERED)) {
-        const store = this.__onMicrofrontendsRegistered(this.microfrontends);
+        const store: any = this.__onMicrofrontendsRegistered(this.microfrontends);
 
         if (this.containerLib) {
           store.injectReducer(this.containerLib.name, this.containerLib.reducers)
@@ -117,6 +137,12 @@ class Controller {
         this.__onMicrofrontendsInfosLoaded(this.microfrontends);
       }
     });
+  }
+  __onMicrofrontendsRegistered(microfrontends: any) {
+    throw new Error("Method not implemented.");
+  }
+  __onMicrofrontendsInfosDiscovered(arg0: unknown) {
+    throw new Error("Method not implemented.");
   }
 
   onMicrofrontendsInfosDiscovered(callback) {

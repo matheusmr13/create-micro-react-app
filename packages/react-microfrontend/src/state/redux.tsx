@@ -13,7 +13,7 @@ const staticReducers = {
 };
 
 function configureStore() {
-  const store = createStore(createReducer({}), applyMiddleware(thunk))
+  const store: any = createStore(createReducer({}), applyMiddleware(thunk))
 
   store.asyncReducers = {}
 

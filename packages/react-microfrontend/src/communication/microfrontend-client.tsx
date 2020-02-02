@@ -1,13 +1,16 @@
 import Communication from './communication';
 
 class MicrofrontendClient extends Communication {
+  from: string;
+  to: string;
+
   constructor() {
     super();
     this.from = process.env.REACT_APP_PACKAGE_NAME;
     this.to = 'http://localhost:3000';
   }
 
-  send(type, payload) {
+  send(type, payload?: any) {
     window.parent.postMessage({
       type,
       origin: this.from,
