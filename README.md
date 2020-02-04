@@ -4,7 +4,7 @@
 
 Create simple microfrontend architecture with tools like [Create React App](https://github.com/facebook/create-react-app).
 
-![Create Microfrontend React App](icon.svg)
+<img src="icon.svg" width="40%">
 
 ## Quick Overview
 
