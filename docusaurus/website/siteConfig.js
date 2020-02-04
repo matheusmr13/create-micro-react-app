@@ -14,18 +14,20 @@ const users = [
   },
 ];
 
+const repoUrl = 'https://github.com/matheusmr13/create-microfrontend-react-app';
 const siteConfig = {
   title: 'Create Microfrontend React App',
   tagline: 'Create a microfrontend architecture as simple as CRA.',
   url: 'https://matheusmr13.github.io/',
   baseUrl: '/create-microfrontend-react-app/',
-  repoUrl: 'https://github.com/matheusmr13/create-microfrontend-react-app',
+  repoUrl,
   projectName: 'create-microfrontend-react-app',
   organizationName: 'matheusmr13',
 
   users,
   headerLinks: [
-    {doc: 'getting-started', label: 'Docs'}
+    {doc: 'getting-started', label: 'Docs'},
+    {href: repoUrl, label: 'Github'}
   ],
 
   users,
@@ -48,7 +50,6 @@ const siteConfig = {
   cleanUrl: true,
 
   ogImage: 'img/undraw_online.svg',
-  twitterImage: 'img/undraw_tweetstorm.svg',
 
   enableUpdateTime: true
 };
