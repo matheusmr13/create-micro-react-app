@@ -17,16 +17,11 @@ const build = async (fileToBuild) => {
   await rm(buildLibFolder);
   await mkdir(buildLibFolder);
 
-  await copyFile(resolveApp(fileToBuild), `${buildLibFolder}/schema.${getExtension(fileToBuild)}`);
+  await copyFile(resolveApp(fileToBuild), `${buildLibFolder}/lib.${getExtension(fileToBuild)}`);
 
   await writeFile(`${buildLibFolder}/index.js`, `
-    import { CreateLib } from 'react-microfrontend';
-    import schema from './schema';
-
-    export default CreateLib(schema, {
-      apiAccess: CreateLib.BUILD_TYPE.PUBLIC_API,
-      packageName: "${escapedPackageName}"
-    });
+    import lib from './lib';
+    export default lib.private();
   `);
 };
 

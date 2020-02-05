@@ -133,7 +133,6 @@ program
       type = build.TYPE.ALL;
       opts.webappName = options.all;
     } else if (options.library) {
-      type = build.TYPE.LIBRARY;
       opts.pathToSchema = options.library;
     } else if (options.package) {
       type = build.TYPE.PACKAGE;

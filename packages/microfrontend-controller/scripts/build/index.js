@@ -1,5 +1,4 @@
 const buildAll = require('./all');
-const buildLibrary = require('./library/create-lib');
 const packageAll = require('./package');
 const buildSingle = require('./single');
 
@@ -13,12 +12,8 @@ const TYPE = {
 const start = (type, opts) => {
   ({
     [TYPE.SINGLE]: () => {
-      const { shouldBuildStandalone } = opts;
-      buildSingle(shouldBuildStandalone);
-    },
-    [TYPE.LIBRARY]: () => {
-      const { pathToSchema } = opts;
-      buildLibrary(pathToSchema);
+      const { shouldBuildStandalone, pathToSchema } = opts;
+      buildSingle(shouldBuildStandalone, pathToSchema);
     },
     [TYPE.ALL]: () => buildAll(opts),
     [TYPE.PACKAGE]: () => packageAll(opts),
