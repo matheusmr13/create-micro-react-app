@@ -1,7 +1,7 @@
 root_dir=$(pwd)
 
 
-link_example_deps () {
+link_example_deps() {
 	cd node_modules
 	rm -r microfrontend-controller 2> /dev/null
 	rm -r react-microfrontend 2> /dev/null
@@ -20,15 +20,16 @@ setup_examples() {
     link_example_deps
     cd ..
   done
+  cd ..
 }
 
-recreate_package () {
+recreate_package() {
   rm -r node_modules 2> /dev/null
   rm -r yarn.lock 2> /dev/null
   yarn
 }
 
-recreate () {
+recreate() {
   lerna clean -y
   rm -r node_modules 2> /dev/null
   rm -r yarn.lock 2> /dev/null
