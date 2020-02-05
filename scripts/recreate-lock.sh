@@ -1,6 +1,13 @@
 root_dir=$(pwd)
 
 
+
+recreate_package() {
+  rm -r node_modules 2> /dev/null
+  rm -r yarn.lock 2> /dev/null
+  yarn
+}
+
 link_example_deps() {
 	cd node_modules
 	rm -r microfrontend-controller 2> /dev/null
@@ -12,21 +19,14 @@ link_example_deps() {
 }
 
 setup_examples() {
-  link_example_deps
   cd ./examples
   for D in `ls .`
   do
     cd $D
-    link_example_deps
+    recreate
     cd ..
   done
   cd ..
-}
-
-recreate_package() {
-  rm -r node_modules 2> /dev/null
-  rm -r yarn.lock 2> /dev/null
-  yarn
 }
 
 recreate() {
@@ -36,16 +36,22 @@ recreate() {
   lerna bootstrap
   yarn
 
+  if [ $1 = "examples" ]; then
+    link_example_deps
+  fi
+
   cd ./packages
   for D in `ls .`
   do
     cd $D
     recreate_package
+    if [ $1 = "examples" ]; then
+      link_example_deps
+    fi
     cd ..
   done
   cd ..
-
-  setup_examples
 }
 
-recreate
+# recreate
+setup_examples
