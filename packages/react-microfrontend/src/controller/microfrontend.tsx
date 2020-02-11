@@ -2,6 +2,7 @@
 
 class Microfrontend {
   static STATUS = {
+    CREATED: 'CREATED',
     DISCOVERED: 'DISCOVERED',
     LOADED: 'LOADED',
     IMPORTED: 'IMPORTED',
@@ -19,6 +20,9 @@ class Microfrontend {
   style = []
   content
   isLoaded = false
+  lib: any;
+  view: any;
+  errorInitializing: { type: any; error: any; };
 
   constructor(name, metaInfo) {
     this.name = name;

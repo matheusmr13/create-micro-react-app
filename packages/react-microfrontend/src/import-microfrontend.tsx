@@ -4,7 +4,7 @@ import Controller from './controller';
 import createStore from './state/redux';
 import { Provider } from 'react-redux';
 
-const iframeStyle = {
+const iframeStyle: any = {
   position: 'absolute',
   height: 0,
   width: 0,
@@ -16,22 +16,44 @@ const iframeStyle = {
 };
 
 const MicrofrontendContext = React.createContext({});
+const { Consumer: MicrofrontendContextConsumer } = MicrofrontendContext;
 
-export const withMicrofrontend = (WrappedComponent, { microfrontendKey } = {}) => props => (
-  <MicrofrontendContext.Consumer>
-    { microfrontends => (
-        <WrappedComponent
-          {...props}
-          microfrontends={microfrontends}
-          microfrontend={microfrontends[microfrontendKey]}
-        />
-      )
-    }}
-  </MicrofrontendContext.Consumer>
-);
+interface withMicrofrontendOptions {
+  microfrontendKey?: string
+}
+
+export const withMicrofrontend = (WrappedComponent, { microfrontendKey }: withMicrofrontendOptions = {}) =>
+  (props) => (
+    <MicrofrontendContextConsumer>
+      {microfrontends => (<WrappedComponent
+            {...props}
+            microfrontends={microfrontends}
+            microfrontend={microfrontends[microfrontendKey]}
+          />
+        )
+      }
+    </MicrofrontendContextConsumer>
+  );
 
 
-class ReactMicrofrontend extends React.Component {
+interface ReactMicrofrontendProviderProps {
+  opts?: {
+    packageName?: string
+    interface?: string
+    view?: any
+  }
+}
+interface ReactMicrofrontendProviderState {
+  iframesToLoad: string[],
+  cssToLoad: string[],
+  jsToLoad: string[],
+  styleToLoad: any,
+  microfrontends: any
+}
+
+class ReactMicrofrontend extends React.Component<ReactMicrofrontendProviderProps, ReactMicrofrontendProviderState> {
+  store: any
+
   constructor(props) {
     super(props);
     this.state = {
@@ -51,12 +73,12 @@ class ReactMicrofrontend extends React.Component {
     microfrontendsController
       .onMicrofrontendsInfosDiscovered((microfrontends) => {
         this.setState({
-          iframesToLoad: Object.values(microfrontends).map(microfrontend => microfrontend.host)
+          iframesToLoad: Object.values(microfrontends).map((microfrontend: any) => microfrontend.host)
         });
       })
       .onMicrofrontendsInfosLoaded((microfrontends) => {
-        const allJsFiles = [].concat.apply([], Object.values(microfrontends).map(microfrontends => microfrontends.files.js));
-        const allCssFiles = [].concat.apply([], Object.values(microfrontends).map(microfrontends => microfrontends.files.css || []));
+        const allJsFiles = [].concat.apply([], Object.values(microfrontends).map((microfrontends: any) => microfrontends.files.js));
+        const allCssFiles = [].concat.apply([], Object.values(microfrontends).map((microfrontends: any) => microfrontends.files.css || []));
         this.setState({
           jsToLoad: allJsFiles,
           cssToLoad: allCssFiles
@@ -76,7 +98,7 @@ class ReactMicrofrontend extends React.Component {
       })
       .onMicrofrontendsRegistered((microfrontends) => {
         this.store = createStore();
-        Object.values(microfrontends).forEach(microfrontend => {
+        Object.values(microfrontends).forEach((microfrontend: any) => {
           if (microfrontend.lib) {
             this.store.injectReducer(microfrontend.name, microfrontend.lib.reducers);
           }
@@ -115,7 +137,7 @@ class ReactMicrofrontend extends React.Component {
         <Helmet>
           { !!jsToLoad.length && jsToLoad.map((url) => <script key={url} src={url} type="text/javascript" /> )}
           { !!cssToLoad.length && cssToLoad.map((url) => <link key={url} href={url} type="text/css" rel="stylesheet" /> )}
-          { Object.values(styleToLoad).length && Object.values(styleToLoad).map((styleContent) => styleContent.map(content => <style type="text/css" >{content}</style> ))}
+          { Object.values(styleToLoad).length && Object.values(styleToLoad).map((styleContent: any) => styleContent.map(content => <style type="text/css" >{content}</style> ))}
         </Helmet>
         {
           !!iframesToLoad.length && iframesToLoad.map((iframeSrc) => (
