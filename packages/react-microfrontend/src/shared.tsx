@@ -1,5 +1,14 @@
 /* eslint-disable no-underscore-dangle */
 
+export const SHARED = '__shared__';
+
+declare global {
+  interface Window {
+    [SHARED]: any,
+  }
+}
+
+
 class Shared {
   // static store;
   // static setStore(store) {
@@ -11,12 +20,12 @@ class Shared {
 
   constructor(sharedName) {
     this.sharedName = sharedName;
-    const allShared = window.__shared__ || {};
+    const allShared = window[SHARED] || {};
     this.shared = allShared[sharedName] || {};
 
 
     allShared[sharedName] = this.shared;
-    window.__shared__ = allShared;
+    window[SHARED] = allShared;
   }
 
   // registerGetter(name, getState) {

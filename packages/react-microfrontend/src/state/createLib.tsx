@@ -19,7 +19,12 @@ const BUILD_TYPE = {
   PRIVATE_API: 'PRIVATE_API'
 }
 
-const createLib = (toExport, meta = {}) => {
+interface createLibMeta {
+  apiAccess?: string,
+  packageName?: string
+}
+
+const createLib = (toExport, meta: createLibMeta = {}) => {
   const {
     apiAccess = BUILD_TYPE.PRIVATE_API,
     packageName = toExport.packageName
@@ -154,7 +159,7 @@ const createLib = (toExport, meta = {}) => {
       privateApi,
       publicApi,
       reducers: {
-        [rightFunctionName]: (state, { payload } = {}) => ({
+        [rightFunctionName]: (state, { payload }: { payload?: any } = {}) => ({
           ...state,
           [name]: payload
         })
@@ -172,8 +177,7 @@ const createLib = (toExport, meta = {}) => {
     getPackageName: () => packageName,
   };
 
-  const aggregateKindFromApi = (kind) => Object.values(apiProps).reduce((agg, propApi) => Object.assign(agg, propApi[kind]), { ...globalApi });
-
+  const aggregateKindFromApi = (kind): any => Object.values(apiProps).reduce((agg, propApi) => Object.assign(agg, propApi[kind]), { ...globalApi });
 
   const getAndExec = (key) => {
     const func = moduleShared.get(key);

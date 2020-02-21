@@ -1,6 +1,10 @@
 import Communication from './communication';
 
 class AppClient extends Communication {
+  from: string;
+  to: string;
+  callback: any;
+
   constructor() {
     super();
     this.from = process.env.REACT_APP_PACKAGE_NAME;
