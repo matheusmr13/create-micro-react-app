@@ -2,11 +2,12 @@ import Meta from "./meta";
 
 class FunctionMeta extends Meta {
   callMethod = (...args) => {
-    this.callback.apply(null, args);
+    const callback = this.getShared('callback');
+    callback.apply(null, args);
   }
 
   calledMethod = (callback) => {
-    this.callback = callback;
+    this.setShared('callback', callback);
   }
 
   build() {

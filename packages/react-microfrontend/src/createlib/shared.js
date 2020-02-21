@@ -21,8 +21,9 @@ class Shared {
   }
 
   withScope(scope) {
-    return new Shared(`${this.shareName}.${scope}`);
+    return new Shared(`${this.sharedName}.${scope}`);
   }
+
 }
 
 export default Shared;

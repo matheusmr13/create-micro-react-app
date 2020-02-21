@@ -1,7 +1,7 @@
-import MetaProperty from './property';
-import MetaFunction from './function';
-
-import Meta from './meta';
+import MetaProperty from './schema/property';
+import MetaFunction from './schema/function';
+import MetaTopic from './schema/topic';
+import Meta from './schema/meta';
 
 import Shared from './shared';
 
@@ -14,24 +14,31 @@ class Api {
 
   static TYPE = {
     PROPERTY: 'PROPERTY',
-    TRIGGER: 'TRIGGER',
+    TOPIC: 'TOPIC',
     FUNCTION: 'FUNCTION'
   }
 
   static Clazzes = {
     [Api.TYPE.FUNCTION]: MetaFunction,
-    [Api.TYPE.PROPERTY]: MetaProperty
+    [Api.TYPE.PROPERTY]: MetaProperty,
+    [Api.TYPE.TOPIC]: MetaTopic,
   }
 
   constructor(schema, meta) {
-    this.shared = new Shared(name);
     this.packageName = meta.packageName;
+    this.shared = new Shared(this.packageName);
     this.properties = Object.keys(schema.interface)
       .map(propertyName => Meta.create(
         Api.Clazzes[schema.interface[propertyName].type || Api.TYPE.PROPERTY],
         { ...schema.interface[propertyName], name: propertyName },
         this.shared.withScope(propertyName)
       ));
+  }
+
+  getName() { return this.packageName; }
+  getReducers() {
+    return this.properties
+      .reduce((agg, property) => Object.assign(agg, property.getReducers()), {});
   }
 
   build(apiAccess) {
