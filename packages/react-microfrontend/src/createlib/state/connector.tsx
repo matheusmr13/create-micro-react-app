@@ -9,9 +9,11 @@ const connector = (Component, packageName, name) => {
     });
     const mapDispatchToProps = {};
 
-    return class MyComponent extends React.Component {
+    return class MyComponent extends React.Component<{}, {
+      Component ?: React.Component
+    }> {
       state = {
-        Component: null
+        Component: undefined
       }
 
       componentDidMount() {
@@ -25,7 +27,7 @@ const connector = (Component, packageName, name) => {
       }
 
       render() {
-        const { Component: any } = this.state;
+        const { Component } = this.state;
         if (!Component) return null;
         return <Component {...this.props} />;
       }

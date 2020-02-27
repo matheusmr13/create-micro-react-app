@@ -19,7 +19,6 @@ const overrideWebpackConfigs = () => (config, env) => {
   } else if (process.env.IS_MICROFRONTEND) {
     newConfig.output.publicPath = `http://localhost:${process.env.PORT}/`;
   }
-  console.info('settando public path', newConfig.output.publicPath)
 
   return newConfig;
 };
