@@ -1,10 +1,12 @@
 # Create Microfrontend React App
 
-[![Build Status](https://travis-ci.com/matheusmr13/cra-microfrontend.svg?branch=master)](https://travis-ci.com/matheusmr13/cra-microfrontend)
+[![Build Status](https://travis-ci.com/matheusmr13/create-microfrontend-react-app.svg?branch=master)](https://travis-ci.com/matheusmr13/create-microfrontend-react-app)
 
 Create simple microfrontend architecture with tools like [Create React App](https://github.com/facebook/create-react-app).
 
-<img src="icon.svg" width="40%">
+<p align="center">
+  <img src="icon.svg" width="40%">
+</p>
 
 ## Quick Overview
 
