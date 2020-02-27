@@ -8,8 +8,8 @@ class TopicMeta extends Meta {
     });
   }
 
-  addSubscriber = (callback) => {
-    this.updateShared('subscribers', (subscribers = []) => subscribers.concat([callback]));
+  addSubscriber = (callback : any) => {
+    this.updateShared('subscribers', (subscribers : Array<any> = []) => subscribers.concat([callback]));
   }
 
   build() {

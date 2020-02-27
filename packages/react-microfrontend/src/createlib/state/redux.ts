@@ -1,29 +1,26 @@
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { handleActions } from 'redux-actions';
-import Shared from './../shared';
+import Shared from '../shared';
 import { connect } from 'react-redux';
 
-import thunk from 'redux-thunk';
-
-const shared = new Shared('__state__');
+const sharedState = new Shared('__state__');
 
 const staticReducers = {
   root: (state = {}, action) => state,
-
 };
 
 function configureStore() {
-  const store: any = createStore(createReducer({}), applyMiddleware(thunk))
+  const store : any = createStore(createReducer({}))
 
   store.asyncReducers = {}
 
   store.injectReducer = (key, asyncReducer) => {
-    store.asyncReducers[key] = handleActions(asyncReducer, {}) //TODO: initialState
+    store.asyncReducers[key] = handleActions(asyncReducer, {});
     store.replaceReducer(createReducer(store.asyncReducers))
   }
 
-  shared.set('store', store);
-  (shared.get('connectSet') || []).forEach((func) => func(connect));
+  sharedState.set('connector', connect);
+  sharedState.set('store', store);
   return store
 }
 function createReducer(asyncReducers) {

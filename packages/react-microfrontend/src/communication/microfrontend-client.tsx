@@ -6,7 +6,7 @@ class MicrofrontendClient extends Communication {
 
   constructor() {
     super();
-    this.from = process.env.REACT_APP_PACKAGE_NAME;
+    this.from = process.env.REACT_APP_PACKAGE_NAME || ''; // TODO: fix to use correct from
     this.to = 'http://localhost:3000';
   }
 

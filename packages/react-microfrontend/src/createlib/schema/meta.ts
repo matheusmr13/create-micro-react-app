@@ -1,15 +1,19 @@
 import connector, { dispatcher } from '../state/connector';
 
+enum ACCESS {
+  PUBLIC,
+  PRIVATE,
+}
 class Meta {
-  static ACCESS = {
-    PUBLIC: 'PUBLIC',
-    PRIVATE: 'PRIVATE'
-  }
+  static ACCESS = ACCESS;
+  name: string;
+  access: ACCESS;
+  private shared: any;
 
   constructor(props, shared) {
     this.name = props.name;
     this.access = props.access || Meta.ACCESS.PRIVATE;
-    this.__shared = shared;
+    this.shared = shared;
   }
 
   getCapitalizedName() {
@@ -20,8 +24,8 @@ class Meta {
     throw new Error('Not implemented');
   }
 
-  getShared(key) { return this.__shared.get(key); }
-  setShared(key, value) { this.__shared.set(key, value); }
+  getShared(key) { return this.shared.get(key); }
+  setShared(key, value) { this.shared.set(key, value); }
   updateShared(key, map) {
     const oldValue = this.getShared(key);
     const newValue = map(oldValue);

@@ -1,7 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import Controller from './controller';
-import createStore from './state/redux';
+import createStore from './createlib/state/redux';
 import { Provider } from 'react-redux';
 
 const iframeStyle: any = {
@@ -19,10 +19,10 @@ const MicrofrontendContext = React.createContext({});
 const { Consumer: MicrofrontendContextConsumer } = MicrofrontendContext;
 
 interface withMicrofrontendOptions {
-  microfrontendKey?: string
+  microfrontendKey: string
 }
 
-export const withMicrofrontend = (WrappedComponent, { microfrontendKey }: withMicrofrontendOptions = {}) =>
+export const withMicrofrontend = (WrappedComponent, { microfrontendKey }: withMicrofrontendOptions) =>
   (props) => (
     <MicrofrontendContextConsumer>
       {microfrontends => (<WrappedComponent

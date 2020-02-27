@@ -1,7 +1,7 @@
 import Shared from './../shared';
 import Communication from './../communication/app-client';
 import Microfrontend from './microfrontend';
-import CreateLib from '../state/createLib';
+import Api from '../createlib/api';
 
 const shared = new Shared('__core__');
 const microfrontendFolderName = 'microfrontends';
@@ -22,16 +22,16 @@ class Controller {
   __onMicrofrontendHotReload() {
     throw new Error("Method not implemented.");
   }
+
   containerLib: any
+  microfrontends: any = null;
 
   constructor(containerSchema) {
     if (containerSchema) {
-      this.containerLib = CreateLib(containerSchema, { apiAccess: CreateLib.BUILD_TYPE.INTERNAL });
+      this.containerLib = new Api(containerSchema, { apiAccess: Api.API_ACCESS.INTERNAL });
       this.containerLib.name = containerSchema.packageName;
     }
   }
-
-  microfrontends = null;
 
   areAllMicrofrontendsOnStatus(status) {
     return !Object.values(this.microfrontends).find((microfrontend: any) => microfrontend.status !== status);
@@ -48,7 +48,7 @@ class Controller {
   handleScriptMessage = message => () => {
     const messageMicrofrontend = this.microfrontends[message.origin];
 
-    messageMicrofrontend.importScript(event.data.payload);
+    messageMicrofrontend.importScript(message.data.payload);
     if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.IMPORTED)) {
       this.__onMicrofrontendsInfosLoaded(this.microfrontends);
     }
@@ -56,7 +56,7 @@ class Controller {
 
   handleStyleMessage = message => () => {
     const messageMicrofrontend = this.microfrontends[message.origin];
-    messageMicrofrontend.setStyle(event.data.payload);
+    messageMicrofrontend.setStyle(message.data.payload);
     this.__onMicrofrontendStyleChange(messageMicrofrontend.name, messageMicrofrontend.style);
   }
 
@@ -100,7 +100,7 @@ class Controller {
   initialize() {
     shared.set('registerMicrofrontend', async (name, microfrontendShared) => {
 
-      const lib = microfrontendShared && CreateLib(microfrontendShared, { apiAccess: CreateLib.BUILD_TYPE.INTERNAL, packageName: name });
+      const lib = microfrontendShared && new Api(microfrontendShared, { apiAccess: Api.API_ACCESS.INTERNAL, packageName: name });
       this.microfrontends[name].register(lib);
 
       if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.REGISTERED)) {

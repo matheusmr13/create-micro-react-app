@@ -1,5 +1,5 @@
 import React from 'react';
-import Shared from './../shared';
+import Shared from '../shared';
 
 const sharedState = new Shared('__state__');
 
@@ -25,7 +25,7 @@ const connector = (Component, packageName, name) => {
       }
 
       render() {
-        const { Component } = this.state;
+        const { Component: any } = this.state;
         if (!Component) return null;
         return <Component {...this.props} />;
       }

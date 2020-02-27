@@ -13,16 +13,16 @@ class Microfrontend {
   name
   status;
   host
-  files = {
-    js: null,
-    css: null
-  };
+  files : {
+    js ?: Array<any>,
+    css ?: Array<any>
+  } = {};
   style = []
   content
   isLoaded = false
   lib: any;
   view: any;
-  errorInitializing: { type: any; error: any; };
+  errorInitializing ?: { type: any; error: any; };
 
   constructor(name, metaInfo) {
     this.name = name;
@@ -30,7 +30,7 @@ class Microfrontend {
     this.files.js = metaInfo.js;
     this.files.css = metaInfo.css;
 
-    if (this.files.js && this.files.js.length > 0) {
+    if (this.files!.js!.length > 0) {
       this.status = Microfrontend.STATUS.IMPORTED;
     } else {
       this.status = Microfrontend.STATUS.CREATED;

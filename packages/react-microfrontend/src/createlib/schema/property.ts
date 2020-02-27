@@ -3,6 +3,8 @@ import Meta from "./meta";
 const SUBSCRIPTIONS = 'SUBSCRIPTIONS';
 
 class Property extends Meta {
+  NAMES : any = null;
+
   constructor(props, shared) {
     super(props, shared);
 
@@ -29,8 +31,8 @@ class Property extends Meta {
     this.dispatch(this.NAMES.WRITE, newState);
   }
 
-  subscribeMethod = (callback) => {
-    this.updateShared(SUBSCRIPTIONS, (subscriptions = []) => subscriptions.concat([callback]));
+  subscribeMethod = (callback : any) => {
+    this.updateShared(SUBSCRIPTIONS, (subscriptions : Array<any> = []) => subscriptions.concat([callback]));
   }
 
   build() {
@@ -44,7 +46,7 @@ class Property extends Meta {
 
   getReducers() {
     return {
-      [this.NAMES.WRITE]: (state, { payload } = {}) => ({
+      [this.NAMES.WRITE]: (state, { payload } = { payload: null }) => ({
         ...state,
         [this.name]: payload
       })

@@ -5,24 +5,31 @@ import Meta from './schema/meta';
 
 import Shared from './shared';
 
-class Api {
-  static API_ACCESS = {
-    INTERNAL: 'INTERNAL',
-    PUBLIC_API: 'PUBLIC_API',
-    PRIVATE_API: 'PRIVATE_API'
-  }
+enum API_ACCESS {
+  INTERNAL,
+  PUBLIC_API,
+  PRIVATE_API
+};
 
-  static TYPE = {
-    PROPERTY: 'PROPERTY',
-    TOPIC: 'TOPIC',
-    FUNCTION: 'FUNCTION'
-  }
+enum TYPE {
+  PROPERTY,
+  TOPIC,
+  FUNCTION,
+}
+
+class Api {
+  static API_ACCESS = API_ACCESS;
+  static TYPE = TYPE
 
   static Clazzes = {
     [Api.TYPE.FUNCTION]: MetaFunction,
     [Api.TYPE.PROPERTY]: MetaProperty,
     [Api.TYPE.TOPIC]: MetaTopic,
   }
+
+  packageName: string;
+  shared: Shared;
+  properties: any;
 
   constructor(schema, meta) {
     this.packageName = meta.packageName;

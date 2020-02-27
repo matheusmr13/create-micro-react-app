@@ -2,9 +2,9 @@ import Communication from './communication/microfrontend-client';
 import Shared from './shared';
 
 const getScriptSrcs = () => {
-  let jsSrcs = [];
+  let jsSrcs  : Array<string> = [];
   document.querySelectorAll('script').forEach(scriptTag => {
-    jsSrcs.push(scriptTag.src);
+    jsSrcs.push(scriptTag.src.toString());
   });
   return jsSrcs;
 }
@@ -22,15 +22,19 @@ const ExportMicrofrontend = (objectToExport) => {
 
     const mutationObserver = new MutationObserver(function(mutations) {
       setTimeout(() => {
-        const styleList = [];
+        const styleList : Array<string>  = [];
         document.querySelectorAll('style').forEach(a => styleList.push(a.innerHTML));
 
         communicate.send(Communication.TYPE.STYLE, styleList);
       }, 100)
     });
-    mutationObserver.observe(document.querySelector('head'), {
-      childList: true
-    });
+    const head = document.querySelector('head');
+
+    if (head) {
+      mutationObserver.observe(head.getRootNode(), {
+        childList: true
+      });
+    }
   }
 }
 

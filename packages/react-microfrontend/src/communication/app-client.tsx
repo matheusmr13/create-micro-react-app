@@ -7,7 +7,7 @@ class AppClient extends Communication {
 
   constructor() {
     super();
-    this.from = process.env.REACT_APP_PACKAGE_NAME;
+    this.from = process.env.REACT_APP_PACKAGE_NAME || ''; //TODO: fix this var
     this.to = 'http://localhost:3000';
   }
 
