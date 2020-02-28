@@ -23,6 +23,7 @@ function configureStore() {
   sharedState.set('store', store);
   return store
 }
+
 function createReducer(asyncReducers) {
   return combineReducers({
     ...staticReducers,

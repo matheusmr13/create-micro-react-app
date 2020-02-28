@@ -5,7 +5,7 @@ import Meta from './schema/meta';
 
 import Shared from './shared';
 
-enum API_ACCESS {
+enum ACCESS {
   INTERNAL,
   PUBLIC_API,
   PRIVATE_API
@@ -18,7 +18,7 @@ enum TYPE {
 }
 
 class Api {
-  static API_ACCESS = API_ACCESS;
+  static ACCESS = ACCESS;
   static TYPE = TYPE
 
   static Clazzes = {

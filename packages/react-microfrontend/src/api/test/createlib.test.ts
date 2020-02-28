@@ -1,8 +1,8 @@
-import Api from '../api';
+import Api from '..';
 
 const buildApi = customInterface => new Api({ interface: customInterface }, {
   packageName: 'test'
-}).build(Api.API_ACCESS.PUBLIC_API);
+}).build(Api.ACCESS.PUBLIC_API);
 const VALUE_1 = { prop: 'value1' };
 const VALUE_2 = { prop: 'value2' };
 

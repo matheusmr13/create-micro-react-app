@@ -1,7 +1,7 @@
 import Shared from './../shared';
 import Communication from './../communication/app-client';
 import Microfrontend from './microfrontend';
-import Api from '../createlib/api';
+import Api from '../api';
 
 const shared = new Shared('__core__');
 const microfrontendFolderName = 'microfrontends';
@@ -28,7 +28,7 @@ class Controller {
 
   constructor(containerSchema) {
     if (containerSchema) {
-      this.containerLib = new Api(containerSchema, { apiAccess: Api.API_ACCESS.INTERNAL });
+      this.containerLib = new Api(containerSchema, { apiAccess: Api.ACCESS.INTERNAL });
       this.containerLib.name = containerSchema.packageName;
     }
   }
@@ -100,7 +100,7 @@ class Controller {
   initialize() {
     shared.set('registerMicrofrontend', async (name, microfrontendShared) => {
 
-      const lib = microfrontendShared && new Api(microfrontendShared, { apiAccess: Api.API_ACCESS.INTERNAL, packageName: name });
+      const lib = microfrontendShared && new Api(microfrontendShared, { apiAccess: Api.ACCESS.INTERNAL, packageName: name });
       this.microfrontends[name].register(lib);
 
       if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.REGISTERED)) {

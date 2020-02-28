@@ -1,7 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import Controller from './controller';
-import createStore from './createlib/state/redux';
+import createStore from './api/state/redux';
 import { Provider } from 'react-redux';
 
 const iframeStyle: any = {

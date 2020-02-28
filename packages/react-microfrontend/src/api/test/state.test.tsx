@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Api from '../api';
+import Api from '..';
 import ApiProvider from '../state/provider';
 
 const test = new Api({
@@ -14,7 +14,7 @@ const test = new Api({
 
 describe('State', () => {
   describe('property', () => {
-    const mylib = test.build(Api.API_ACCESS.PUBLIC_API);
+    const mylib = test.build(Api.ACCESS.PUBLIC_API);
 
     const MyComponent = (props) => (
       <span>{props.myProp}</span>
@@ -39,7 +39,7 @@ describe('State', () => {
       wrapper.update();
       expect(wrapper.text()).toEqual('my another text')
     });
-    it('should connect component with prop', () => {
+    it('should connect and listen to changes on props', () => {
       const Wrapped = mylib.withMyProp(({ myProp }) => (
         <div>
           <button onClick={() => mylib.setMyProp(myProp + 1)}>+</button>
