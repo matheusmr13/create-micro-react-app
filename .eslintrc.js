@@ -2,6 +2,9 @@ const path = require('path')
 
 module.exports = {
   extends: 'airbnb',
+  env: {
+    "jest": true
+  },
   settings: {
     'import/resolver': {
       'eslint-import-resolver-lerna': {

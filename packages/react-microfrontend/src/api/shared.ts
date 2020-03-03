@@ -4,12 +4,12 @@ class Shared {
 
   constructor(sharedName) {
     this.sharedName = sharedName;
-    const allShared = window.__shared__ || {};
+    const allShared = window['__shared__'] || {};
     this.shared = allShared[sharedName] || {};
 
 
     allShared[sharedName] = this.shared;
-    window.__shared__ = allShared;
+    window['__shared__'] = allShared;
   }
 
   set(key, value) {

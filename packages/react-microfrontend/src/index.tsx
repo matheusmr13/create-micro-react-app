@@ -1,8 +1,4 @@
-export { default as Shared } from './shared';
-export { default as Observable } from './observable';
-export { default as CreateLib } from './api';
-
-export { default as ImportMicrofrontend, withMicrofrontend } from './import-microfrontend';
-export { default as ExportMicrofrontend } from './expose-microfrontend';
-
-// export { helpers } from './helpers';
+export { default as Api } from './api';
+export { default as ExportMicrofrontend } from './microfrontend';
+export { default as ImportMicrofrontend } from './container';
+export { default as withMicrofrontend } from './container/context/consumer';

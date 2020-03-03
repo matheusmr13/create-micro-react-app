@@ -30,10 +30,12 @@ class Api {
   packageName: string;
   shared: Shared;
   properties: any;
+  view: any;
 
   constructor(schema, meta) {
     this.packageName = meta.packageName;
     this.shared = new Shared(this.packageName);
+    this.view = schema.view;
     this.properties = Object.keys(schema.interface)
       .map(propertyName => Meta.create(
         Api.Clazzes[schema.interface[propertyName].type || Api.TYPE.PROPERTY],

@@ -1,8 +1,10 @@
 import React from 'react';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet';
+
 import Controller from './controller';
-import createStore from './api/state/redux';
-import { Provider } from 'react-redux';
+// import ApiContextProvider, { createStore } from '../api/state/redux';
+import ApiContextProvider from '../api/state/provider';
+import MicrofrontendContextProvider from './context/provider';
 
 const iframeStyle: any = {
   position: 'absolute',
@@ -14,27 +16,6 @@ const iframeStyle: any = {
   pointerEvents: 'none',
   border:0
 };
-
-const MicrofrontendContext = React.createContext({});
-const { Consumer: MicrofrontendContextConsumer } = MicrofrontendContext;
-
-interface withMicrofrontendOptions {
-  microfrontendKey: string
-}
-
-export const withMicrofrontend = (WrappedComponent, { microfrontendKey }: withMicrofrontendOptions) =>
-  (props) => (
-    <MicrofrontendContextConsumer>
-      {microfrontends => (<WrappedComponent
-            {...props}
-            microfrontends={microfrontends}
-            microfrontend={microfrontends[microfrontendKey]}
-          />
-        )
-      }
-    </MicrofrontendContextConsumer>
-  );
-
 
 interface ReactMicrofrontendProviderProps {
   opts?: {
@@ -96,16 +77,16 @@ class ReactMicrofrontend extends React.Component<ReactMicrofrontendProviderProps
           }
         })
       })
-      .onMicrofrontendsRegistered((microfrontends) => {
-        this.store = createStore();
-        Object.values(microfrontends).forEach((microfrontend: any) => {
-          if (microfrontend.lib) {
-            this.store.injectReducer(microfrontend.name, microfrontend.lib.reducers);
-          }
-        });
+      // .onMicrofrontendsRegistered((microfrontends) => {
+      //   this.store = createStore();
+      //   Object.values(microfrontends).forEach((microfrontend: any) => {
+      //     if (microfrontend.lib) {
+      //       this.store.injectReducer(microfrontend.name, microfrontend.api.reducers);
+      //     }
+      //   });
 
-        return this.store;
-      })
+      //   return this.store;
+      // })
       .onMicrofrontendsInitialized((microfrontends) => {
         this.setState({
           microfrontends
@@ -128,16 +109,16 @@ class ReactMicrofrontend extends React.Component<ReactMicrofrontendProviderProps
     return (
       <React.Fragment>
         { microfrontends && ((
-          <MicrofrontendContext.Provider value={microfrontends} >
-            <Provider store={this.store}>
+          <MicrofrontendContextProvider value={microfrontends} >
+            <ApiContextProvider microfrontends={Object.keys(microfrontends).reduce((agg, m) => Object.assign(agg, { [m]: microfrontends[m].api }), {})}>
               {children}
-            </Provider>
-          </MicrofrontendContext.Provider>
+            </ApiContextProvider>
+          </MicrofrontendContextProvider>
         )) }
         <Helmet>
           { !!jsToLoad.length && jsToLoad.map((url) => <script key={url} src={url} type="text/javascript" /> )}
           { !!cssToLoad.length && cssToLoad.map((url) => <link key={url} href={url} type="text/css" rel="stylesheet" /> )}
-          { Object.values(styleToLoad).length && Object.values(styleToLoad).map((styleContent: any) => styleContent.map(content => <style type="text/css" >{content}</style> ))}
+          { !!(Object.values(styleToLoad).length) && Object.values(styleToLoad).map((styleContent: any) => styleContent.map(content => <style type="text/css" >{content}</style> ))}
         </Helmet>
         {
           !!iframesToLoad.length && iframesToLoad.map((iframeSrc) => (

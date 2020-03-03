@@ -1,5 +1,4 @@
-import Communication from './communication/microfrontend-client';
-import Shared from './shared';
+import Communication from './communication';
 
 const getScriptSrcs = () => {
   let jsSrcs  : Array<string> = [];
@@ -9,12 +8,11 @@ const getScriptSrcs = () => {
   return jsSrcs;
 }
 
-const shared = new Shared('__core__');
 const ExportMicrofrontend = (objectToExport) => {
-  const registerMicrofrontend = shared.get('registerMicrofrontend');
+  const registerMicrofrontend = window['__shared__']['__core__']['registerMicrofrontend'];
 
   if (registerMicrofrontend) {
-    registerMicrofrontend(process.env.REACT_APP_PACKAGE_NAME, objectToExport);
+    registerMicrofrontend(objectToExport.name, objectToExport);
   } else {
     const communicate = new Communication();
     communicate.send(Communication.TYPE.LOAD);

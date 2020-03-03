@@ -1,7 +1,8 @@
-import { combineReducers, createStore, applyMiddleware } from 'redux';
+import React from 'react';
+import { combineReducers, createStore as createReduxStore, applyMiddleware } from 'redux';
 import { handleActions } from 'redux-actions';
 import Shared from '../shared';
-import { connect } from 'react-redux';
+import { connect, Provider } from 'react-redux';
 
 const sharedState = new Shared('__state__');
 
@@ -10,7 +11,7 @@ const staticReducers = {
 };
 
 function configureStore() {
-  const store : any = createStore(createReducer({}))
+  const store : any = createReduxStore(createReducer({}))
 
   store.asyncReducers = {}
 
