@@ -75,7 +75,7 @@ class ReactMicrofrontend extends React.Component<ReactMicrofrontendProviderProps
             ...styleToLoad,
             [name]: styles
           }
-        })
+        });
       })
       // .onMicrofrontendsRegistered((microfrontends) => {
       //   this.store = createStore();

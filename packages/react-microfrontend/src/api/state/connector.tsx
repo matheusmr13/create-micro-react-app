@@ -3,6 +3,7 @@ import Shared from '../shared';
 
 const sharedState = new Shared('__state__');
 
+
 const connector = (Component, packageName, name) => {
     const mapStateToProps = (state) => ({
       [name]: state[packageName][name]
@@ -10,7 +11,7 @@ const connector = (Component, packageName, name) => {
     const mapDispatchToProps = {};
 
     return class MyComponent extends React.Component<{}, {
-      Component ?: React.Component
+      Component ?: React.ComponentType
     }> {
       state = {
         Component: undefined
@@ -29,7 +30,10 @@ const connector = (Component, packageName, name) => {
       render() {
         const { Component } = this.state;
         if (!Component) return null;
-        return <Component {...this.props} />;
+
+        // Changing this to "return <Component {...this.props} /> would cause an error" (???)
+        const TypescriptFix = ({ C, ...props }) => <C {...props} />;
+        return <TypescriptFix C={Component} {...this.props} />
       }
     }
 }

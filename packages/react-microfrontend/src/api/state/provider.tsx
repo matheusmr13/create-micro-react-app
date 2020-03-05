@@ -1,8 +1,11 @@
 import { Provider } from 'react-redux';
 import React, { Component } from 'react';
 import createStore from './redux';
+import Api from '..';
 
-class ApiProvider extends Component {
+class ApiProvider extends Component<{
+  microfrontends: { [key : string] : Api; }
+}> {
   state = {
     store: null
   }

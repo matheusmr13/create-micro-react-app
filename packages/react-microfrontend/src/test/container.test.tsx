@@ -49,7 +49,7 @@ describe('container', () => {
           type: 'SCRIPT',
           origin: 'my-micro',
           source: 'react-microfrontend',
-          data: { payload: ['my-js-file.js']}
+          payload: ['my-js-file.js']
         },
       });
 
@@ -79,7 +79,7 @@ describe('container', () => {
           type: 'STYLE',
           origin: 'my-micro',
           source: 'react-microfrontend',
-          data: { payload: ['my-style']}
+          payload: ['my-style']
         }
       });
 

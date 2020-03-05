@@ -23,7 +23,7 @@ enum CALLBACKS {
 
 class Controller {
   private containerApi: any
-  private microfrontends ?: { [key : string] : Microfrontend; };
+  private microfrontends : { [key : string] : Microfrontend; } = {};
   private callbacks : { [key in keyof typeof CALLBACKS] ?: Function; } = {};
 
   constructor(containerSchema) {
@@ -48,7 +48,7 @@ class Controller {
   handleScriptMessage = message => () => {
     const messageMicrofrontend = this.microfrontends[message.origin];
 
-    messageMicrofrontend.importScript(message.data.payload);
+    messageMicrofrontend.importScript(message.payload);
     if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.IMPORTED)) {
       this.call(CALLBACKS.MICROFRONTENDS_INFOS_LOADED, this.microfrontends);
     }
@@ -56,7 +56,7 @@ class Controller {
 
   handleStyleMessage = message => () => {
     const messageMicrofrontend = this.microfrontends[message.origin];
-    messageMicrofrontend.setStyle(message.data.payload);
+    messageMicrofrontend.setStyle(message.payload);
     this.call(CALLBACKS.MICROFRONTEND_STYLE_CHANGED, messageMicrofrontend.name, messageMicrofrontend.style);
   }
 
@@ -98,10 +98,7 @@ class Controller {
 
   initialize() {
     shared.set('registerMicrofrontend', async (name, schema) => {
-      if (schema) {
-        const api = new Api(schema, { packageName: name });
-        this.microfrontends[name].registerApi(api);
-      }
+      this.microfrontends[name].registerApi(schema);
 
       if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.REGISTERED)) {
         this.call(CALLBACKS.MICROFRONTENDS_REGISTERED, this.microfrontends);

@@ -42,10 +42,9 @@ class Microfrontend {
     }
   }
 
-  registerApi(api) {
+  registerApi(schema) {
     this.status = STATUS.REGISTERED;
-
-    this.api = api;
+    this.api = new Api(schema, {});
   }
 
   setAsInitialized() {

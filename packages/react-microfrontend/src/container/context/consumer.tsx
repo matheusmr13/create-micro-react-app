@@ -4,16 +4,15 @@ import MicrofrontendContext from './index';
 const { Consumer: MicrofrontendContextConsumer } = MicrofrontendContext;
 
 interface withMicrofrontendOptions {
-  microfrontendKey: string
+  microfrontendKey ?: string
 }
 
-export default (WrappedComponent, { microfrontendKey }: withMicrofrontendOptions) =>
-(props) => (
+export default (WrappedComponent, opts : withMicrofrontendOptions = {}) => (props) => (
   <MicrofrontendContextConsumer>
     {microfrontends => (<WrappedComponent
           {...props}
           microfrontends={microfrontends}
-          microfrontend={microfrontends[microfrontendKey]}
+          {...(opts.microfrontendKey ? { microfrontend: microfrontends[opts.microfrontendKey] } : {})}
         />
       )
     }
