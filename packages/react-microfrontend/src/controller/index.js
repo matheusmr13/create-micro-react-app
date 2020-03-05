@@ -111,7 +111,7 @@ class Controller {
 
     fetchRetry(`./${microfrontendFolderName}/meta.json`,{
       limit: RETRY_CONFIG.LIMIT,
-      delay: RETRY_CONFIG.LIMIT
+      delay: RETRY_CONFIG.DELAY
     }).then(meta => {
       this.microfrontends = Object.keys(meta)
         .reduce((agg, microfrontendName) => Object.assign(agg, {
