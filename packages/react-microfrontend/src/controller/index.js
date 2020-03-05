@@ -2,9 +2,15 @@ import Shared from './../shared';
 import Communication from './../communication/app-client';
 import Microfrontend from './microfrontend';
 import CreateLib from '../state/createLib';
+import fetchRetry from '../fetch-retry';
 
 const shared = new Shared('__core__');
 const microfrontendFolderName = 'microfrontends';
+
+const RETRY_CONFIG = {
+  LIMIT: 5,
+  DELAY: 3000
+}
 
 class Controller {
   constructor(containerSchema) {
@@ -103,7 +109,10 @@ class Controller {
       }[message.type] || (() => { console.info(`Unknown type ${message.type}`); }))();
     }).initialize();
 
-    fetch(`./${microfrontendFolderName}/meta.json`).then(response => response.json()).then(meta => {
+    fetchRetry(`./${microfrontendFolderName}/meta.json`,{
+      limit: RETRY_CONFIG.LIMIT,
+      delay: RETRY_CONFIG.LIMIT
+    }).then(meta => {
       this.microfrontends = Object.keys(meta)
         .reduce((agg, microfrontendName) => Object.assign(agg, {
           [microfrontendName] : new Microfrontend(microfrontendName, meta[microfrontendName])
