@@ -35,7 +35,7 @@ const App = ({ microfrontends }) => {
         {
           MicrofrontendComponent && (
             <div className="App__microfrontend-content">
-              <MicrofrontendComponent.view />
+              <MicrofrontendComponent.api.view />
             </div>
           )
         }

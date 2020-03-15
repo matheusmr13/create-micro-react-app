@@ -1,2 +1,5 @@
 /e2e-dist
 /node_modules
+
+/cypress/videos
+/cypress/screenshots
