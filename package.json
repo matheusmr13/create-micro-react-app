@@ -11,7 +11,7 @@
     "lerna": "^3.19.0"
   },
   "scripts": {
-    "test": "lerna run test",
+    "test": "lerna run --stream --concurrency=1 test",
     "lerna-bootstrap": "lerna bootstrap"
   },
   "dependencies": {
