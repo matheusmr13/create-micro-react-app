@@ -47,6 +47,9 @@ const writeFile = async (pathToFile, content) => {
 const writeJson = async (pathToFile, json) => writeFile(pathToFile, JSON.stringify(json, null, 2));
 
 const copyTemplateTo = async (template, pathToFolder) => {
+  const templateExists = existsSync(template);
+  if (!templateExists) return Promise.resolve();
+
   await copyFolder(`${__dirname}/../../templates/${template}`, pathToFolder);
 };
 
