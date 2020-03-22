@@ -52,16 +52,14 @@ const serve = async () => {
   return app.listen(8081);
 };
 
-const runTests = async () => {
-  const results = await cypress.run({
-    browser: 'chrome',
-    config: {
-      baseUrl: `http://localhost:${8081}`,
-      video: true,
-    },
-    exit: true,
-  });
-};
+const runTests = async () => cypress.run({
+  browser: 'chrome',
+  config: {
+    baseUrl: `http://localhost:${8081}`,
+    video: true,
+  },
+  exit: true,
+});
 
 const run = async () => {
   await cleanUp();
@@ -70,8 +68,12 @@ const run = async () => {
   await build();
 
   const server = await serve();
-  await runTests();
+  const results = await runTests();
   server.close();
+
+  if (results.totalFailed > 0) {
+    throw new Error('Tests failed');
+  }
 };
 
 
