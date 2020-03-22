@@ -12,7 +12,7 @@ export default (WrappedComponent, opts : withMicrofrontendOptions = {}) => (prop
     {microfrontends => (<WrappedComponent
           {...props}
           microfrontends={microfrontends}
-          {...(opts.microfrontendKey ? { microfrontend: microfrontends[opts.microfrontendKey] } : {})}
+          {...(opts.microfrontendKey ? { microfrontend: microfrontends[opts.microfrontendKey].api } : {})}
         />
       )
     }
