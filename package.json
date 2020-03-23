@@ -12,6 +12,7 @@
   },
   "scripts": {
     "test": "lerna run test",
+    "postinstall": "yarn lerna-bootstrap",
     "lerna-bootstrap": "lerna bootstrap"
   },
   "dependencies": {
