@@ -12,6 +12,7 @@
   },
   "scripts": {
     "test": "lerna run --stream --concurrency=1 test",
+    "postinstall": "yarn lerna-bootstrap",
     "lerna-bootstrap": "lerna bootstrap"
   },
   "dependencies": {
