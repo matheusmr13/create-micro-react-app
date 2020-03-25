@@ -1,6 +1,7 @@
 # Create Microfrontend React App
 
 [![Build Status](https://travis-ci.com/matheusmr13/create-microfrontend-react-app.svg?branch=master)](https://travis-ci.com/matheusmr13/create-microfrontend-react-app)
+[![Build Status](https://dev.azure.com/matheusmr13/create-microfrontend-react-app/_apis/build/status/matheusmr13.create-microfrontend-react-app?branchName=master)](https://dev.azure.com/matheusmr13/create-microfrontend-react-app/_build/latest?definitionId=2&branchName=master)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=matheusmr13_create-microfrontend-react-app&metric=alert_status)](https://sonarcloud.io/dashboard?id=matheusmr13_create-microfrontend-react-app)
 
 Create simple microfrontend architecture with tools like [Create React App](https://github.com/facebook/create-react-app).
