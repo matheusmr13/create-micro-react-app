@@ -8,14 +8,18 @@ const buildFolder = (testName, isOld) => `./test/__snapshots__/dist${isOld ? '' 
 const testSnapshot = async (testName) => {
   const newFolder = buildFolder(testName);
   const oldFolder = buildFolder(testName, true);
+  let result;
   try {
-    const result = await dircompare.compare(oldFolder, newFolder, {
+    result = await dircompare.compare(oldFolder, newFolder, {
       compareContent: true,
       excludeFilter: 'node_modules',
     });
+  } catch (e) {
+    throw new Error(`There is no snapshot created for "${testName}". Maybe you should check "${newFolder}" and, if it is right, copy to "${oldFolder}" in order to setup a new base snapshot`);
+  }
 
-    if (result.distinctFiles > 0) {
-      throw new Error(`
+  if (result.distinctFiles > 0) {
+    throw new Error(`
         Test "${testName}" failed with ${result.distinctFiles} different files. Check diff with:
 
 ${result.diffSet
@@ -23,9 +27,6 @@ ${result.diffSet
     .map(diff => `diff ${diff.path1}/${diff.name1} ${diff.path2}/${diff.name2}`)
     .join('\n\n')}
       `);
-    }
-  } catch (e) {
-    throw new Error(`There is no snapshot created for "${testName}". Maybe you should check "${newFolder}" and, if it is right, copy to "${oldFolder}" in order to setup a new base snapshot`);
   }
 };
 
