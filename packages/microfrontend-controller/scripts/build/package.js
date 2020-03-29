@@ -120,6 +120,11 @@ const packageAll = async (opts) => {
   for (let i = 0; i < microfrontends.length; i++) {
     const actualPackage = microfrontends[i];
 
+    await copyFolder(
+      `./${allBuildsFolder}/${actualPackage}`,
+      `./${distFolder}/${microfrontendFolderName}/${actualPackage}`,
+    );
+
     [
       'asset-manifest.json',
       'index.html',
@@ -130,16 +135,11 @@ const packageAll = async (opts) => {
       'deps.json',
     ].forEach((file) => {
       try {
-        rmSync(`./${allBuildsFolder}/${actualPackage}/${file}`);
+        rmSync(`./${distFolder}/${microfrontendFolderName}/${actualPackage}/${file}`);
       } catch (error) {
         console.error(error);
       }
     });
-
-    await copyFolder(
-      `./${allBuildsFolder}/${actualPackage}`,
-      `./${distFolder}/${microfrontendFolderName}/${actualPackage}`,
-    );
   }
 
   const metaMicrofrontend = await mapMicrofrontend(microfrontends);

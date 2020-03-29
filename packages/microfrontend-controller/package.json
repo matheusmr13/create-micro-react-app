@@ -23,8 +23,8 @@
     "react-app-rewired": "^2.1.5",
     "react-scripts": "^3.2.0",
     "semver": "^6.3.0",
-    "sw-precache": "^5.2.1",
-    "uglify-js": "^3.6.7"
+    "uglify-js": "^3.6.7",
+    "workbox-build": "^5.1.2"
   },
   "scripts": {
     "test": "echo 'pass'"
