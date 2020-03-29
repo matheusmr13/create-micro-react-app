@@ -1,0 +1,58 @@
+.App {
+  text-align: center;
+}
+
+.App__header {
+  background-color: #282c34;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  font-weight: bold;
+  padding: 16px;
+  line-height: 32px;
+  margin: 0;
+}
+
+.App__menu {
+  display: flex;
+  justify-content: center;
+  background-color: #575f6d;
+}
+
+.App__menu-item {
+  border: 0;
+  background-color: #373f4e;
+  padding: 16px;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  outline: 0;
+  cursor: pointer;
+}
+
+.App__menu-item:not(:last-child) {
+  border-left: #575f6d;
+}
+
+.App__menu-item:hover {
+  background-color: #2c3340;
+}
+
+.App__menu-item--selected {
+  background-color: #242b38;
+}
+
+.App__menu-item--selected:hover {
+  background-color: #242b38;
+}
+
+.App__content {
+  display: flex;
+}
+
+.App__microfrontend-content {
+  flex: 1 0 220px;
+}
