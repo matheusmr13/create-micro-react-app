@@ -1,5 +1,5 @@
 module.exports = {
-	staticFileGlobs:
+  staticFileGlobs:
 	 [
 	   './build/**/**.html',
 	   './build/vendor/**',
@@ -13,7 +13,6 @@ module.exports = {
 	   './build/**/bundle/**',
 	   './build/**/static/js/*.js',
 	   './build/**/static/css/*.css',
-	   './build/**/static/media/**'
-	 ]
-  };
-  
+	   './build/**/static/media/**',
+	 ],
+};
