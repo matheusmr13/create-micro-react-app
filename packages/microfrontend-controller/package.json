@@ -27,14 +27,23 @@
     "workbox-build": "^5.1.2"
   },
   "scripts": {
-    "test": "echo 'pass'"
+    "test:watch": "jest watch ./test",
+    "test": "jest ./test"
   },
   "devDependencies": {
+    "dir-compare": "^2.2.0",
+    "jest": "^25.2.3",
     "rollup-plugin-typescript": "^1.0.1",
     "tslib": "^1.10.0",
     "typescript": "^3.7.4"
   },
   "engines": {
     "node": ">=12.10"
+  },
+  "jest": {
+    "testPathIgnorePatterns" : [
+      "<rootDir>/test/__snapshots__"
+    ],
+    "testTimeout": 10000000
   }
 }
