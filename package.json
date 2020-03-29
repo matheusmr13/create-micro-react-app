@@ -13,7 +13,8 @@
   "scripts": {
     "test": "lerna run --stream --concurrency=1 test",
     "postinstall": "yarn lerna-bootstrap",
-    "lerna-bootstrap": "lerna bootstrap"
+    "lerna-bootstrap": "lerna bootstrap",
+    "validate:react-microfrontend": "lerna run --scope react-microfrontend validate --stream "
   },
   "dependencies": {
     "eslint-import-resolver-lerna": "^1.1.0"
