@@ -2,6 +2,7 @@ import Shared from '../../api/shared';
 import Communication from '../communication';
 import Microfrontend from './microfrontend';
 import Api from '../../api';
+import fetchRetry from '../../fetch-retry';
 
 const shared = new Shared('__core__');
 const microfrontendFolderName = 'microfrontends';
@@ -10,6 +11,11 @@ declare global {
   interface Event {
     data?: any
   }
+}
+
+const RETRY_CONFIG = {
+  LIMIT: 5,
+  DELAY: 3000
 }
 
 enum CALLBACKS {
@@ -116,7 +122,10 @@ class Controller {
       }[message.type] || (() => { console.info(`Unknown type ${message.type}`); }))();
     }).initialize();
 
-    fetch(`./${microfrontendFolderName}/meta.json`).then(response => response.json()).then(meta => {
+    fetchRetry(`./${microfrontendFolderName}/meta.json`,{
+      limit: RETRY_CONFIG.LIMIT,
+      delay: RETRY_CONFIG.DELAY
+    }).then(meta => {
       this.microfrontends = Object.keys(meta)
         .reduce((agg, microfrontendName) => Object.assign(agg, {
           [microfrontendName] : new Microfrontend(microfrontendName, meta[microfrontendName])
