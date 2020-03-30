@@ -1,4 +1,4 @@
-import Communication from './../base/communication';
+import Communication from '../base/communication';
 
 class AppClient extends Communication {
   from: string;

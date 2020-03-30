@@ -1,7 +1,7 @@
 const LIMIT = 1;
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-const fetchRetry = async (url, { limit = LIMIT, delay, ...opts } = {}) => {
+const fetchRetry = async (url, { limit = LIMIT, delay = 5000, ...opts } = {}) => {
   let error;
   try {
     const response = await fetch(url, opts);

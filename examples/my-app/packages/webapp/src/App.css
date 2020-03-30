@@ -1,29 +1,31 @@
 .App {
   text-align: center;
+  display: flex;
 }
 
-.App__header {
+.App__side-bar {
   background-color: #282c34;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: white;
   font-weight: bold;
   padding: 16px;
-  line-height: 32px;
   margin: 0;
+  height: 100vh;
+  width: 200px;
 }
 
-.App__menu {
+.App__restaurant-profile {
+  padding: 12px;
+}
+
+.App__nav-bar {
   display: flex;
-  justify-content: center;
-  background-color: #575f6d;
 }
 
 .App__menu-item {
   border: 0;
+  border-radius: 4px;
   background-color: #373f4e;
   padding: 16px;
   color: white;
@@ -31,10 +33,7 @@
   font-weight: bold;
   outline: 0;
   cursor: pointer;
-}
-
-.App__menu-item:not(:last-child) {
-  border-left: #575f6d;
+  width: 100%;
 }
 
 .App__menu-item:hover {
@@ -51,8 +50,9 @@
 
 .App__content {
   display: flex;
+  flex: 1;
 }
 
-.App__microfrontend-content {
+/* .App__microfrontend-content {
   flex: 1 0 220px;
-}
+} */

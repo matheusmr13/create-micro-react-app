@@ -1,46 +1,49 @@
-import { withMicrofrontend } from 'react-microfrontend';
+import { withMicrofrontend, TYPE } from 'react-microfrontend';
 
-import React, { useState } from 'react';
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 import './App.css';
 
-const App = ({ microfrontends }) => {
-  const [selectedMicrofrontendKey, setSelectedMicrofrontendKey] = useState(undefined);
-
-  const MicrofrontendComponent = selectedMicrofrontendKey
-    ? microfrontends[selectedMicrofrontendKey]
-    : Object.values(microfrontends)[0];
-
+const App = ({ microfrontendsList }) => {
+  console.info(microfrontendsList)
   return (
-    <div className="App">
-      <p className="App__header">
-        Welcome to Microfrontend World.
-        <br />
-        Choose a microfrontend to show:
-      </p>
-      <div className="App__menu">
-        {
-          Object.keys(microfrontends).map(microfrontend => (
-            <button
-              onClick={() => setSelectedMicrofrontendKey(microfrontend)}
-              key={microfrontend}
-              className={`App__menu-item${microfrontend === selectedMicrofrontendKey ? ' App__menu-item--selected' : ''}`}
-            >
-              {microfrontend}
-            </button>
-          ))
-        }
+    <Router>
+      <div  className="App">
+        <section className="App__side-bar">
+          <div className="App__restaurant-profile">
+            My Restaurant
+          </div>
+          <nav className="App__nav-bar">
+            {
+              microfrontendsList.map(microfrontend => (
+                <Link
+                  to={microfrontend.definition.url}
+                  key={microfrontend.packageName}
+                  className={`App__menu-item`}//${microfrontend === selectedMicrofrontendKey ? ' App__menu-item--selected' : ''}`}
+                >
+                  {microfrontend.definition.label}
+                </Link>
+              ))
+            }
+          </nav>
+        </section>
+        <section className="App__content">
+          <Router>
+            <Switch>
+              {microfrontendsList.map(micro => (
+                <Route path={micro.definition.url} component={micro.view} key={micro.packageName} />
+              ))}
+            </Switch>
+          </Router>
+        </section>
       </div>
-      <div className="App__content">
-        {
-          MicrofrontendComponent && (
-            <div className="App__microfrontend-content">
-              <MicrofrontendComponent.api.view />
-            </div>
-          )
-        }
-      </div>
-    </div>
+    </Router>
   );
 };
-export default withMicrofrontend(App);
+export default withMicrofrontend(App, { filterByType: TYPE.ROUTING });

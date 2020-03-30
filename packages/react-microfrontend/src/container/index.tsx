@@ -2,7 +2,6 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 
 import Controller from './controller';
-// import ApiContextProvider, { createStore } from '../api/state/redux';
 import ApiContextProvider from '../api/state/provider';
 import MicrofrontendContextProvider from './context/provider';
 
@@ -77,16 +76,6 @@ class ReactMicrofrontend extends React.Component<ReactMicrofrontendProviderProps
           }
         });
       })
-      // .onMicrofrontendsRegistered((microfrontends) => {
-      //   this.store = createStore();
-      //   Object.values(microfrontends).forEach((microfrontend: any) => {
-      //     if (microfrontend.lib) {
-      //       this.store.injectReducer(microfrontend.name, microfrontend.api.reducers);
-      //     }
-      //   });
-
-      //   return this.store;
-      // })
       .onMicrofrontendsInitialized((microfrontends) => {
         this.setState({
           microfrontends

@@ -31,11 +31,13 @@ class Api {
   shared: Shared;
   properties ?: any;
   view: any;
+  definition: any;
 
   constructor(schema, meta) {
     this.packageName = schema.name || meta.packageName;
     this.shared = new Shared(this.packageName);
     this.view = schema.view;
+    this.definition = schema.definition;
     if (schema.interface) {
       this.properties = Object.keys(schema.interface)
         .map(propertyName => Meta.create(
@@ -60,6 +62,10 @@ class Api {
 
     return this.properties
       .reduce((agg, property) => Object.assign(agg, property.build(apiAccess)), {});
+  }
+
+  hasType(type) {
+    return this.definition.type === type;
   }
 }
 

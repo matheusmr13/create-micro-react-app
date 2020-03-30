@@ -2,7 +2,7 @@ import Shared from '../../api/shared';
 import Communication from '../communication';
 import Microfrontend from './microfrontend';
 import Api from '../../api';
-import fetchRetry from '../../fetch-retry';
+import fetchRetry from '../../base/fetch-retry';
 
 const shared = new Shared('__core__');
 const microfrontendFolderName = 'microfrontends';
