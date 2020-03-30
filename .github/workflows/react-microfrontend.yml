@@ -23,13 +23,15 @@ jobs:
   publish-npm:
     needs: validate
     runs-on: ubuntu-latest
-    working-directory: ./packages/react-microfrontend
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 12
           registry-url: https://registry.npmjs.org/
-      - run: yarn print
+      - name: Printing test
+        run: yarn print
+        working-directory: ./packages/react-microfrontend
+      # - run:
         # env:
         #   NODE_AUTH_TOKEN: ${{secrets.npm_token}} # Add the npm token on this repo secret
