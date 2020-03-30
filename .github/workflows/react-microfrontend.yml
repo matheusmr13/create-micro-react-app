@@ -1,13 +1,9 @@
-name: CI + Publish
-
+name: Validate and publish
 
 on:
   push:
-    branches:
-      - feature/releases_actions
-  # push:
-  #   tags:
-  #     - react-microfrontend-v* # Any tag starting with, example: "react-microfrontend-v2.2.0"
+    tags:
+      - react-microfrontend-v* # Any tag starting with, example: "react-microfrontend-v2.2.0"
 
 jobs:
   validate:
@@ -18,10 +14,11 @@ jobs:
         with:
           node-version: 12
       - name: Validations
-        run: yarn && yarn validate:react-microfrontend
+        run: yarn && yarn validate
+        working-directory: ./packages/react-microfrontend
 
   publish-npm:
-    needs: validate
+    needs: validate # awaits "validate" job to run
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -30,8 +27,7 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
       - name: Printing test
-        run: yarn print
+        run: npm publish
         working-directory: ./packages/react-microfrontend
-      # - run:
-        # env:
-        #   NODE_AUTH_TOKEN: ${{secrets.npm_token}} # Add the npm token on this repo secret
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}} # Add the npm token on this repo secrets configuration
