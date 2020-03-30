@@ -1,0 +1,35 @@
+name: CI + Publish
+
+
+on:
+  push:
+    branches:
+      - feature/releases_actions
+  # push:
+  #   tags:
+  #     - react-microfrontend-v* # Any tag starting with, example: "react-microfrontend-v2.2.0"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Validations
+        run: yarn && yarn validate:react-microfrontend
+
+  publish-npm:
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://registry.npmjs.org/
+      working-directory: ./packages/react-microfrontend
+      - run: yarn print
+        # env:
+        #   NODE_AUTH_TOKEN: ${{secrets.npm_token}} # Add the npm token on this repo secret
