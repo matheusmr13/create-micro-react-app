@@ -18,7 +18,8 @@ jobs:
         with:
           node-version: 12
       - name: Validations
-        run: yarn && yarn validate:react-microfrontend
+        run: yarn && yarn validate
+        working-directory: ./packages/react-microfrontend
 
   publish-npm:
     needs: validate
