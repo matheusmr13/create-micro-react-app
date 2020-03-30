@@ -36,9 +36,6 @@ describe('test', () => {
     await mkdir(buildFolder('', true));
     await mkdir(buildFolder(''));
   });
-  afterAll(async () => {
-    await rm(buildFolder(''));
-  });
   it('should create app', async () => {
     const TEST_NAME = 'CREATE_APP';
     await create([create.TYPE.APP], buildFolder(TEST_NAME), {});
