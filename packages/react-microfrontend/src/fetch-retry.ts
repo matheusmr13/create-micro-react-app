@@ -1,8 +1,15 @@
 const LIMIT = 1;
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-const fetchRetry = async (url, { limit = LIMIT, delay, ...opts } = {}) => {
-  let error;
+
+interface FetchRetryOptions {
+  limit?: number,
+  delay?: number | undefined,
+  [x: string]: any
+}
+
+const fetchRetry = async (url: string, { limit = LIMIT, delay = undefined, ...opts }: FetchRetryOptions = {}) => {
+  let error: Error;
   try {
     const response = await fetch(url, opts);
     const { status, statusText } = response;

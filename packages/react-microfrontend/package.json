@@ -23,7 +23,8 @@
     "start": "rollup -c -w",
     "predeploy": "cd example && yarn install && yarn run build",
     "deploy": "gh-pages -d example/build",
-    "prepare": "yarn run build"
+    "prepare": "yarn run build",
+    "validate": "yarn test && yarn build"
   },
   "peerDependencies": {
     "react": ">=16.12.0",
