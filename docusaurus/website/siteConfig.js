@@ -14,14 +14,14 @@ const users = [
   },
 ];
 
-const repoUrl = 'https://github.com/matheusmr13/create-microfrontend-react-app';
+const repoUrl = 'https://github.com/matheusmr13/create-micro-react-app';
 const siteConfig = {
   title: 'Create Microfrontend React App',
   tagline: 'Create a microfrontend architecture as simple as CRA.',
   url: 'https://matheusmr13.github.io/',
-  baseUrl: '/create-microfrontend-react-app/',
+  baseUrl: '/create-micro-react-app/',
   repoUrl,
-  projectName: 'create-microfrontend-react-app',
+  projectName: 'create-micro-react-app',
   organizationName: 'matheusmr13',
 
   users,

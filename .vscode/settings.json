@@ -1,6 +1,14 @@
 {
-  "eslint.enable": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  }
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "folders": [],
+  "settings": {},
+  "editor.formatOnSave": true,
+  "editor.useTabStops": false,
+  "prettier.printWidth": 120,
+  "prettier.singleQuote": true,
+  "editor.detectIndentation": false,
+  "editor.tabSize": 2
 }

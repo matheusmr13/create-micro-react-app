@@ -91,7 +91,7 @@ class Index extends React.Component {
       <div
         className="productShowcaseSection paddingBottom"
         style={{textAlign: 'center'}}>
-        <h2>Microfrontend Development Made Easy</h2>
+        <h2>Microfrontend Development Made Easyy</h2>
         <MarkdownBlock>Hot reload, simulate your production envvironment, a command line to help you and much more.</MarkdownBlock>
       </div>
     );
