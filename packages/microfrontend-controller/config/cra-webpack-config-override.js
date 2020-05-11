@@ -15,6 +15,8 @@ const overrideWebpackConfigs = () => (config) => {
   if (process.env.NODE_ENV === 'production') {
     if (process.env.IS_MICROFRONTEND) {
       newConfig.output.publicPath = `./${microfrontendFolderName}/${escapedPackageName}/`;
+    } else {
+      newConfig.output.publicPath = './';
     }
   } else if (process.env.IS_MICROFRONTEND) {
     newConfig.output.publicPath = `http://localhost:${process.env.PORT}/`;
