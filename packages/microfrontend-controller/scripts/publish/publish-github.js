@@ -8,7 +8,7 @@ const publish = async () => {
 
   const escapePackageName = (packageName) => packageName.replace(/@/g, '').replace(/\//g, '_');
 
-  const dest = `versions/${escapePackageName(appPackageJson.name)}/${appPackageJson.version}`;
+  const dest = `versions/${escapePackageName(packageJson.name)}/${packageJson.version}`;
   await new Promise((resolve, reject) => {
     ghPages.publish(
       'build',
