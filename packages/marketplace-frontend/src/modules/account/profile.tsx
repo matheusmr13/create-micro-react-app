@@ -29,23 +29,23 @@ function Profiile() {
       {loading ? (
         <Spin size="large" />
       ) : (
-        <Form name="basic" initialValues={profile} onFinish={onFinish}>
-          <Form.Item label="Github Token" name="githubToken">
-            <Input />
-          </Form.Item>
+          <Form name="basic" initialValues={profile} onFinish={onFinish}>
+            <Form.Item label="Github Token" name="githubToken">
+              <Input />
+            </Form.Item>
 
-          <Form.Item>
-            <Space>
-              <Button type="primary" htmlType="submit" loading={savingProfile}>
-                Save
+            <Form.Item>
+              <Space>
+                <Button type="primary" htmlType="submit" loading={savingProfile}>
+                  Save
               </Button>
-              <Link to="/logout">
-                <Button type="danger">Logout</Button>
-              </Link>
-            </Space>
-          </Form.Item>
-        </Form>
-      )}
+                <Link to="/logout">
+                  <Button type="dashed">Logout</Button>
+                </Link>
+              </Space>
+            </Form.Item>
+          </Form>
+        )}
     </Page>
   );
 }

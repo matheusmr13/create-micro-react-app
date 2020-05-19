@@ -1,4 +1,3 @@
-
 const { override, overrideDevServer } = require('customize-cra');
 const { microfrontendFolderName } = require('../scripts/utils/config');
 const { appPackageJson } = require('../scripts/utils/paths');

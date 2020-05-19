@@ -7,13 +7,7 @@ import Version from 'version/model';
 
 import { PathToNamespace, PathTo } from './path';
 
-const FILES_TO_REMOVE = [
-  'asset-manifest.json',
-  'manifest.json',
-  'precache-manifest*',
-  'service-worker.js',
-  'deps.json',
-];
+const FILES_TO_REMOVE = ['asset-manifest.json', 'precache-manifest*', 'service-worker.js', 'deps.json'];
 
 const mapMicrofrontend = async (pathToNamespace: PathToNamespace, microfrontends: MicroVersion[]) => {
   const meta = await Promise.all(
