@@ -1,4 +1,5 @@
 const { createModule } = require('./module');
+const { createLibrary } = require('./library');
 
 const { writeFile } = require('../utils/fs');
 const { explain } = require('../utils/log');
@@ -27,4 +28,14 @@ const createMicrofrontend = async (name, folder = '.') => {
   );
 };
 
-module.exports = createMicrofrontend;
+const createMicrofrontendWithLibrary = async (name, folder = '.') => {
+  await explain(
+    'Creating microfrontend with library',
+    () => createLibrary(name, folder, 'microfrontend-library'),
+  );
+};
+
+module.exports = {
+  createMicrofrontend,
+  createMicrofrontendWithLibrary,
+};
