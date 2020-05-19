@@ -5,7 +5,7 @@ import App from './App';
 ExportMicrofrontend({
   ...schema,
   view: App,
-  name: 'microfrontend',
+  name: 'order',
   definition: {
     type: TYPE.ROUTING,
     url: '/orders',

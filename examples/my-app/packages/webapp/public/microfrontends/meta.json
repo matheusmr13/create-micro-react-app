@@ -1,8 +1,5 @@
 {
-  "home": {
+  "orders": {
     "host": "http://localhost:3001"
-  },
-  "microfrontend": {
-    "host": "http://localhost:3002"
   }
 }

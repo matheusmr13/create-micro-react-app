@@ -13,7 +13,7 @@ const iframeStyle: any = {
   left: 0,
   opacity: 0,
   pointerEvents: 'none',
-  border:0
+  border: 0
 };
 
 interface ReactMicrofrontendProviderProps {
@@ -99,17 +99,17 @@ class ReactMicrofrontend extends React.Component<ReactMicrofrontendProviderProps
 
     return (
       <React.Fragment>
-        { microfrontends && ((
+        {microfrontends && ((
           <MicrofrontendContextProvider value={microfrontendsToExpose} >
             <ApiContextProvider microfrontends={microfrontendsToExpose}>
               {children}
             </ApiContextProvider>
           </MicrofrontendContextProvider>
-        )) }
+        ))}
         <Helmet>
-          { !!jsToLoad.length && jsToLoad.map((url) => <script key={url} src={url} type="text/javascript" /> )}
-          { !!cssToLoad.length && cssToLoad.map((url) => <link key={url} href={url} type="text/css" rel="stylesheet" /> )}
-          { !!(Object.values(styleToLoad).length) && Object.values(styleToLoad).map((styleContent: any) => styleContent.map(content => <style type="text/css" >{content}</style> ))}
+          {!!jsToLoad.length && jsToLoad.map((url) => <script key={url} src={url} type="text/javascript" />)}
+          {!!cssToLoad.length && cssToLoad.map((url) => <link key={url} href={url} type="text/css" rel="stylesheet" />)}
+          {!!(Object.values(styleToLoad).length) && Object.values(styleToLoad).map((styleContent: any) => styleContent.map(content => <style type="text/css" >{content}</style>))}
         </Helmet>
         {
           !!iframesToLoad.length && iframesToLoad.map((iframeSrc) => (
