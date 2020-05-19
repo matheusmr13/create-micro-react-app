@@ -24,10 +24,6 @@ const startProxyServer = async (proxyUrl) => {
 
   app.use(namespace, proxy(proxyUrl, {
     proxyReqPathResolver: req => `${namespace}${req.url}`,
-    userResDecorator: function(proxyRes, proxyResData, userReq, userRes) {
-      console.info(proxyRes.statusCode);
-      return proxyResData;
-    }
   }));
 
   app.use('/', proxy(url.origin));
