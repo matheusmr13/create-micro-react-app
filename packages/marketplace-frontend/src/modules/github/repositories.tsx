@@ -32,7 +32,7 @@ const Repos: React.FC<{}> = () => {
   };
 
   return (
-    <Page title="Github Repositories">
+    <Page title="Github Repositories" rootPage>
       <Input
         size="large"
         placeholder="Search"

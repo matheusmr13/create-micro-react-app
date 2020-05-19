@@ -17,7 +17,7 @@ function MicrofrontendList() {
   if (!microfrontends) return null;
 
   return (
-    <Page title="Microfrontends">
+    <Page title="Microfrontends" rootPage>
       <List
         itemLayout="vertical"
         size="large"

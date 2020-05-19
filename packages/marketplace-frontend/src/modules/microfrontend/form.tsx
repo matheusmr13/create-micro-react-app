@@ -4,6 +4,7 @@ import { useLoggedApiRequest } from 'base/hooks/request';
 import { useHistory } from 'react-router-dom';
 import { Form, Input, Button, Select, Card, Typography, Timeline, Table } from 'antd';
 import useQuery from 'base/hooks/query-param';
+import Page from 'base/components/page';
 const { Title } = Typography;
 
 const NewMicrofrontend: React.FC<{
@@ -30,12 +31,10 @@ const NewMicrofrontend: React.FC<{
     { manual: true }
   );
 
-  const applicationId = useQuery().get('applicationId');
   const onFinish = async (values: any) => {
     await createmicrofrontend({
       data: {
-        ...values,
-        applicationId,
+        ...values
       },
     });
     history.goBack();
@@ -87,7 +86,7 @@ const NewMicrofrontend: React.FC<{
   if (result) return null;
 
   return (
-    <Card title={isNew ? 'Creating' : `Editing ${microfrontend.name}`} style={{ margin: '32px' }}>
+    <Page title={isNew ? 'Creating' : `Editing ${microfrontend.name}`}>
       <Form
         labelCol={{ span: 2 }}
         name="basic"
@@ -134,7 +133,7 @@ const NewMicrofrontend: React.FC<{
           </Timeline>
         </>
       )}
-    </Card>
+    </Page>
   );
 };
 

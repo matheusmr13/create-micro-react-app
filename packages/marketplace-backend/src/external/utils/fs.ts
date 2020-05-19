@@ -55,13 +55,16 @@ export const getDirsFrom = async (source: string) => {
   return paths.map((name) => path.join(source, name)).filter(isDirectory);
 };
 
-export const rm = async (pathTo: string) => {
+const rmSingle = async (pathTo: string) => {
   if (!existsSync(pathTo)) return Promise.resolve();
+  await fs.rmdir(pathTo, { recursive: true });
+};
 
-  try {
-    return fs.rmdir(pathTo, { recursive: true });
-  } catch (error) {
-    return rmdirSync(pathTo, { recursive: true });
+export const rm = async (pathTo: string | string[]) => {
+  if (typeof pathTo === 'string') {
+    await rmSingle(pathTo);
+  } else if (pathTo instanceof Array) {
+    await Promise.all(pathTo.map((pathToSingle) => rmSingle(pathToSingle)));
   }
 };
 

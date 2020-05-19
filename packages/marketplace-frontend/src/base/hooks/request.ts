@@ -56,3 +56,5 @@ export const configureLoggedUser = (loggedUser: any) => {
   configureLoggedApiRequest(loggedUser.api);
   configureGithubApiRequest(loggedUser.github);
 };
+
+export { default as useApiAction } from './api-action';

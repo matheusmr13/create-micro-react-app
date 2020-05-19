@@ -39,7 +39,7 @@
     "jsonwebtoken": "^8.5.1",
     "npm-api": "^1.0.0",
     "octokat": "^0.10.0",
-    "ts-datastore-orm": "^0.1.21",
+    "ts-datastore-orm": "^0.2.2",
     "typescript": "^3.8.3",
     "uuid": "^7.0.3"
   },

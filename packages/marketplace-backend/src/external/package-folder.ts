@@ -1,26 +1,40 @@
 import { copyFolder, rm, mkdir, writeJson, getDirsFrom, getAllFilesFromDir } from './utils/fs';
+import Namespace from 'namespace/model';
+import Deploy from 'deploy/state';
+import CompiledDeploy, { MicroVersion } from 'deploy/model';
+import Microfrontend, { TYPE } from 'microfrontend/model';
+import Version from 'version/model';
 
-const distFolder = 'build';
-const microfrontendFolderName = 'microfrontends';
-const allBuildsFolder = 'builds';
+import { PathToNamespace, PathTo } from './path';
 
-const escapePackageName = (packageName: string) => packageName.replace(/@/g, '').replace(/\//g, '_');
+const FILES_TO_REMOVE = [
+  'asset-manifest.json',
+  'manifest.json',
+  'precache-manifest*',
+  'service-worker.js',
+  'deps.json',
+];
 
-const mapMicrofrontend = async (microfrontends: any, rootFolder: string) => {
+const mapMicrofrontend = async (pathToNamespace: PathToNamespace, microfrontends: MicroVersion[]) => {
   const meta = await Promise.all(
-    microfrontends.map(async (moduleName: string) => {
-      const dir = `${rootFolder}/${allBuildsFolder}/${moduleName}`;
-      const findResult = await getAllFilesFromDir(dir);
-
+    microfrontends.map(async ({ microfrontend, version }) => {
+      const dir = pathToNamespace.microfrontendFolder(microfrontend);
+      let findResult;
+      try {
+        findResult = await getAllFilesFromDir(dir);
+      } catch (e) {
+        console.info('deu errado', e, dir);
+        return;
+      }
       const files = findResult
         .map((f: string) => f.replace(dir, ''))
         .filter((f: string) => !!f && f.indexOf('.') > -1)
         .reduce(
           (fileTypes: any, file: string) => {
             if (file.endsWith('.js')) {
-              fileTypes.js.push(`./${microfrontendFolderName}/${moduleName}${file}`);
+              fileTypes.js.push(PathTo.microfrontendFile(microfrontend, file));
             } else if (file.endsWith('.css')) {
-              fileTypes.css.push(`./${microfrontendFolderName}/${moduleName}${file}`);
+              fileTypes.css.push(PathTo.microfrontendFile(microfrontend, file));
             }
             return fileTypes;
           },
@@ -29,7 +43,7 @@ const mapMicrofrontend = async (microfrontends: any, rootFolder: string) => {
 
       return {
         files,
-        moduleName,
+        moduleName: microfrontend.packageName,
       };
     })
   );
@@ -37,52 +51,48 @@ const mapMicrofrontend = async (microfrontends: any, rootFolder: string) => {
   return meta.reduce((agg: any, microMeta: any) => Object.assign(agg, { [microMeta.moduleName]: microMeta.files }), {});
 };
 
-const packageAll = async (opts: any) => {
-  const { webappName = 'webapp', rootFolder = '/tmp' } = opts;
+const processMicroVersion = async (pathTo: PathTo, pathToNamespace: PathToNamespace, microVersion: MicroVersion) => {
+  const { microfrontend } = microVersion;
 
-  const escapedWebappPackageName = escapePackageName(webappName);
-  await rm(`${rootFolder}/${distFolder}`);
+  const microfrontendFolder = pathToNamespace.microfrontendFolder(microfrontend);
+  await copyFolder(pathTo.microVersion(microVersion), microfrontendFolder);
+  await rm(FILES_TO_REMOVE.map((file) => `${microfrontendFolder}/${file}`));
+};
 
-  const allPackages = (await getDirsFrom(`${rootFolder}/${allBuildsFolder}`)).map(
-    (folder) => folder.split('/').splice(-1, 1)[0]
+const processCompiledDeploy = async (pathTo: PathTo, compiledDeploy: CompiledDeploy) => {
+  const { namespace, versionsByMicrofrontend } = compiledDeploy;
+  const pathToNamespace = pathTo.withNamespace(namespace);
+  const webapp = versionsByMicrofrontend.find(({ microfrontend }) => microfrontend.type === TYPE.CONTAINER)!;
+  await processMicroVersion(pathTo, pathToNamespace, webapp);
+
+  const microfrontends = versionsByMicrofrontend.filter(
+    ({ microfrontend }) => microfrontend.type === TYPE.MICROFRONTEND
   );
-  const microfrontends = allPackages.filter((moduleName) => moduleName !== escapedWebappPackageName);
-
-  await copyFolder(`${rootFolder}/${allBuildsFolder}/${escapedWebappPackageName}`, `${rootFolder}/${distFolder}`);
-
-  await rm(`${rootFolder}/${distFolder}/service-worker.js`);
-
-  await mkdir(`${rootFolder}/${distFolder}/${microfrontendFolderName}`);
-
   for (let i = 0; i < microfrontends.length; i++) {
-    const actualPackage = microfrontends[i];
-
-    await copyFolder(
-      `${rootFolder}/${allBuildsFolder}/${actualPackage}`,
-      `${rootFolder}/${distFolder}/${microfrontendFolderName}/${actualPackage}`
-    );
-
-    await Promise.all(
-      [
-        'asset-manifest.json',
-        'index.html',
-        'manifest.json',
-        'precache-manifest*',
-        'robots.txt',
-        'service-worker.js',
-        'deps.json',
-      ].map(async (file) => {
-        try {
-          await rm(`${rootFolder}/${distFolder}/${microfrontendFolderName}/${actualPackage}/${file}`);
-        } catch (error) {
-          console.error(error);
-        }
-      })
-    );
+    await processMicroVersion(pathTo, pathToNamespace, microfrontends[i]);
   }
 
-  const metaMicrofrontend = await mapMicrofrontend(microfrontends, rootFolder);
-  await writeJson(`${rootFolder}/${distFolder}/${microfrontendFolderName}/meta.json`, metaMicrofrontend);
+  const metaMicrofrontend = await mapMicrofrontend(pathToNamespace, microfrontends);
+  await writeJson(pathToNamespace.microfrontendsMetaJson(), metaMicrofrontend);
+};
+
+const packageAll = async (opts: { webappName?: string; rootFolder?: string; deploysToDo: CompiledDeploy[] }) => {
+  const { rootFolder = '/tmp', deploysToDo } = opts;
+
+  const pathTo = new PathTo(rootFolder);
+  await rm(pathTo.distFolder());
+
+  await Promise.all(deploysToDo.map(async (compiledDeploy) => processCompiledDeploy(pathTo, compiledDeploy)));
+  console.info('acabou de package');
+
+  await writeJson(
+    pathTo.namespaceMetaJson(),
+    deploysToDo.reduce(
+      (agg, { namespace: { path, isMain }, deploy }) =>
+        Object.assign(agg, { [isMain ? 'main' : path.replace(/\//g, '')]: deploy.id }),
+      {}
+    )
+  );
 };
 
 export default packageAll;

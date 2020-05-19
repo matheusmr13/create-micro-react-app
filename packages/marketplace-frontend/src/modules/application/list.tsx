@@ -15,7 +15,7 @@ function ApplicationList() {
 
   if (!applications) return null;
   return (
-    <Page title="Applications">
+    <Page title="Applications" rootPage>
       <List
         itemLayout="vertical"
         size="large"

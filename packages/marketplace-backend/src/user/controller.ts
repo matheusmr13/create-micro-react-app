@@ -8,7 +8,7 @@ class UserController extends BaseController<typeof User> {
   }
 
   public getMe = async (req: Request, res: Response) => {
-    const { id } = res.locals.tokenAuth;
+    const { id } = req.locals.tokenAuth;
     const [user] = await User.find(id);
 
     if (!user) {
@@ -20,7 +20,7 @@ class UserController extends BaseController<typeof User> {
   };
 
   public updateMe = async (req: Request, res: Response) => {
-    const { id } = res.locals.tokenAuth;
+    const { id } = req.locals.tokenAuth;
     const [user] = await User.find(id);
 
     if (!user) {

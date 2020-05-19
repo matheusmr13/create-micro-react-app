@@ -14,14 +14,14 @@ export default class Section extends React.Component<ISectionProps> {
     const { title, children, loading } = this.props;
     return (
       <section>
-        <Title level={2}>{title}</Title>
+        <Title level={4}>{title}</Title>
         {loading ? (
           <Row justify="center">
             <Spin size="large" />
           </Row>
         ) : (
-          children
-        )}
+            children
+          )}
       </section>
     );
   }

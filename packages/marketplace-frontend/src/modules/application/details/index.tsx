@@ -7,6 +7,7 @@ import { Form, Input, Button, Card, Space } from 'antd';
 import Page from 'base/components/page';
 import useApiAction from 'base/hooks/api-action';
 import MicrofrontendList from './microfrontend-list';
+import NamespaceList from './namespace-list';
 import FetchApplication from '../fetch';
 
 interface IApplicationDetailsProps {
@@ -18,6 +19,12 @@ const ApplicationDetails: React.FunctionComponent<IApplicationDetailsProps> = ({
     method: 'PUT',
     message: {
       success: 'Application saved',
+    },
+  });
+  const [{ loading: deployingApplication }, deployApplication] = useApiAction(`/applications/${application.id}/deploy`, {
+    method: 'POST',
+    message: {
+      success: 'Deploy done',
     },
   });
 
@@ -39,16 +46,18 @@ const ApplicationDetails: React.FunctionComponent<IApplicationDetailsProps> = ({
             <Button type="primary" htmlType="submit">
               Save
             </Button>
-            <Link to={`./${application.id}/deploy`}>
-              <Button type="ghost">New Deploy</Button>
-            </Link>
             <Link to={`../github?applicationId=${application.id}`}>
-              <Button type="ghost">Import New Microfrontend</Button>
+              <Button type="ghost">New Microfrontend</Button>
             </Link>
+            <Link to={`../namespace/new?applicationId=${application.id}`}>
+              <Button type="ghost">New Namespace</Button>
+            </Link>
+            <Button type="ghost" loading={deployingApplication} onClick={() => deployApplication()}>New Deploy</Button>
           </Space>
         </Form.Item>
       </Form>
 
+      <NamespaceList applicationId={application.id} />
       <MicrofrontendList applicationId={application.id} />
     </>
   );

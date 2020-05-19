@@ -11,9 +11,9 @@ enum APPROVAL_TYPE {
   AUTO_APPROVE = 'AUTO_APPROVE',
 }
 
-enum TYPE {
-  MICROFRONTEND,
-  CONTAINER,
+export enum TYPE {
+  MICROFRONTEND = 'MICROFRONTEND',
+  CONTAINER = 'CONTAINER',
 }
 
 interface IMicrofrontend {
@@ -42,7 +42,7 @@ class Microfrontend extends BasicEntity {
 
   static async createFromRepository(repository: any, payload: IMicrofrontend, ownerId: string) {
     const application = Microfrontend.create({
-      name: repository.name,
+      name: payload.packageName,
       ...payload,
       githubId: repository.full_name,
       ownerId,

@@ -10,17 +10,24 @@ import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch, useHistory
 import Version from 'modules/version';
 import Github from 'modules/github';
 import Profile from 'modules/account/profile';
+import Namespace from 'modules/namespace';
+
+
+function Home() {
+  return (<div>Home</div>);
+}
 
 function FullApp() {
   const match = useRouteMatch();
   const history = useHistory();
 
   const items = [
-    { label: 'Home', icon: HomeOutlined, url: '/' },
-    { label: 'Repositories', icon: GithubFilled, url: '/github' },
-    { label: 'Applications', icon: SolutionOutlined, url: '/application' },
-    { label: 'Microfrontends', icon: UnorderedListOutlined, url: '/microfrontend' },
-    { label: 'Profile', icon: UserOutlined, url: '/profile' },
+    { label: 'Home', icon: HomeOutlined, rootComponent: Home, url: '/' },
+    { label: 'Repositories', icon: GithubFilled, rootComponent: Github, url: '/github' },
+    { label: 'Applications', icon: SolutionOutlined, rootComponent: Application, url: '/application' },
+    { label: 'Microfrontends', icon: UnorderedListOutlined, rootComponent: Microfrontend, url: '/microfrontend' },
+    { label: 'Profile', icon: UserOutlined, rootComponent: Profile, url: '/profile' },
+    { rootComponent: Namespace, url: '/namespaces' },
   ];
 
   const reverseItems: Array<any> = Object.assign([], items);
@@ -33,22 +40,25 @@ function FullApp() {
   return (
     <>
       <Menu style={{ minWidth: 256 }} selectedKeys={[selectedMenuIndex.toString()]} mode={'vertical'} theme={'dark'}>
-        {items.map((item, i) => (
-          <Menu.Item key={i}>
-            <Link to={`${match.path}${item.url}`}>
-              <item.icon />
-              {item.label}
-            </Link>
-          </Menu.Item>
-        ))}
+        {items
+          .filter((item) => item.label && item.icon)
+          .map((item, i) => (
+            <Menu.Item key={i}>
+              <Link to={`${match.path}${item.url}`}>
+                {item.icon && <item.icon />}
+                {item.label}
+              </Link>
+            </Menu.Item>
+          ))
+        }
       </Menu>
       <main className="App__container">
         <Switch>
-          <Route exact path={`${match.path}/`}>
-            HOME
-          </Route>
           <Route path={`${match.path}/application`}>
             <Application />
+          </Route>
+          <Route path={`${match.path}/namespace`}>
+            <Namespace />
           </Route>
           <Route path={`${match.path}/microfrontend`}>
             <Microfrontend />
@@ -61,6 +71,9 @@ function FullApp() {
           </Route>
           <Route path={`${match.path}/profile`}>
             <Profile />
+          </Route>
+          <Route path={`${match.path}/`}>
+            HOME
           </Route>
         </Switch>
       </main>

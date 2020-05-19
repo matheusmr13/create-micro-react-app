@@ -16,7 +16,9 @@ const AuthFilter = (req: Request, res: Response, next: NextFunction) => {
     return;
   }
 
-  res.locals.tokenAuth = tokenAuth;
+  req.locals = {
+    tokenAuth,
+  };
   next();
 };
 

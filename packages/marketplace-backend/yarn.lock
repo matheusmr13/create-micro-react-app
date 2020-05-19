@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@google-cloud/datastore@^5.0.3", "@google-cloud/datastore@^5.1.0":
+"@google-cloud/datastore@^5.1.0":
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/@google-cloud/datastore/-/datastore-5.1.0.tgz#ebf7ada687ad0372fbc0f7f48cfefa27af2d52c3"
   integrity sha512-zPGWHrYqtWXZC6eOe32p/IlwyYSt3E/2Ac47DzXiHj6+Ir5fotuwtwNcNhJ2mxIUF24dZAo1CJT1uXchYVW03g==
@@ -2369,12 +2369,12 @@ tough-cookie@~2.5.0:
     psl "^1.1.28"
     punycode "^2.1.1"
 
-ts-datastore-orm@^0.1.21:
-  version "0.1.21"
-  resolved "https://registry.yarnpkg.com/ts-datastore-orm/-/ts-datastore-orm-0.1.21.tgz#656d5c7674af527b1097a61a2f4d575adad1b69d"
-  integrity sha512-h0qXar2+HAQ7Jm5g3hwpAwj1wcQio/JHa40hSrX1OzTbONrnorpYWV6YTGn72913Evym8dCkKzRr7UgzQ/Da/w==
+ts-datastore-orm@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/ts-datastore-orm/-/ts-datastore-orm-0.2.2.tgz#57e621eb78d64271b962cbb899301cf047f5d6f8"
+  integrity sha512-ubm9QPDecSPWvUcD8wi1ErqHd0703zAJ5YAq+E/Ccpib42fhRrNW6hQibB9hofAovlbnjioFRhSpkJbEk02k/Q==
   dependencies:
-    "@google-cloud/datastore" "^5.0.3"
+    "@google-cloud/datastore" "^5.1.0"
     reflect-metadata "^0.1.13"
 
 tunnel-agent@^0.6.0:

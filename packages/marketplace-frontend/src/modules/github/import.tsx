@@ -20,7 +20,7 @@ function ImportRepository(props: { application?: any }) {
   };
 
   const shouldShowImportType = !application;
-  const shouldShowApplicationIdField = !application && importType === 'application';
+  const shouldShowApplicationIdField = !application && importType === 'microfrontend';
 
   const [{ data: repository, loading: loadingRepository }] = useGithubApiRequest(`/repos/${repositoryFullName}`);
 
@@ -116,7 +116,11 @@ function ImportRepository(props: { application?: any }) {
 export default () => {
   const importApplicationId = useQuery().get('applicationId');
 
-  if (!importApplicationId) return <ImportRepository />;
+  if (!importApplicationId) return (
+    <Page title={"Import repository"}>
+      <ImportRepository />
+    </Page>
+  );
 
   return (
     <FetchApplication title="Import repository" applicationId={importApplicationId}>

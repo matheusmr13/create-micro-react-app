@@ -19,7 +19,7 @@ class MicrofrontendController extends BaseController<typeof Microfrontend> {
         res.status(404).send();
         return;
       }
-      const { id } = res.locals.tokenAuth;
+      const { id } = req.locals.tokenAuth;
       const [user] = await User.find(id);
       if (!user) {
         res.status(500).send();
@@ -37,7 +37,7 @@ class MicrofrontendController extends BaseController<typeof Microfrontend> {
 
   public import = async (req: Request, res: Response) => {
     try {
-      const { id } = res.locals.tokenAuth;
+      const { id } = req.locals.tokenAuth;
       const repository = await getGithubRepository(req.body.repositoryName);
       const application = await Microfrontend.createFromRepository(repository, req.body, id);
       res.json(application.toJSON());

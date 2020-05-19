@@ -13,9 +13,6 @@ interface IUser {
 
 @Entity({ namespace: 'testing', kind: 'user' })
 class User extends Model {
-  @Column({ index: true })
-  public id: string = '';
-
   @Column()
   public name: string = '';
 
@@ -27,9 +24,6 @@ class User extends Model {
 
   @Column()
   public githubToken: string = '';
-
-  @Column({ index: true })
-  public createdAt: string = '';
 
   static async createUser(payload: IUser) {
     const user = User.create({

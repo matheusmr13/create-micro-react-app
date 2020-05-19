@@ -3,7 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 import dayJs from 'dayjs';
 import BasicEntity from 'base/basic-entity';
 
-import Microfrontend from 'microfrontend/model';
+import Microfrontend, { TYPE } from 'microfrontend/model';
+import Namespace from 'namespace/model';
 
 interface IApplication {
   name: string;
@@ -12,9 +13,6 @@ interface IApplication {
 
 @Entity({ namespace: 'testing', kind: 'application' })
 class Application extends BasicEntity {
-  @Column({ index: true })
-  public id: string = '';
-
   @Column()
   public githubId: string = '';
 
@@ -33,14 +31,25 @@ class Application extends BasicEntity {
     const containerMicrofrontend = await Microfrontend.createFromRepository(
       repository,
       {
-        name: `${applicationName} Container`,
+        name: 'Container',
         applicationId: application.id,
         packageName: payload.packageName,
       },
       ownerId
     );
-
+    containerMicrofrontend.type = TYPE.CONTAINER;
     await containerMicrofrontend.save();
+
+    const mainNamespace = await Namespace.createEntity(
+      {
+        name: 'Main namespace',
+        path: '/',
+        applicationId: application.id,
+      },
+      ownerId
+    );
+    mainNamespace.isMain = true;
+    await mainNamespace.save();
 
     return application;
   }

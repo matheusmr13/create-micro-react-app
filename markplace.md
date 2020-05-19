@@ -43,4 +43,4 @@
 [ ] Microfrontend types and metainfos (eg: by url, by menu, by custom field)
 [ ] Namespaces (multiple application versions with differente microfrontend versions)
 [ ] Create a base library (with microfrontend-controller passing uuid and installing this lib)
-[ ]
+[ ] Define flux between namespaces (alpha -> beta -> prod)
