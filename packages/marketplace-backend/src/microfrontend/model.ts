@@ -17,7 +17,7 @@ export enum TYPE {
 }
 
 interface IMicrofrontend {
-  name: string;
+  name?: string;
   applicationId: string;
   packageName: string;
   type?: TYPE;
