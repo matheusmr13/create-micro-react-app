@@ -7,6 +7,7 @@ enum ACCESS {
 class Meta {
   static ACCESS = ACCESS;
   name: string;
+  packageName: string;
   access: ACCESS;
   private shared: any;
 

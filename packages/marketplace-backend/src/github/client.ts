@@ -56,7 +56,6 @@ export const downloadTree = async (path: string, tree: any, user: User) => {
 
       const filePath = `${path}/${object.path}`;
       const folderPath = filePath.substring(0, filePath.lastIndexOf('/'));
-      console.info(filePath);
       await fs.mkdir(folderPath, { recursive: true });
       await fs.writeFile(filePath, data.content, { encoding: 'base64' });
     }
@@ -65,7 +64,6 @@ export const downloadTree = async (path: string, tree: any, user: User) => {
 
 export const uploadTree2 = async (githubId: string, tree: any, user: User) => {
   const master = await getBranch(githubId, 'master', user);
-  console.info(master);
 
   try {
     await axios({
@@ -92,7 +90,6 @@ export const uploadTree2 = async (githubId: string, tree: any, user: User) => {
   });
 
   const ghpagesBranch = await getBranch(githubId, 'gh-pages', user);
-  console.info(ghpagesBranch);
 
   const {
     data: { sha },
@@ -119,8 +116,6 @@ export const uploadTree2 = async (githubId: string, tree: any, user: User) => {
       tree: sha,
     },
   });
-
-  console.info(response);
 };
 
 export const uploadTree = async (githubId: string, tree: any, user: User, version: string) => {
@@ -136,6 +131,4 @@ export const uploadTree = async (githubId: string, tree: any, user: User, versio
     })),
     'my commit'
   );
-
-  console.info(a);
 };

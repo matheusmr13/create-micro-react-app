@@ -4,14 +4,14 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 import './App.css';
+import OrdersApi from 'orders';
 
-const App = ({ microfrontendsList }) => {
-  console.info(microfrontendsList);
+const App = ({ microfrontendsList, orders }) => {
   return (
     <Router>
       <div className="App">
         <section className="App__side-bar">
-          <div className="App__restaurant-profile">My Restaurant</div>
+          <div className="App__restaurant-profile">{JSON.stringify(orders)}</div>
           <nav className="App__nav-bar">
             {microfrontendsList.map((microfrontend) => (
               <Link
@@ -35,4 +35,4 @@ const App = ({ microfrontendsList }) => {
     </Router>
   );
 };
-export default withMicrofrontend(App, { filterByType: TYPE.ROUTING });
+export default withMicrofrontend(OrdersApi.withOrders(App), { filterByType: TYPE.ROUTING });

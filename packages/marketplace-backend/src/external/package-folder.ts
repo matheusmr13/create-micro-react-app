@@ -19,13 +19,7 @@ const mapMicrofrontend = async (pathToNamespace: PathToNamespace, microfrontends
   const meta = await Promise.all(
     microfrontends.map(async ({ microfrontend, version }) => {
       const dir = pathToNamespace.microfrontendFolder(microfrontend);
-      let findResult;
-      try {
-        findResult = await getAllFilesFromDir(dir);
-      } catch (e) {
-        console.info('deu errado', e, dir);
-        return;
-      }
+      const findResult = await getAllFilesFromDir(dir);
       const files = findResult
         .map((f: string) => f.replace(dir, ''))
         .filter((f: string) => !!f && f.indexOf('.') > -1)
@@ -83,7 +77,6 @@ const packageAll = async (opts: { webappName?: string; rootFolder?: string; depl
   await rm(pathTo.distFolder());
 
   await Promise.all(deploysToDo.map(async (compiledDeploy) => processCompiledDeploy(pathTo, compiledDeploy)));
-  console.info('acabou de package');
 
   await writeJson(
     pathTo.namespaceMetaJson(),

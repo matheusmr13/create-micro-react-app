@@ -59,8 +59,6 @@ class Deploy extends BasicEntity {
       Object.entries(this.versions).map(async ([microfrontendId, versionId]) => {
         if (typeof versionId !== 'string') return null;
 
-        console.info(microfrontendId, versionId);
-
         const [microfrontend] = await Microfrontend.find(microfrontendId);
         const [version] = await Version.find(versionId);
         if (!version || !microfrontend) return null;

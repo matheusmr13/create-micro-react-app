@@ -2,7 +2,6 @@ import fs, { copyFolder, rm, mkdir, writeJson, getDirsFrom, getAllFilesFromDir }
 
 const getTreeFromFolder = async (folder: string) => {
   const a = await getAllFilesFromDir(folder);
-  console.info(a);
   const tree = await Promise.all(
     a.map(async (filePath: string) => {
       const content = await fs.readFile(filePath);

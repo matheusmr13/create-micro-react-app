@@ -119,7 +119,7 @@ class Controller {
         [Communication.TYPE.LOAD]: this.handleLoadMessage(message),
         [Communication.TYPE.SCRIPT]: this.handleScriptMessage(message),
         [Communication.TYPE.STYLE]: this.handleStyleMessage(message)
-      }[message.type] || (() => { console.info(`Unknown type ${message.type}`); }))();
+      }[message.type] || (() => { console.log(`Unknown type ${message.type}`); }))();
     }).initialize();
 
     fetchRetry(`./${microfrontendFolderName}/meta.json`,{
@@ -136,7 +136,7 @@ class Controller {
       if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.IMPORTED)) {
         this.call(CALLBACKS.MICROFRONTENDS_INFOS_LOADED, this.microfrontends);
       }
-    }).catch(e => console.info(e));
+    });
   }
 
   on(event:CALLBACKS) {

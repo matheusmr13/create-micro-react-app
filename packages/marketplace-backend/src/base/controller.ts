@@ -44,12 +44,9 @@ class Controller<T extends typeof Model> {
         if (!queryParam) return;
         const valueString = queryParam.toString();
 
-        console.info(fieldString, valueString);
-
         query.filterAny(fieldString, '=', valueString);
       });
       const [instances] = await query.run();
-      console.info(instances);
       res.json(instances.map((microfrontend) => microfrontend.toJSON()));
     };
   }

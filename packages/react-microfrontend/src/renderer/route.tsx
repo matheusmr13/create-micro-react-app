@@ -7,12 +7,11 @@ import {
 } from "react-router-dom";
 import Api from "../api";
 
-class App  extends React.Component<{
+class App extends React.Component<{
   microfrontends: Array<Api>
 }> {
   render() {
-    const { microfrontends} = this.props;
-    console.info(microfrontends);
+    const { microfrontends } = this.props;
     return (
       <Router>
         <Switch>

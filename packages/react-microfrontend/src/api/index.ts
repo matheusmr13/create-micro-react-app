@@ -58,7 +58,7 @@ class Api {
     return this.properties.reduce((agg, property) => Object.assign(agg, property.getReducers()), {});
   }
 
-  build(apiAccess) {
+  build(apiAccess = Api.ACCESS.PRIVATE_API) {
     if (!apiAccess) throw new Error('Api access required!');
     if (!this.properties) return {};
 

@@ -33,5 +33,5 @@
       "last 1 safari version"
     ]
   },
-  "main": "./build-lib/index.js"
+  "main": "./src/lib/index.js"
 }

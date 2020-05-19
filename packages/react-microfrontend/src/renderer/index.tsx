@@ -5,9 +5,9 @@ import Api from '../api';
 import MICRO_TYPE from './type';
 
 class MicrofrontendRenderer extends React.Component<{
-  microfrontends: { [key : string] : Api; },
-  type ?: MICRO_TYPE
-  children ?: string
+  microfrontends: { [key: string]: Api; },
+  type?: MICRO_TYPE
+  children?: string
 }> {
   render() {
     const { type = MICRO_TYPE.DEFAULT, children, microfrontends } = this.props;
@@ -16,8 +16,6 @@ class MicrofrontendRenderer extends React.Component<{
       [MICRO_TYPE.DEFAULT]: () => undefined,
     };
     let a = options[type]();
-
-    console.info('aque', options, type, children, a);
     return a;
   }
 }

@@ -41,7 +41,7 @@ const useApiAction = (
       await makeRequest(config);
       showMessage('success');
     } catch ({ response }) {
-      console.info(`Error on request ${method} to ${url}`, response);
+      console.log(`Error on request ${method} to ${url}`, response);
       showMessage('error', {
         default: response.status >= 500 ? 'Server error. Try again later!' : 'Error processing your request.',
         params: [response],
