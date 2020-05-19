@@ -20,27 +20,27 @@
 3. Import New Microfrontend -> Search your repo again -> Import -> packageName = microfrontend -> Import Button
 4. New deploy -> Choose versions -> deploy -> Go to `https://<YOUR_USERNAME>.github.io/<YOUR_REPO_NAME>/`
 
-# Next steps
+# Features
 
-## Permissions
+- Manage application and microfrontends deploy with github integration
 
-[ ] Only application owners can manage them
-[ ]
+  - A simple application would cost nothing thanks for github free public repositories and gh-pages
 
-## Deploy
+- Create multiple versions of your application in one single site
 
-[ ] Schedule deploy
-[ ] Recurrent deploy with approval versions
-[ ]
+  - Rollout your changes progressively using multiple applications at once
 
-## Integrations
+- All of this using `create-micro-react-app` and `micro-react`
+  - Easy to use and maintain
 
-[ ] Integrate with gitlab
-[ ] Integrate with npm (get built packages from npm registry)
+## Next steps
 
-## New big features
-
+[ ] Permission - Separate application between users/company
+[ ] Deploy - Schedule deploy
+[ ] Deploy - Recurrent deploy with approval versions
+[ ] New integrations - Integrate with gitlab (same as github if possible)
+[ ] New integrations - Integrate with amazon s3 (get artifacts and publish them)
+[ ] New integrations - Integrate with npm (get built packages from npm registry)
 [ ] Microfrontend types and metainfos (eg: by url, by menu, by custom field)
-[ ] Namespaces (multiple application versions with differente microfrontend versions)
 [ ] Create a base library (with microfrontend-controller passing uuid and installing this lib)
 [ ] Define flux between namespaces (alpha -> beta -> prod)
