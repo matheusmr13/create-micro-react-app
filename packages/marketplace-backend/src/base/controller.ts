@@ -71,7 +71,15 @@ class Controller<T extends typeof Model> {
   };
 
   public delete = async (req: Request, res: Response) => {
-    res.status(404).send();
+    const [instance] = await this.classRef.find(req.params.uuid);
+    if (!instance) {
+      res.status(404).send();
+      return;
+    }
+
+    await instance.delete();
+
+    res.json(instance.toJSON());
   };
 
   public clear = async (req: Request, res: Response) => {

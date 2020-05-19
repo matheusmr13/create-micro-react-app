@@ -6,7 +6,7 @@ const { Title } = Typography;
 export interface ISectionProps {
   title: string;
   children: React.ReactNode;
-  loading: Boolean;
+  loading?: Boolean;
 }
 
 export default class Section extends React.Component<ISectionProps> {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLoggedApiRequest } from 'base/hooks/request';
 
 import { Redirect, Link, useParams } from 'react-router-dom';
@@ -27,10 +27,17 @@ const ApplicationDetails: React.FunctionComponent<IApplicationDetailsProps> = ({
       success: 'Deploy done',
     },
   });
+  const [{ data: namespaces, loading: gettingNamespaces }, refetchNamespaces] = useLoggedApiRequest(`/namespaces?applicationId=${application.id}`);
+
+  useEffect(() => {
+    refetchNamespaces();
+  }, []);
 
   const onFinish = async (data: any) => {
     await saveApplication({ data });
   };
+
+  if (gettingNamespaces || !namespaces) return null;
 
   if (!savingProfile && data && !error) return <Redirect to="../application" />;
 
@@ -52,12 +59,18 @@ const ApplicationDetails: React.FunctionComponent<IApplicationDetailsProps> = ({
             <Link to={`../namespace/new?applicationId=${application.id}`}>
               <Button type="ghost">New Namespace</Button>
             </Link>
-            <Button type="ghost" loading={deployingApplication} onClick={() => deployApplication()}>New Deploy</Button>
+            {namespaces.length === 1 ? (
+              <Link to={`../namespace/${namespaces[0].id}/deploy/next`}>
+                <Button type="ghost">Prepare next deploy</Button>
+              </Link>
+            ) : null
+            }
+            <Button type="ghost" loading={deployingApplication} onClick={() => deployApplication()}>Deploy</Button>
           </Space>
         </Form.Item>
       </Form>
 
-      <NamespaceList applicationId={application.id} />
+      {namespaces.length > 1 && <NamespaceList namespaces={namespaces} />}
       <MicrofrontendList applicationId={application.id} />
     </>
   );

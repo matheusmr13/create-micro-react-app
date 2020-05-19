@@ -41,7 +41,7 @@ class Microfrontend extends BasicEntity {
   public type: TYPE = TYPE.MICROFRONTEND;
 
   static async createFromRepository(repository: any, payload: IMicrofrontend, ownerId: string) {
-    const application = Microfrontend.create({
+    const microfrontend = Microfrontend.create({
       name: payload.packageName,
       ...payload,
       githubId: repository.full_name,
@@ -49,13 +49,15 @@ class Microfrontend extends BasicEntity {
       createdAt: dayJs().format(),
       id: uuidv4(),
     });
-    await application.save();
-    return application;
+    await microfrontend.save();
+    await microfrontend.syncVersions();
+    return microfrontend;
   }
 
-  async syncVersions(user: User) {
+  async syncVersions() {
+    const [user] = await User.find(this.ownerId);
     const githubUrl = `/repos/${this.githubId}/contents/versions/${this.packageName}`;
-    const versions = await getFoldersFromGithub(githubUrl, user);
+    const versions = await getFoldersFromGithub(githubUrl, user!);
 
     const [microfrontendVersions] = await Version.query().filter('microfrontendId', '=', this.id).run();
 

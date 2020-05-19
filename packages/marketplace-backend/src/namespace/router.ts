@@ -5,6 +5,7 @@ import { asyncRequestHandler } from 'base/router';
 const NamespaceRouter = express.Router();
 NamespaceRouter.get('/:uuid', asyncRequestHandler(NamespaceController.read));
 NamespaceRouter.put('/:uuid', asyncRequestHandler(NamespaceController.update));
+NamespaceRouter.delete('/:uuid', asyncRequestHandler(NamespaceController.delete));
 NamespaceRouter.get('/', asyncRequestHandler(NamespaceController.list));
 NamespaceRouter.post('/', asyncRequestHandler(NamespaceController.create));
 

@@ -1,9 +1,6 @@
 import * as React from 'react';
 
 import { Typography, Row, Col, Divider, Spin, PageHeader } from 'antd';
-import {
-  ArrowLeftOutlined
-} from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 
 import './page.css';

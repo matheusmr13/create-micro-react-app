@@ -12,28 +12,10 @@ class MicrofrontendController extends BaseController<typeof Microfrontend> {
 
   list = this.createFilteredByList(['applicationId']);
 
-  public syncVersions = async (req: Request, res: Response) => {
-    try {
-      const [microfrontend] = await Microfrontend.find(req.params.uuid);
-      if (!microfrontend) {
-        res.status(404).send();
-        return;
-      }
-      const { id } = req.locals.tokenAuth;
-      const [user] = await User.find(id);
-      if (!user) {
-        res.status(500).send();
-        return;
-      }
-
-      await microfrontend.syncVersions(user);
-
-      res.json('ok');
-    } catch (e) {
-      console.error(e);
-      res.status(500).send();
-    }
-  };
+  public syncVersions = this.createInstanceAction(async (microfrontend, req: Request, res: Response) => {
+    await microfrontend.syncVersions();
+    return microfrontend;
+  });
 
   public import = async (req: Request, res: Response) => {
     try {

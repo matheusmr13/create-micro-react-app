@@ -2,7 +2,10 @@ import React from 'react';
 import { useLoggedApiRequest } from 'base/hooks/request';
 
 import { Redirect, Link, useParams } from 'react-router-dom';
-import { Form, Input, Button, Card, Space } from 'antd';
+import { Form, Input, Button, Card, Space, Modal, Tooltip } from 'antd';
+import {
+  ExclamationCircleOutlined
+} from '@ant-design/icons';
 
 import useQuery from 'base/hooks/query-param';
 import Page from 'base/components/page';
@@ -10,8 +13,24 @@ import useApiAction from 'base/hooks/api-action';
 import DeployList from './deploy-list';
 import FetchNamespace from '../fetch';
 
+const { confirm } = Modal;
+
 interface INamespaceDetailsProps {
   namespace: any;
+}
+
+const createDeleteConfirm = (deleteNamespace: Function) => () => {
+  confirm({
+    title: 'Are you sure delete this namespace?',
+    icon: <ExclamationCircleOutlined />,
+    content: 'This action cannot be undone',
+    okText: 'Yes',
+    okType: 'danger',
+    cancelText: 'No',
+    onOk() {
+      deleteNamespace();
+    }
+  });
 }
 
 const NamespaceDetails: React.FunctionComponent<INamespaceDetailsProps> = ({ namespace }) => {
@@ -24,6 +43,13 @@ const NamespaceDetails: React.FunctionComponent<INamespaceDetailsProps> = ({ nam
     },
   });
 
+  const [{ data: deletedNamespace, error: errorDeleting, loading: deletingNamespace }, deleteNamespace] = useApiAction(`/namespaces/${namespace.id}`, {
+    method: 'DELETE',
+    message: {
+      success: 'Namespace deleted',
+    },
+  });
+
   const onFinish = async (namespaceFields: any) => {
     await saveNamespace({
       ...namespace, data: {
@@ -33,8 +59,21 @@ const NamespaceDetails: React.FunctionComponent<INamespaceDetailsProps> = ({ nam
     });
   };
 
-  if (!savingNamespace && data && !error) return <Redirect to={`../application/${namespace.applicationId}`} />;
+  const savedSuccessfully = !savingNamespace && data && !error;
+  const deletedSuccessfully = !deletingNamespace && deletedNamespace && !errorDeleting;
+  if (savedSuccessfully || deletedSuccessfully) return <Redirect to={`../application/${namespace.applicationId}`} />;
 
+
+  const deleteButton = (
+    <Button
+      type="dashed"
+      onClick={createDeleteConfirm(deleteNamespace)}
+      loading={deletingNamespace}
+      disabled={namespace.isMain}
+    >
+      Delete
+    </Button>
+  );
   return (
     <>
       <Form onFinish={onFinish} initialValues={namespace}>
@@ -51,6 +90,15 @@ const NamespaceDetails: React.FunctionComponent<INamespaceDetailsProps> = ({ nam
             <Button type="primary" htmlType="submit">
               Save
             </Button>
+            {
+              !isNew && (
+                namespace.isMain ? (
+                  <Tooltip placement="topLeft" title="Cannot delete main namespace">
+                    {deleteButton}
+                  </Tooltip>
+                ) : deleteButton
+              )
+            }
             {!isNew && (
               <Link to={`./${namespace.id}/deploy/next`}>
                 <Button type="ghost">Update next deploy</Button>

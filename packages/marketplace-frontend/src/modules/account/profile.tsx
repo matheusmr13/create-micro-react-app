@@ -40,7 +40,7 @@ function Profiile() {
                   Save
               </Button>
                 <Link to="/logout">
-                  <Button type="dashed">Logout</Button>
+                  <Button type="ghost">Logout</Button>
                 </Link>
               </Space>
             </Form.Item>
