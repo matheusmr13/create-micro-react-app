@@ -1,4 +1,6 @@
-const { copyTemplateTo, writeJson, readJson } = require('../utils/fs');
+const {
+  copyTemplateTo, writeJson, readJson, appendFile,
+} = require('../utils/fs');
 const { createExecutionContext } = require('../utils/process');
 
 const getModuleScripts = isMicrofrontend => ({
@@ -21,6 +23,7 @@ const createModule = async (name, template, rootAppPath) => {
   const { execInPackages, execInApp } = createExecutionContext(rootAppPath, name);
 
   await execInPackages(`npx create-react-app ${name}`);
+  await appendFile('.gitignore', ['build-lib', 'public/meta.json'].join('\n'));
   await copyTemplateTo(template, `${rootAppPath}/packages/${name}`);
 
   await execInApp('yarn add microfrontend-controller');

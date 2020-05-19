@@ -6,7 +6,7 @@ ExportMicrofrontend({
   view: App,
   definition: {
     type: TYPE.ROUTING,
-    url: '/hue',
-    label: 'lala',
+    url: '/lala',
+    label: 'lalalalaa',
   },
 });

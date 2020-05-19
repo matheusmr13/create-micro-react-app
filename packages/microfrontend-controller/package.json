@@ -1,6 +1,6 @@
 {
   "name": "microfrontend-controller",
-  "version": "2.1.18",
+  "version": "2.2.0",
   "description": "Microfrontend ruler",
   "main:src": "src/index.js",
   "main": "index.js",
@@ -41,7 +41,7 @@
     "node": ">=12.10"
   },
   "jest": {
-    "testPathIgnorePatterns" : [
+    "testPathIgnorePatterns": [
       "<rootDir>/test/__snapshots__"
     ],
     "testTimeout": 10000000
