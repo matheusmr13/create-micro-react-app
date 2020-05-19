@@ -28,4 +28,4 @@ const publish = async () => {
   });
 };
 
-export default () => explain('Publishing build folder to github versions branch', publish);
+module.exports = () => explain('Publishing build folder to github versions branch', publish);
