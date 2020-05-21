@@ -1,0 +1,12 @@
+@import '~antd/dist/antd.css';
+
+.App {
+  display: flex;
+  height: 100vh;
+}
+
+.App__container {
+  flex-grow: 1;
+  max-height: 100%;
+  overflow: auto;
+}
