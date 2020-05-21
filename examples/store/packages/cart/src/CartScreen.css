@@ -1,0 +1,37 @@
+.CartScreen {
+}
+
+.CartScreen__title {
+}
+
+.CartScreen__icon {
+}
+
+.CartScreen__items {
+}
+
+.CartItem {
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 5px;
+  margin: 16px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.CartItem__image {
+  height: 50px;
+}
+
+.CartItem__name {
+}
+
+.CartItem__rating {
+}
+
+.CartItem__price {
+}
+
+.CartItem__actions {
+}

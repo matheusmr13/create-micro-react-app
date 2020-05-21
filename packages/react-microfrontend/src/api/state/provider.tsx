@@ -4,7 +4,7 @@ import createStore from './redux';
 import Api from '..';
 
 class ApiProvider extends Component<{
-  microfrontends: { [key : string] : Api; }
+  microfrontends: { [key: string]: Api; }
 }> {
   state = {
     store: null
@@ -15,7 +15,7 @@ class ApiProvider extends Component<{
     const store = createStore();
 
     Object.values(microfrontends).forEach(microfrontend => {
-      store.injectReducer(microfrontend.getName(), microfrontend.getReducers());
+      store.injectReducer(microfrontend.getName(), microfrontend.getReducers(), microfrontend.getInitialState());
     });
 
     this.setState({ store });

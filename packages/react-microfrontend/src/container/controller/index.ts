@@ -61,6 +61,7 @@ class Controller {
   }
 
   handleStyleMessage = message => () => {
+    console.info('chegou', message)
     const messageMicrofrontend = this.microfrontends[message.origin];
     messageMicrofrontend.setStyle(message.payload);
     this.call(CALLBACKS.MICROFRONTEND_STYLE_CHANGED, messageMicrofrontend.name, messageMicrofrontend.style);
@@ -104,13 +105,15 @@ class Controller {
 
   initialize() {
     shared.set('registerMicrofrontend', async (name, schema) => {
-      this.microfrontends[name].registerApi(schema);
+      try {
+        this.microfrontends[name].registerApi(schema);
 
-      if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.REGISTERED)) {
-        this.call(CALLBACKS.MICROFRONTENDS_REGISTERED, this.microfrontends);
+        if (this.areAllMicrofrontendsOnStatus(Microfrontend.STATUS.REGISTERED)) {
+          this.call(CALLBACKS.MICROFRONTENDS_REGISTERED, this.microfrontends);
 
-        await this.setupAllMicrofrontends();
-      }
+          await this.setupAllMicrofrontends();
+        }
+      } catch(e) { console.info(name, schema); console.error(e);}
     });
 
     const communication = new Communication();

@@ -12,11 +12,15 @@ class AppClient extends Communication {
   }
 
   initialize() {
-    window.addEventListener('message', (event) => {
-      if (!event.data || !event.data.source || event.data.source !== Communication.COMMUNICATION_SOURCE) return;
+    window.addEventListener(
+      'message',
+      (event) => {
+        if (!event.data || !event.data.source || event.data.source !== Communication.COMMUNICATION_SOURCE) return;
 
-      this.notifyMessage(event.data);
-    }, false);
+        this.notifyMessage(event.data);
+      },
+      false
+    );
     return this;
   }
 
@@ -26,6 +30,7 @@ class AppClient extends Communication {
   }
 
   notifyMessage(message) {
+    console.info('chegou', message);
     this.callback(message);
   }
 }

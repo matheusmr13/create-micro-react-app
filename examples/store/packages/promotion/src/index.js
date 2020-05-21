@@ -2,6 +2,6 @@ import { ExportMicrofrontend, TYPE } from 'react-microfrontend';
 import Promotion from './Promotion';
 
 ExportMicrofrontend({
-  name: 'promotions',
+  name: 'promotion',
   view: Promotion,
 });

@@ -1,5 +1,5 @@
 {
-  "orders": {
+  "cart": {
     "host": "http://localhost:3001"
   },
   "design-system": {

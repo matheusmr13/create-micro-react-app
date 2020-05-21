@@ -11,12 +11,12 @@ const staticReducers = {
 };
 
 function configureStore() {
-  const store : any = createReduxStore(createReducer({}))
+  const store: any = createReduxStore(createReducer({}))
 
   store.asyncReducers = {}
 
-  store.injectReducer = (key, asyncReducer) => {
-    store.asyncReducers[key] = handleActions(asyncReducer, {});
+  store.injectReducer = (key, asyncReducer, initialState) => {
+    store.asyncReducers[key] = handleActions(asyncReducer, initialState);
     store.replaceReducer(createReducer(store.asyncReducers))
   }
 

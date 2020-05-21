@@ -1,6 +1,17 @@
+import { Api } from 'react-microfrontend';
 export default {
-  name: 'orders',
+  name: 'cart',
   interface: {
-    orders: {},
+    cart: {
+      initialValue: {
+        products: [],
+      },
+    },
+    addProductToCart: {
+      type: Api.TYPE.FUNCTION,
+    },
+    removeProductFromCart: {
+      type: Api.TYPE.FUNCTION,
+    },
   },
 };

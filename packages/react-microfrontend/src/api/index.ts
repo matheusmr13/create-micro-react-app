@@ -55,7 +55,17 @@ class Api {
   getReducers() {
     if (!this.properties) return {};
 
-    return this.properties.reduce((agg, property) => Object.assign(agg, property.getReducers()), {});
+    return this.properties
+      .filter((property) => property instanceof MetaProperty)
+      .reduce((agg, property) => Object.assign(agg, property.getReducers()), {});
+  }
+
+  getInitialState() {
+    if (!this.properties) return {};
+
+    return this.properties
+      .filter((property) => property instanceof MetaProperty)
+      .reduce((agg, property) => Object.assign(agg, { [property.name]: property.initialValue }), {});
   }
 
   build(apiAccess = Api.ACCESS.PRIVATE_API) {

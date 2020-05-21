@@ -36,7 +36,10 @@ Deploy application && show changes
 
 ## Example application
 
-Cart -> Has state Cart with itens
-Showcase -> Add item to cart -> Has state with filter by
-Promotions -> List some promotions that filters itens on Showcase
+Show application
+
+- Cart -> Has state Cart with itens
+- Showcase -> Add item to cart -> Has state with filter by
+- Promotions -> List some promotions that filters itens on Showcase
+
 Design System -> Version 1 (black and white, hard corners, monospaced) | Version 2 (colorfull, rounded, comic sans)
