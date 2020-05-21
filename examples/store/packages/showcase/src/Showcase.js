@@ -3,32 +3,36 @@ import './Showcase.css';
 
 import ShowcaseApi from './lib';
 import CartApi from 'cart';
+import DesignSystem from 'design-system';
 import './Showcase.css';
 
 const products = require('./products.json');
 
-const Product = ({ product, onBuy, onDetails }) => (
-  <div className="Product">
-    <div className="Product__image">
-      <img src={product.image.small} />
+const Product = ({ product, onBuy }) => {
+  const { Button } = DesignSystem.getComponents();
+
+  return (
+    <div className="Product">
+      <div className="Product__image">
+        <img src={product.image.small} />
+      </div>
+      <div className="Product__name">{product.name}</div>
+      <div className="Product__rating">Rating: {product.rating && product.rating.toFixed(2).replace('.', ',')}</div>
+      <div className="Product__price">R$ {product.price.toFixed(2).replace('.', ',')}</div>
+      <div className="Product__actions">
+        <Button onClick={() => onBuy(onBuy)}>Comprar</Button>
+      </div>
     </div>
-    <div className="Product__name">{product.name}</div>
-    <div className="Product__rating">Rating: {product.rating && product.rating.toFixed(2).replace('.', ',')}</div>
-    <div className="Product__price">R$ {product.price.toFixed(2).replace('.', ',')}</div>
-    <div className="Product__actions">
-      <button className="Button" onClick={() => onBuy(onBuy)}>
-        Comprar
-      </button>
-    </div>
-  </div>
-);
+  );
+};
 
 const Showcase = ({ filterBy }) => {
   const { tag } = filterBy;
+  const { Button } = DesignSystem.getComponents();
   return (
     <div className="Showcase">
       <div className="Showcase__filter">
-        <button onClick={() => ShowcaseApi.setFilterBy({})}>Clear filters</button>
+        <Button onClick={() => ShowcaseApi.setFilterBy({})}>Clear filters</Button>
       </div>
       <div className="Showcase__products">
         {Object.values(products)

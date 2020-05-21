@@ -97,7 +97,6 @@ class ReactMicrofrontend extends React.Component<ReactMicrofrontendProviderProps
 
     const microfrontendsToExpose = microfrontends && Object.keys(microfrontends).reduce((agg, m) => Object.assign(agg, { [m]: microfrontends[m].api }), {});
 
-    console.info(styleToLoad);
     return (
       <React.Fragment>
         {microfrontends && ((

@@ -30,7 +30,6 @@ class AppClient extends Communication {
   }
 
   notifyMessage(message) {
-    console.info('chegou', message);
     this.callback(message);
   }
 }

@@ -1,29 +1,34 @@
 import React from 'react';
 import CartApi from './lib';
+import DesignSystem from 'design-system';
 
 import './CartScreen.css';
 
-const CartItem = ({ product }) => (
-  <div className="CartItem">
-    <img src={product.image.small} className="CartItem__image" />
-    <div className="CartItem__name">{product.name}</div>
-    <div className="CartItem__rating">Rating: {product.rating && product.rating.toFixed(2).replace('.', ',')}</div>
-    <div className="CartItem__price">R$ {product.price.toFixed(2).replace('.', ',')}</div>
-    <div className="CartItem__quantity">Qtty: {product.qtty}</div>
-    <div className="CartItem__actions">
-      <button className="Button" onClick={() => CartApi.callRemoveProductFromCart(product)}>
-        Remove
-      </button>
+const CartItem = ({ product }) => {
+  const { Button } = DesignSystem.getComponents();
+  return (
+    <div className="CartItem">
+      <img src={product.image.small} className="CartItem__image" />
+      <div className="CartItem__name">{product.name}</div>
+      <div className="CartItem__rating">Rating: {product.rating && product.rating.toFixed(2).replace('.', ',')}</div>
+      <div className="CartItem__price">R$ {product.price.toFixed(2).replace('.', ',')}</div>
+      <div className="CartItem__quantity">Qtty: {product.qtty}</div>
+      <div className="CartItem__actions">
+        <Button className="Button" onClick={() => CartApi.callRemoveProductFromCart(product)}>
+          Remove
+        </Button>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 function CartScreen({ cart, onBack }) {
   const { products } = cart;
+  const { Button } = DesignSystem.getComponents();
   return (
     <div className="CartScreen">
       <div className="CartScreen__title">
-        <button onClick={onBack}>Voltar</button>
+        <Button onClick={onBack}>Voltar</Button>
         <h2>Cart</h2>
       </div>
       <div className="CartScreen__items">

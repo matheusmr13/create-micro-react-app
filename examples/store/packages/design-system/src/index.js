@@ -1,10 +1,9 @@
 import { ExportMicrofrontend } from 'react-microfrontend';
-import schema from './lib/schema';
+import schema from './lib/internal';
 
-import Button from './components/button';
-import Card from './components/button';
+import Button from './components/Button';
 
 ExportMicrofrontend({
   ...schema,
-  view: { Button, Card },
+  view: { Button },
 });

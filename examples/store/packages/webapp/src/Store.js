@@ -1,6 +1,7 @@
 import { withMicrofrontend, TYPE } from 'react-microfrontend';
 
 import React, { useState } from 'react';
+import DesignSystem from 'design-system';
 import './Store.css';
 
 const Highlight = ({ children, name, enabled, backgroundColor }) => {
@@ -60,6 +61,8 @@ const ConnectedContainer = withMicrofrontend(Container);
 const Store = ({ microfrontend: cart }) => {
   const [showCart, setShouldShowCart] = useState(false);
   const [showMicrofrontends, setShowMicrofrontends] = useState(false);
+  console.info(DesignSystem.getComponents());
+  const { Button } = DesignSystem.getComponents();
   const { CartWidget, CartScreen } = cart.view;
 
   return (
@@ -69,7 +72,7 @@ const Store = ({ microfrontend: cart }) => {
           <div className="Store__top">
             <h1 className="Store__title">
               Microfrontend Store{' '}
-              <button onClick={() => setShowMicrofrontends(!showMicrofrontends)}>Show microfrontends</button>
+              <Button onClick={() => setShowMicrofrontends(!showMicrofrontends)}>Show microfrontends</Button>
             </h1>
             <div className="Store__cart">
               <Highlight enabled={showMicrofrontends} name="Cart" backgroundColor="yellow">

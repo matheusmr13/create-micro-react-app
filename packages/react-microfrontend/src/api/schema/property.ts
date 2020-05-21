@@ -22,9 +22,18 @@ class Property extends Meta {
     return this.getShared(this.name);
   };
 
-  initialize() {
-    this.writeMethod(this.initialState);
-  }
+  initializeMethod = (value) => {
+    const initialized = this.getShared(`${this.name}-initialized`);
+    if (initialized)
+      throw new Error(
+        'Trying to initialize a property for a second time. Remember to import internal api in your index.js'
+      );
+
+    if (!initialized) {
+      this.initialState = value;
+      this.setShared(`${this.name}-initialized`, true);
+    }
+  };
 
   writeMethod = (...args) => {
     const [newState] = args;
@@ -51,8 +60,7 @@ class Property extends Meta {
   }
 
   getReducers() {
-    console.info('aqui', this);
-    this.initialize();
+    this.setShared(`${this.name}-initialized`, true);
     return {
       [this.NAMES.WRITE]: (state, { payload } = { payload: null }) => ({
         ...state,
