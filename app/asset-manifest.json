@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "./microfrontend-marketplace/static/css/main.798f63cd.chunk.css",
+    "main.js": "./microfrontend-marketplace/static/js/main.2a09f9c6.chunk.js",
+    "main.js.map": "./microfrontend-marketplace/static/js/main.2a09f9c6.chunk.js.map",
+    "runtime-main.js": "./microfrontend-marketplace/static/js/runtime-main.ce84e8bb.js",
+    "runtime-main.js.map": "./microfrontend-marketplace/static/js/runtime-main.ce84e8bb.js.map",
+    "static/css/2.4c6ee7a4.chunk.css": "./microfrontend-marketplace/static/css/2.4c6ee7a4.chunk.css",
+    "static/js/2.ac70fcd5.chunk.js": "./microfrontend-marketplace/static/js/2.ac70fcd5.chunk.js",
+    "static/js/2.ac70fcd5.chunk.js.map": "./microfrontend-marketplace/static/js/2.ac70fcd5.chunk.js.map",
+    "index.html": "./microfrontend-marketplace/index.html",
+    "precache-manifest.a8616cb635f724d13b01ffa97b10cd35.js": "./microfrontend-marketplace/precache-manifest.a8616cb635f724d13b01ffa97b10cd35.js",
+    "service-worker.js": "./microfrontend-marketplace/service-worker.js",
+    "static/css/2.4c6ee7a4.chunk.css.map": "./microfrontend-marketplace/static/css/2.4c6ee7a4.chunk.css.map",
+    "static/css/main.798f63cd.chunk.css.map": "./microfrontend-marketplace/static/css/main.798f63cd.chunk.css.map",
+    "static/js/2.ac70fcd5.chunk.js.LICENSE.txt": "./microfrontend-marketplace/static/js/2.ac70fcd5.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ce84e8bb.js",
+    "static/css/2.4c6ee7a4.chunk.css",
+    "static/js/2.ac70fcd5.chunk.js",
+    "static/css/main.798f63cd.chunk.css",
+    "static/js/main.2a09f9c6.chunk.js"
+  ]
+}
