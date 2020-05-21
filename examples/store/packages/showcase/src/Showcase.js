@@ -1,6 +1,7 @@
 import React from 'react';
 import './Showcase.css';
 
+import ShowcaseApi from './lib';
 import CartApi from 'cart';
 import './Showcase.css';
 
@@ -22,18 +23,26 @@ const Product = ({ product, onBuy, onDetails }) => (
   </div>
 );
 
-const Showcase = ({ history, microfrontend }) => {
+const Showcase = ({ filterBy }) => {
+  const { tag } = filterBy;
   return (
     <div className="Showcase">
-      {Object.values(products).map((product) => (
-        <Product
-          key={product.id}
-          product={product}
-          onBuy={() => CartApi.callAddProductToCart(product)}
-          // onDetails={() => history.push(`/product/${product.id}`)}
-        />
-      ))}
+      <div className="Showcase__filter">
+        <button onClick={() => ShowcaseApi.setFilterBy({})}>Clear filters</button>
+      </div>
+      <div className="Showcase__products">
+        {Object.values(products)
+          .filter((product) => product.tag === tag)
+          .map((product) => (
+            <Product
+              key={product.id}
+              product={product}
+              onBuy={() => CartApi.callAddProductToCart(product)}
+              // onDetails={() => history.push(`/product/${product.id}`)}
+            />
+          ))}
+      </div>
     </div>
   );
 };
-export default Showcase;
+export default ShowcaseApi.withFilterBy(Showcase);

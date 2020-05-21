@@ -4,6 +4,7 @@
     "name": "Vodka Absolut 1 Litro",
     "rating": 4.645161,
     "price": 72.9,
+    "tag": "DRINK",
     "image": {
       "small": "https://images-submarino.b2w.io/produtos/01/00/image/5432/2/5432286P1.jpg",
       "medium": "https://images-submarino.b2w.io/produtos/01/00/image/5432/2/5432286G1.jpg"
@@ -14,6 +15,7 @@
     "name": "Gin Tanqueray 750ml",
     "rating": 4.714286,
     "price": 99.9,
+    "tag": "DRINK",
     "image": {
       "small": "https://images-submarino.b2w.io/produtos/01/00/image/5949/2/5949269P1.jpg",
       "medium": "https://images-submarino.b2w.io/produtos/01/00/image/5949/2/5949269G1.jpg"
@@ -33,6 +35,7 @@
     "id": "34336512",
     "name": "Gift Card Digital Riot League Of Legends R$ 20",
     "rating": 4.5,
+    "tag": "GAME",
     "price": 20,
     "image": {
       "small": "https://images-submarino.b2w.io/produtos/01/00/img/34336/5/34336510P1.jpg",
@@ -43,6 +46,7 @@
     "id": "34522020",
     "name": "Gift Card Digital Xbox Live 12 Meses",
     "rating": 4.7391305,
+    "tag": "GAME",
     "price": 149,
     "image": {
       "small": "https://images-submarino.b2w.io/produtos/01/00/img10/34522/0/34522022P1.jpg",
@@ -73,6 +77,7 @@
     "id": "77891462",
     "name": "Relógio Bluetooth Inteligente Smartband M3 Monitor Cardiaco Lançamento",
     "rating": 2.4782608,
+    "tag": "TECH",
     "price": 31.49,
     "image": {
       "small": "https://images-submarino.b2w.io/produtos/01/00/img/77891/4/77891460P1.jpg",
@@ -104,6 +109,7 @@
     "name": "Gin Beefeater Dry - 750ml",
     "rating": 4,
     "price": 82.9,
+    "tag": "DRINK",
     "image": {
       "small": "https://images-submarino.b2w.io/produtos/01/00/item/129048/3/129048398P1.jpg",
       "medium": "https://images-submarino.b2w.io/produtos/01/00/item/129048/3/129048398G1.jpg"
@@ -114,6 +120,7 @@
     "name": "MacBook Air MQD32BZ/A com Intel Core i5 Dual Core 8GB 128GB SSD 13'' Prata - Apple",
     "rating": 4.773292,
     "price": 4942.12,
+    "tag": "TECH",
     "image": {
       "small": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/132490/7/132490742P1.png",
       "medium": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/132490/7/132490742G1.png"
@@ -139,71 +146,12 @@
       "medium": "https://images-submarino.b2w.io/produtos/01/00/img7/01/00/item/133240/7/133240729G1.png"
     }
   },
-  "133273660": {
-    "id": "133273660",
-    "name": "Smartphone Samsung Galaxy S9 Dual Chip Android 8.0 Tela 5.8\" Octa-Core 2.8GHz 128GB 4G Câmera 12MP - Ultravioleta",
-    "rating": 4.3714285,
-    "price": 1887.78,
-    "image": {
-      "small": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/133273/6/133273660P1.png",
-      "medium": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/133273/6/133273660G1.png"
-    }
-  },
-  "133274700": {
-    "id": "133274700",
-    "name": "Smartphone Samsung Galaxy S9 Dual Chip Android 8.0 Tela 5.8\" Octa-Core 2.8GHz 128GB 4G Câmera 12MP - Preto",
-    "rating": 4.37013,
-    "price": 1887.78,
-    "image": {
-      "small": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/133274/7/133274700P1.png",
-      "medium": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/133274/7/133274700G1.png"
-    }
-  },
-  "133274769": {
-    "id": "133274769",
-    "name": "Smartphone Samsung Galaxy S9+ Dual Chip Android 8.0 Tela 6.2\" Octa-Core 2.8GHz 128GB 4G Câmera 12MP Dual Cam - Preto",
-    "rating": 4.7099237,
-    "price": 2221.11,
-    "image": {
-      "small": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/133274/7/133274769P1.png",
-      "medium": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/133274/7/133274769G1.png"
-    }
-  },
-  "133274929": {
-    "id": "133274929",
-    "name": "Smartphone Samsung Galaxy S9+ Dual Chip Android 8.0 Tela 6.2\" Octa-Core 2.8GHz 128GB 4G Câmera 12MP Dual Cam - Cinza",
-    "rating": 4.5882354,
-    "price": 2221.11,
-    "image": {
-      "small": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/133274/9/133274929P1.png",
-      "medium": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/133274/9/133274929G1.png"
-    }
-  },
-  "133274988": {
-    "id": "133274988",
-    "name": "Smartphone Samsung Galaxy S9+ Dual Chip Android 8.0 Tela 6.2\" Octa-Core 2.8GHz 128GB 4G Câmera 12MP Dual Cam - Ultravioleta",
-    "rating": 4.695652,
-    "price": 2271.59,
-    "image": {
-      "small": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/133274/9/133274988P1.png",
-      "medium": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/133274/9/133274988G1.png"
-    }
-  },
-  "133275702": {
-    "id": "133275702",
-    "name": "Smartphone Samsung Galaxy S9 Dual Chip Android 8.0 Tela 5.8\" Octa-Core 2.8GHz 128GB 4G Câmera 12MP - Cinza",
-    "rating": 4.56,
-    "price": 1887.78,
-    "image": {
-      "small": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/133275/7/133275702P1.png",
-      "medium": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/133275/7/133275702G1.png"
-    }
-  },
   "133730963": {
     "id": "133730963",
     "name": "Smartphone Samsung Galaxy S9 Dual Chip Android 8.0 Tela 5.8\" Octa-Core 2.8GHz 128GB 4G Câmera 12MP - Azul",
     "rating": 4.6538463,
     "price": 1887.78,
+    "tag": "TECH",
     "image": {
       "small": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/133730/9/133730963P1.png",
       "medium": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/133730/9/133730963G1.png"
@@ -214,6 +162,7 @@
     "name": "Smartphone Samsung Galaxy S9+ Dual Chip Android 8.0 Tela 6.2\" Octa-Core 2.8GHz 128GB 4G Câmera 12MP Dual Cam - Azul",
     "rating": 4.836066,
     "price": 2271.59,
+    "tag": "TECH",
     "image": {
       "small": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/133731/0/133731042P1.png",
       "medium": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/133731/0/133731042G1.png"
@@ -224,6 +173,7 @@
     "name": "SSD Kingston A400 480GB - 500mb/s para Leitura e 450mb/s para Gravação",
     "rating": 4.75,
     "price": 287.5,
+    "tag": "TECH",
     "image": {
       "small": "https://images-submarino.b2w.io/produtos/01/00/item/133766/8/133766827P1.jpg",
       "medium": "https://images-submarino.b2w.io/produtos/01/00/item/133766/8/133766827G1.jpg"
@@ -234,6 +184,7 @@
     "name": "Smart TV LED 32\" Samsung 32J4290 HD com Conversor Digital 2 HDMI 1 USB Wi-Fi 60Hz - Preta",
     "rating": 3.586777,
     "price": 899,
+    "tag": "TECH",
     "image": {
       "small": "https://images-submarino.b2w.io/produtos/01/00/offers/01/03/item/133791/1/133791184P1.png",
       "medium": "https://images-submarino.b2w.io/produtos/01/00/offers/01/03/item/133791/1/133791184G1.png"
@@ -254,19 +205,10 @@
     "name": "Smartphone ZenFone Asus Max Pro (M1) ZB602KL-4A136BRR 64GB Dual Chip Android Tela 6\" Qualcomm Câmera 13 + 5MP (Dual Traseira) - Preto",
     "rating": 4.5555553,
     "price": 949,
+    "tag": "TECH",
     "image": {
       "small": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/134123/1/134123153P1.jpg",
       "medium": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/134123/1/134123153G1.jpg"
-    }
-  },
-  "134163729": {
-    "id": "134163729",
-    "name": "Smartphone Motorola One 64GB Dual Chip Android Oreo 8.1 Tela 5.9\" 2.0 GHz Octa-Core Qualcomm 4G Câmera 13 + 2MP (Dual Traseira) - Preto",
-    "rating": 4.181818,
-    "price": 969.9,
-    "image": {
-      "small": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/134163/7/134163729P1.jpg",
-      "medium": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/134163/7/134163729G1.jpg"
     }
   },
   "134217328": {
@@ -274,6 +216,7 @@
     "name": "Smartphone Samsung Galaxy S10+ 1TB Dual Chip Android 9.0 Tela 6,4\" Octa-Core 4G Câmera Tripla Traseira 12MP + 12MP + 16MP - Ceramic Preto",
     "rating": 4.5,
     "price": 4499,
+    "tag": "TECH",
     "image": {
       "small": "https://images-submarino.b2w.io/produtos/01/00/img/134217/3/134217336P1.jpg",
       "medium": "https://images-submarino.b2w.io/produtos/01/00/img/134217/3/134217336G1.jpg"
@@ -284,6 +227,7 @@
     "name": "Smartphone Samsung Galaxy S10 128GB Nano Chip Android Tela 6.1\" Octa-Core 4G Câmera Tripla Traseira 12MP + 12MP + 16MP - Preto",
     "rating": 4.7619047,
     "price": 2999,
+    "tag": "TECH",
     "image": {
       "small": "https://images-submarino.b2w.io/produtos/01/00/img7/01/00/item/134217/3/134217344P1.jpg",
       "medium": "https://images-submarino.b2w.io/produtos/01/00/img7/01/00/item/134217/3/134217344G1.jpg"
@@ -294,59 +238,10 @@
     "name": "Smartphone Samsung Galaxy S10e 128GB Dual Chip Android 9.0 Tela 5,8\" Octa-Core 4G Câmera 12MP + 16MP - Preto",
     "rating": 4.4210525,
     "price": 2499,
+    "tag": "TECH",
     "image": {
       "small": "https://images-submarino.b2w.io/produtos/01/00/img7/01/00/item/134217/3/134217361P1.jpg",
       "medium": "https://images-submarino.b2w.io/produtos/01/00/img7/01/00/item/134217/3/134217361G1.jpg"
-    }
-  },
-  "134217408": {
-    "id": "134217408",
-    "name": "Smartphone Samsung Galaxy S10e 128GB Dual Chip Android 9.0 Tela 5,8\" Octa-Core 4G Câmera 12MP + 16MP - Azul",
-    "rating": 4.25,
-    "price": 2499,
-    "image": {
-      "small": "https://images-submarino.b2w.io/produtos/01/00/img7/01/00/item/134217/4/134217408P1.jpg",
-      "medium": "https://images-submarino.b2w.io/produtos/01/00/img7/01/00/item/134217/4/134217408G1.jpg"
-    }
-  },
-  "134217441": {
-    "id": "134217441",
-    "name": "Smartphone Samsung Galaxy S10+ 128GB Dual Chip Android 9.0 Tela 6.4¿ Octa-Core 4G Câmera Tripla Traseira 12MP + 12MP + 16MP - Branco",
-    "rating": 4.814815,
-    "price": 3499,
-    "image": {
-      "small": "https://images-submarino.b2w.io/produtos/01/00/img7/01/00/item/134217/4/134217441P1.jpg",
-      "medium": "https://images-submarino.b2w.io/produtos/01/00/img7/01/00/item/134217/4/134217441G1.jpg"
-    }
-  },
-  "134218128": {
-    "id": "134218128",
-    "name": "Smartphone Samsung Galaxy S10+ 128GB Dual Chip Android 9.0 Tela 6.4\" Octa-Core 4G Câmera Tripla Traseira 12MP + 12MP + 16MP - Preto",
-    "rating": 4.4444447,
-    "price": 3499,
-    "image": {
-      "small": "https://images-submarino.b2w.io/produtos/01/00/img7/01/00/item/134218/1/134218128P1.jpg",
-      "medium": "https://images-submarino.b2w.io/produtos/01/00/img7/01/00/item/134218/1/134218128G1.jpg"
-    }
-  },
-  "134218144": {
-    "id": "134218144",
-    "name": "Smartphone Samsung Galaxy S10e 128GB Dual Chip Android 9.0 Tela 5,8\" Octa-Core 4G Câmera 12MP + 16MP - Branco",
-    "rating": 4.5,
-    "price": 2499,
-    "image": {
-      "small": "https://images-submarino.b2w.io/produtos/01/00/img7/01/00/item/134218/1/134218144P1.jpg",
-      "medium": "https://images-submarino.b2w.io/produtos/01/00/img7/01/00/item/134218/1/134218144G1.jpg"
-    }
-  },
-  "134218161": {
-    "id": "134218161",
-    "name": "Smartphone Samsung Galaxy S10 128GB Nano Chip Android Tela 6.1¿ Octa-Core 4G Câmera Tripla Traseira 12MP + 12MP + 16MP - Azul",
-    "rating": 4.55,
-    "price": 2999,
-    "image": {
-      "small": "https://images-submarino.b2w.io/produtos/01/00/img7/01/00/item/134218/1/134218161P1.jpg",
-      "medium": "https://images-submarino.b2w.io/produtos/01/00/img7/01/00/item/134218/1/134218161G1.jpg"
     }
   },
   "134218187": {
@@ -354,6 +249,7 @@
     "name": "Smartphone Samsung Galaxy S10+ 128GB Dual Chip Android 9.0 Tela 6.4¿ Octa-Core 4G Câmera Tripla Traseira 12MP + 12MP + 16MP - Azul",
     "rating": 4.9166665,
     "price": 3499,
+    "tag": "TECH",
     "image": {
       "small": "https://images-submarino.b2w.io/produtos/01/00/img7/01/00/item/134218/1/134218187P1.jpg",
       "medium": "https://images-submarino.b2w.io/produtos/01/00/img7/01/00/item/134218/1/134218187G1.jpg"
@@ -364,6 +260,7 @@
     "name": "Iphone 8 Plus 64GB Ouro  Tela 5.5\" iOS 12 4G Câmera 12MP - Apple",
     "rating": 4.575,
     "price": 3499,
+    "tag": "TECH",
     "image": {
       "small": "https://images-submarino.b2w.io/produtos/01/00/oferta/134220/3/134220359P1.jpg",
       "medium": "https://images-submarino.b2w.io/produtos/01/00/oferta/134220/3/134220359G1.jpg"
@@ -374,6 +271,7 @@
     "name": "Smart TV LED 65\" Samsung 65RU7100 Ultra HD 4K com Conversor Digital 3 HDMI 2 USB Wi-Fi Visual Livre de Cabos Controle Remoto Único e Bluetooth",
     "rating": 4.428571,
     "price": 3699,
+    "tag": "TECH",
     "image": {
       "small": "https://images-submarino.b2w.io/produtos/01/00/image/134240/5/134240579P1.jpg",
       "medium": "https://images-submarino.b2w.io/produtos/01/00/image/134240/5/134240579G1.jpg"
@@ -384,6 +282,7 @@
     "name": "Smart TV LED 55\" Samsung 55RU7100 Ultra HD 4K com Conversor Digital 3 HDMI 2 USB Wi-Fi Visual Livre de Cabos Controle Remoto Único e Bluetooth",
     "rating": 4.3421054,
     "price": 2499,
+    "tag": "TECH",
     "image": {
       "small": "https://images-submarino.b2w.io/produtos/01/00/image/134240/6/134240632P1.jpg",
       "medium": "https://images-submarino.b2w.io/produtos/01/00/image/134240/6/134240632G1.jpg"
@@ -394,6 +293,7 @@
     "name": "Smart TV LED 43'' Samsung 43RU7100 Ultra HD 4K com Conversor Digital 3 HDMI 2 USB Wi-Fi Hdr Premium Controle Remoto Único e Bluetooth",
     "rating": 4.2883434,
     "price": 1599,
+    "tag": "TECH",
     "image": {
       "small": "https://images-submarino.b2w.io/produtos/01/00/img/134240/6/134240675P1.jpg",
       "medium": "https://images-submarino.b2w.io/produtos/01/00/img/134240/6/134240675G1.jpg"
@@ -409,86 +309,6 @@
       "medium": "https://images-submarino.b2w.io/produtos/01/00/image/134241/7/134241731G1.jpg"
     }
   },
-  "134252781": {
-    "id": "134252781",
-    "name": "Smartphone Samsung Galaxy M10 32GB Dual Chip Android 9.0 Tela 6,2\" Octa-Core 4G Câmera 13+5MP - Preto",
-    "rating": 3.9152544,
-    "price": 749,
-    "image": {
-      "small": "https://images-submarino.b2w.io/produtos/01/00/img2/134252/7/134252799P1.jpg",
-      "medium": "https://images-submarino.b2w.io/produtos/01/00/img2/134252/7/134252799G1.jpg"
-    }
-  },
-  "134253943": {
-    "id": "134253943",
-    "name": "Smartphone Samsung Galaxy A20 32GB Dual Chip Android 9.0 Tela 6.4\" Octa-Core 4G Câmera Dupla 13MP + 5MP - Azul",
-    "rating": 4.133333,
-    "price": 838.95,
-    "image": {
-      "small": "https://images-submarino.b2w.io/produtos/01/00/oferta/134253/9/134253951P1.jpg",
-      "medium": "https://images-submarino.b2w.io/produtos/01/00/oferta/134253/9/134253951G1.jpg"
-    }
-  },
-  "134254022": {
-    "id": "134254022",
-    "name": "Smartphone Samsung Galaxy A20 32GB Dual Chip Android 9.0 Tela 6.4\" Octa-Core 4G Câmera Dupla 13MP + 5MP - Preto",
-    "rating": 4.4666667,
-    "price": 838.95,
-    "image": {
-      "small": "https://images-submarino.b2w.io/produtos/01/00/oferta/134254/0/134254031P1.jpg",
-      "medium": "https://images-submarino.b2w.io/produtos/01/00/oferta/134254/0/134254031G1.jpg"
-    }
-  },
-  "134254161": {
-    "id": "134254161",
-    "name": "Smartphone Motorola Moto G7 Play  Edição Especial 32GB Dual Chip Android Pie - 9.0 Tela 5.7\" 1.8 GHz Octa-Core 4G Câmera 13MP - Índigo",
-    "rating": 3.9166667,
-    "price": 699.99,
-    "image": {
-      "small": "https://images-submarino.b2w.io/produtos/01/00/image/134254/1/134254170P1.jpg",
-      "medium": "https://images-submarino.b2w.io/produtos/01/00/image/134254/1/134254170G1.jpg"
-    }
-  },
-  "134255981": {
-    "id": "134255981",
-    "name": "Smartphone Samsung Galaxy S9 Desbloqueado Tim 128GB Dual Chip Android 8.0 Tela 5.8\" Octa-Core 2.8GHz 4G Câmera 12MP Dual Cam - Azul",
-    "rating": 5,
-    "price": 2799,
-    "image": {
-      "small": "https://images-submarino.b2w.io/produtos/01/00/oferta/134255/9/134255990P1.jpg",
-      "medium": "https://images-submarino.b2w.io/produtos/01/00/oferta/134255/9/134255990G1.jpg"
-    }
-  },
-  "134315981": {
-    "id": "134315981",
-    "name": "Smartphone Samsung Galaxy A70 128GB Dual Chip Android 9.0 Tela 6.7\" Octa-Core 4G Câmera Tripla 32MP + 5MP + 8MP (UW) - Branco",
-    "rating": 4.4736843,
-    "price": 1999,
-    "image": {
-      "small": "https://images-submarino.b2w.io/produtos/01/00/image/134315/9/134315999P1.jpg",
-      "medium": "https://images-submarino.b2w.io/produtos/01/00/image/134315/9/134315999G1.jpg"
-    }
-  },
-  "134344423": {
-    "id": "134344423",
-    "name": "Smartphone Motorola Moto G7 Power 64GB Dual Chip Android Pie 9.0 Tela 6,2\" 1.8 GHz Octa-Core 4G Câmera 12MP - Lilás",
-    "rating": 4.1538463,
-    "price": 999,
-    "image": {
-      "small": "https://images-submarino.b2w.io/produtos/01/00/oferta/134344/4/134344440P1.jpg",
-      "medium": "https://images-submarino.b2w.io/produtos/01/00/oferta/134344/4/134344440G1.jpg"
-    }
-  },
-  "134385663": {
-    "id": "134385663",
-    "name": "Notebook Inspiron i15-3583-A30P 8ª Intel Core i7 8GB (AMD Radeon 520 com 2GB) 2TB LED HD 15,6\" W10 Preto - Dell",
-    "rating": 4.4736843,
-    "price": 3075.07,
-    "image": {
-      "small": "https://images-submarino.b2w.io/produtos/01/00/img/134385/6/134385671P1.jpg",
-      "medium": "https://images-submarino.b2w.io/produtos/01/00/img/134385/6/134385671G1.jpg"
-    }
-  },
   "134409805": {
     "id": "134409805",
     "name": "Fritadeira Elétrica Sem Óleo - Air Fryer Mondial AF-30 Family IV 3,5L Preta com Timer",
@@ -499,73 +319,15 @@
       "medium": "https://images-submarino.b2w.io/produtos/01/00/img/134409/8/134409821G1.jpg"
     }
   },
-  "134455924": {
-    "id": "134455924",
-    "name": "Smartphone Samsung Galaxy S10 128GB Dual Chip Desbloqueado Tim Android 9.0 Tela 6,1\" Octa-Core 4G Câmera 12MP - Branco",
-    "rating": 4.6666665,
-    "price": 4099.99,
-    "image": {
-      "small": "https://images-submarino.b2w.io/produtos/01/00/img7/01/00/item/134455/9/134455924P1.jpg",
-      "medium": "https://images-submarino.b2w.io/produtos/01/00/img7/01/00/item/134455/9/134455924G1.jpg"
-    }
-  },
   "134544880": {
     "id": "134544880",
     "name": "Game EFootball PES 2020 - PS4",
     "rating": 4.3207545,
     "price": 99.99,
+    "tag": "GAME",
     "image": {
       "small": "https://images-submarino.b2w.io/produtos/01/00/img/134544/8/134544898P1.jpg",
       "medium": "https://images-submarino.b2w.io/produtos/01/00/img/134544/8/134544898G1.jpg"
-    }
-  },
-  "134573381": {
-    "id": "134573381",
-    "name": "Notebook Lenovo Ultrafino Ideapad S145 8ª Intel Core I7 8GB (Geforce MX110 com 2GB) 1TB FHD 15,6\" W10 Prata",
-    "rating": 3.7317073,
-    "price": 2993.61,
-    "image": {
-      "small": "https://images-submarino.b2w.io/produtos/01/00/img2/134573/3/134573390P1.jpg",
-      "medium": "https://images-submarino.b2w.io/produtos/01/00/img2/134573/3/134573390G1.jpg"
-    }
-  },
-  "134589906": {
-    "id": "134589906",
-    "name": "SSD Patriot Burst 240gb Sata3 2.5",
-    "rating": 4.6666665,
-    "price": 179.99,
-    "image": {
-      "small": "https://images-submarino.b2w.io/produtos/01/00/img5/134589/9/134589914P1.jpg",
-      "medium": "https://images-submarino.b2w.io/produtos/01/00/img5/134589/9/134589914G1.jpg"
-    }
-  },
-  "144563110": {
-    "id": "144563110",
-    "name": "Notebook Dell Gaming G3-3590-A20P 9ª Intel Core I5 8GB (Geforce GTX1650 com 4GB) 1TB + 128GB SSD 15,6\" W10",
-    "rating": 4,
-    "price": 4299.99,
-    "image": {
-      "small": "https://images-submarino.b2w.io/produtos/01/00/img/144563/1/144563128P1.jpg",
-      "medium": "https://images-submarino.b2w.io/produtos/01/00/img/144563/1/144563128G1.jpg"
-    }
-  },
-  "223825894": {
-    "id": "223825894",
-    "name": "Smartwatch Xiaomi Mi Band 4 Display Colorido - Global",
-    "rating": 5,
-    "price": 173.68,
-    "image": {
-      "small": "https://images-submarino.b2w.io/produtos/01/00/img/1423024/2/1423024266P1.jpg",
-      "medium": "https://images-submarino.b2w.io/produtos/01/00/img/1423024/2/1423024266G1.jpg"
-    }
-  },
-  "338834299": {
-    "id": "338834299",
-    "name": "iPhone 8 128GB Gold iOS Câmera 12MP 4G Wi-Fi - Apple",
-    "price": 2899.99,
-    "image": {
-      "small": "https://images-submarino.b2w.io/produtos/01/00/img/338835/8/338835865P1.jpg",
-      "medium": "https://images-submarino.b2w.io/produtos/01/00/img/338835/8/338835865G1.jpg"
     }
   },
   "513385874": {
@@ -573,6 +335,7 @@
     "name": "Fone de Ouvido Xiaomi Redmi Airdots Earbuds Sem Fio Bluetooth 5.0 Duplo Tws Original - Versão Global",
     "rating": 2.75,
     "price": 113.49,
+    "tag": "TECH",
     "image": {
       "small": "https://images-submarino.b2w.io/produtos/01/00/img/513384/9/513384986P1.jpg",
       "medium": "https://images-submarino.b2w.io/produtos/01/00/img/513384/9/513384986G1.jpg"
@@ -583,6 +346,7 @@
     "name": "Game God of War Hits - PS4",
     "rating": 4.866667,
     "price": 62.9,
+    "tag": "GAME",
     "image": {
       "small": "https://images-submarino.b2w.io/produtos/01/00/img/1227812/3/1227812329P1.jpg",
       "medium": "https://images-submarino.b2w.io/produtos/01/00/img/1227812/3/1227812329G1.jpg"

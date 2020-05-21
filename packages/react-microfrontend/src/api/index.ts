@@ -65,7 +65,7 @@ class Api {
 
     return this.properties
       .filter((property) => property instanceof MetaProperty)
-      .reduce((agg, property) => Object.assign(agg, { [property.name]: property.initialValue }), {});
+      .reduce((agg, property) => Object.assign(agg, { [property.name]: property.initialState }), {});
   }
 
   build(apiAccess = Api.ACCESS.PRIVATE_API) {

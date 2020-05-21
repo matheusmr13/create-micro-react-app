@@ -3,9 +3,31 @@ import { withMicrofrontend, TYPE } from 'react-microfrontend';
 import React, { useState } from 'react';
 import './Store.css';
 
-const Container = ({ microfrontends, overrideContent }) => {
+const Highlight = ({ children, name, enabled, backgroundColor }) => {
+  if (!enabled) return children;
+
+  return (
+    <div className="Hightlight">
+      <div style={{ backgroundColor }} className="Hightlight__overlay" />
+      <div className="Hightlight__text">{name}</div>
+      {children}
+    </div>
+  );
+};
+
+const Container = ({ microfrontends, overrideContent, showMicrofrontends }) => {
   const [selected, setSelected] = useState('showcase');
   const ComponentToRender = microfrontends[selected].view;
+
+  const props = {
+    promotion: {
+      onPromotionSelected: () => setSelected('showcase'),
+      backgroundColor: 'purple',
+    },
+    showcase: {
+      backgroundColor: 'blue',
+    },
+  }[selected];
 
   return (
     <div className="Store__content">
@@ -17,7 +39,18 @@ const Container = ({ microfrontends, overrideContent }) => {
           Promotion
         </button>
       </nav>
-      <main>{overrideContent || <ComponentToRender />}</main>
+      <main>
+        {overrideContent || (
+          <Highlight
+            enabled={showMicrofrontends}
+            name={selected}
+            backgroundColor={props.backgroundColor}
+            enabled={showMicrofrontends}
+          >
+            <ComponentToRender {...props} />
+          </Highlight>
+        )}
+      </main>
     </div>
   );
 };
@@ -26,6 +59,7 @@ const ConnectedContainer = withMicrofrontend(Container);
 
 const Store = ({ microfrontend: cart }) => {
   const [showCart, setShouldShowCart] = useState(false);
+  const [showMicrofrontends, setShowMicrofrontends] = useState(false);
   const { CartWidget, CartScreen } = cart.view;
 
   return (
@@ -33,13 +67,27 @@ const Store = ({ microfrontend: cart }) => {
       <div className="Store__container">
         <header className="Store__header">
           <div className="Store__top">
-            <h1 className="Store__title">Microfrontend Store</h1>
+            <h1 className="Store__title">
+              Microfrontend Store{' '}
+              <button onClick={() => setShowMicrofrontends(!showMicrofrontends)}>Show microfrontends</button>
+            </h1>
             <div className="Store__cart">
-              <CartWidget onClick={() => setShouldShowCart(!showCart)} />
+              <Highlight enabled={showMicrofrontends} name="Cart" backgroundColor="yellow">
+                <CartWidget onClick={() => setShouldShowCart(!showCart)} />
+              </Highlight>
             </div>
           </div>
         </header>
-        <ConnectedContainer overrideContent={showCart && <CartScreen onBack={() => setShouldShowCart(false)} />} />
+        <ConnectedContainer
+          showMicrofrontends={showMicrofrontends}
+          overrideContent={
+            showCart && (
+              <Highlight enabled={showMicrofrontends} name="Cart" backgroundColor="yellow">
+                <CartScreen onBack={() => setShouldShowCart(false)} />
+              </Highlight>
+            )
+          }
+        />
       </div>
     </div>
   );

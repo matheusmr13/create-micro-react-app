@@ -4,12 +4,12 @@ const SUBSCRIPTIONS = 'SUBSCRIPTIONS';
 
 class Property extends Meta {
   NAMES: any = null;
-  initialValue;
+  initialState;
 
   constructor(props, shared) {
     super(props, shared);
 
-    this.initialValue = props.initialValue;
+    this.initialState = props.initialState;
     const name = this.getCapitalizedName();
     this.NAMES = {
       WRITE: `set${name}`,
@@ -23,7 +23,7 @@ class Property extends Meta {
   };
 
   initialize() {
-    this.writeMethod(this.initialValue);
+    this.writeMethod(this.initialState);
   }
 
   writeMethod = (...args) => {

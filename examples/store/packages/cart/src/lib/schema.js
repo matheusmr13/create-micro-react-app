@@ -3,7 +3,7 @@ export default {
   name: 'cart',
   interface: {
     cart: {
-      initialValue: {
+      initialState: {
         products: [],
       },
     },

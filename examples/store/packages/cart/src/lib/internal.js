@@ -2,10 +2,6 @@ import schema from './schema';
 import { Api } from 'react-microfrontend';
 const api = new Api(schema).build();
 
-console.info('asd', api);
-api.setCart({
-  products: [],
-});
 api.onAddProductToCartCalled((product) => {
   api.setCart(
     Object.assign({

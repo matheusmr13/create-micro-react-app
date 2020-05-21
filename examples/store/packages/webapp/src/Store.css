@@ -22,7 +22,8 @@
 }
 
 .Store__title {
-  float: 1;
+  flex: 1;
+  padding: 0 16px;
 }
 
 .Store__cart {
@@ -62,4 +63,35 @@
 }
 
 .Store__content {
+}
+
+.Hightlight {
+  position: relative;
+}
+
+.Hightlight__overlay {
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Hightlight__text {
+  background-color: white;
+  border-radius: 8px;
+  padding: 8px;
+  pointer-events: none;
+  font-weight: bold;
+  font-size: 24px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: black;
+  z-index: 9999;
 }
