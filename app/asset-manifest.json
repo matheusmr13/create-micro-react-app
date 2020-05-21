@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "./create-micro-react-app/app/static/css/main.798f63cd.chunk.css",
+    "main.js": "./create-micro-react-app/app/static/js/main.981be963.chunk.js",
+    "main.js.map": "./create-micro-react-app/app/static/js/main.981be963.chunk.js.map",
+    "runtime-main.js": "./create-micro-react-app/app/static/js/runtime-main.94b1670e.js",
+    "runtime-main.js.map": "./create-micro-react-app/app/static/js/runtime-main.94b1670e.js.map",
+    "static/css/2.4c6ee7a4.chunk.css": "./create-micro-react-app/app/static/css/2.4c6ee7a4.chunk.css",
+    "static/js/2.a0476da1.chunk.js": "./create-micro-react-app/app/static/js/2.a0476da1.chunk.js",
+    "static/js/2.a0476da1.chunk.js.map": "./create-micro-react-app/app/static/js/2.a0476da1.chunk.js.map",
+    "index.html": "./create-micro-react-app/app/index.html",
+    "precache-manifest.870bc110c6141809a136819e4a2e37d9.js": "./create-micro-react-app/app/precache-manifest.870bc110c6141809a136819e4a2e37d9.js",
+    "service-worker.js": "./create-micro-react-app/app/service-worker.js",
+    "static/css/2.4c6ee7a4.chunk.css.map": "./create-micro-react-app/app/static/css/2.4c6ee7a4.chunk.css.map",
+    "static/css/main.798f63cd.chunk.css.map": "./create-micro-react-app/app/static/css/main.798f63cd.chunk.css.map",
+    "static/js/2.a0476da1.chunk.js.LICENSE.txt": "./create-micro-react-app/app/static/js/2.a0476da1.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.94b1670e.js",
+    "static/css/2.4c6ee7a4.chunk.css",
+    "static/js/2.a0476da1.chunk.js",
+    "static/css/main.798f63cd.chunk.css",
+    "static/js/main.981be963.chunk.js"
+  ]
+}
