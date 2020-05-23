@@ -31,17 +31,45 @@
   - Rollout your changes progressively using multiple applications at once
 
 - All of this using `create-micro-react-app` and `micro-react`
+
   - Easy to use and maintain
 
 ## Next steps
 
 [ ] Permission - Separate application between users/company
 [ ] Deploy - Schedule deploy
-[ ] Deploy - Recurrent deploy with approval versions
+[ ] Deploy - Recurrent deploy with approved versions
 [ ] New integrations - Integrate with gitlab (same as github if possible)
 [ ] New integrations - Integrate with amazon s3 (get artifacts and publish them)
 [ ] New integrations - Integrate with npm (get built packages from npm registry)
 [ ] Microfrontend types and metainfos (eg: by url, by menu, by custom field)
 [ ] Create a base library (with microfrontend-controller passing uuid and installing this lib)
 [ ] Define flux between namespaces (alpha -> beta -> prod)
-[ ] Cannary deploy based on some request that checks if it is all fine with app
+[ ] Cannary deploy based on some request that checks if it is all fine with app (integrate with quality platforms?)
+
+# Configuration
+
+Create two files
+
+- `.env.local` needed to deploy
+- `.env.development.local` needed to local development
+
+## Github setup
+
+Generate an OAuth Application on github settings: https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/
+
+Define these two vars on env file:
+GITHUB_CLIENT_ID
+GITHUB_CLIENT_SECRET
+
+To use deployed application, after logged in, you will need to generate a personal access token and save it on Profile page.
+Generate a personal access token: https://help.github.com/en/enterprise/2.17/user/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line#creating-a-token
+
+## Google App Engine
+
+Create app on Google App Engine: https://cloud.google.com/appengine/docs/standard/nodejs/quickstart
+
+Configure your connection with datastore: https://cloud.google.com/datastore/docs/activate
+To setup your datastore configs, use this env vars:
+GOOGLE_CLOUD_PRIVATE_KEY
+GOOGLE_CLOUD_CLIENT_EMAIL

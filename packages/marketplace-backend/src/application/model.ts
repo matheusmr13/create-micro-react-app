@@ -11,7 +11,7 @@ interface IApplication {
   packageName: string;
 }
 
-@Entity({ namespace: 'testing', kind: 'application' })
+@Entity({ kind: 'application' })
 class Application extends BasicEntity {
   @Column()
   public githubId: string = '';

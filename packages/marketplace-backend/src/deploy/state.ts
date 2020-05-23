@@ -21,7 +21,7 @@ export enum STATUS {
   PREVIOUS = 'PREVIOUS',
 }
 
-@Entity({ namespace: 'testing', kind: 'deploy' })
+@Entity({ kind: 'deploy' })
 class Deploy extends BasicEntity {
   @Column()
   public versions: { [key: string]: string } = {};

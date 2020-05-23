@@ -23,7 +23,7 @@ interface IMicrofrontend {
   type?: TYPE;
 }
 
-@Entity({ namespace: 'testing', kind: 'microfrontend' })
+@Entity({ kind: 'microfrontend' })
 class Microfrontend extends BasicEntity {
   @Column()
   public packageName: string = '';

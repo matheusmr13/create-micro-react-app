@@ -12,7 +12,7 @@ interface INamespace {
   applicationId: string;
 }
 
-@Entity({ namespace: 'testing', kind: 'namespace' })
+@Entity({ kind: 'namespace' })
 class Namespace extends BasicEntity {
   @Column()
   public path: string = '';

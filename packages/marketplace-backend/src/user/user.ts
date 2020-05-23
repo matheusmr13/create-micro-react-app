@@ -11,7 +11,7 @@ interface IUser {
   githubToken?: string;
 }
 
-@Entity({ namespace: 'testing', kind: 'user' })
+@Entity({ kind: 'user' })
 class User extends Model {
   @Column()
   public name: string = '';

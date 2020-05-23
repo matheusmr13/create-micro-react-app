@@ -17,6 +17,8 @@ import Microfrontend from 'microfrontend/model';
 import Namespace from 'namespace/model';
 import Version from 'version/model';
 
+import { getGoogleCloudConfig } from './config';
+
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -41,7 +43,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).send('Something broke!');
 });
 
-datastoreOrm.addConnection('default', { keyFilename: './datastoreServiceAccount.json' });
+datastoreOrm.addConnection('default', getGoogleCloudConfig());
 
 const { PORT = 8080 } = process.env;
 const server = app.listen(PORT, () => {

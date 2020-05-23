@@ -16,7 +16,7 @@ Import application
 Import microfrontend
 Deploy application && show changes
 
-## Simplicity to add new miicrofrontend
+## Simplicity to add new microfrontend
 
 Create new repo
 Clone it
@@ -41,5 +41,7 @@ Show application
 - Cart -> Has state Cart with itens
 - Showcase -> Add item to cart -> Has state with filter by
 - Promotions -> List some promotions that filters itens on Showcase
+- Design System -> Responsible for all buttons on the page
 
+D
 Design System -> Version 1 (black and white, hard corners, monospaced) | Version 2 (colorfull, rounded, comic sans)

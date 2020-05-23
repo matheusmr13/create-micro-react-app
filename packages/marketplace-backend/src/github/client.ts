@@ -62,62 +62,6 @@ export const downloadTree = async (path: string, tree: any, user: User) => {
   }
 };
 
-export const uploadTree2 = async (githubId: string, tree: any, user: User) => {
-  const master = await getBranch(githubId, 'master', user);
-
-  try {
-    await axios({
-      method: 'DELETE',
-      url: `https://api.github.com/repos/${githubId}/git/refs/heads/gh-pages`,
-      headers: {
-        Authorization: `token ${user.githubToken}`,
-      },
-    });
-  } catch (e) {
-    console.error(e);
-  }
-
-  await axios({
-    method: 'POST',
-    url: `https://api.github.com/repos/${githubId}/git/refs`,
-    headers: {
-      Authorization: `token ${user.githubToken}`,
-    },
-    data: {
-      ref: 'refs/heads/gh-pages',
-      sha: master.commit.sha,
-    },
-  });
-
-  const ghpagesBranch = await getBranch(githubId, 'gh-pages', user);
-
-  const {
-    data: { sha },
-  } = await axios({
-    method: 'POST',
-    url: `https://api.github.com/repos/${githubId}/git/trees`,
-    headers: {
-      Authorization: `token ${user.githubToken}`,
-    },
-    data: {
-      base_tree: ghpagesBranch.commit.sha,
-      tree,
-    },
-  });
-
-  const response = await axios({
-    method: 'POST',
-    url: `https://api.github.com/repos/${githubId}/git/commits`,
-    headers: {
-      Authorization: `token ${user.githubToken}`,
-    },
-    data: {
-      message: 'hue',
-      tree: sha,
-    },
-  });
-};
-
 export const uploadTree = async (githubId: string, tree: any, user: User, version: string) => {
   const a = await octokat({
     username: githubId.split('/')[0],

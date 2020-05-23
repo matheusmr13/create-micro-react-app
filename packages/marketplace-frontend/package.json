@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "./microfrontend-marketplace",
+  "homepage": "/create-micro-react-app/app/",
   "dependencies": {
     "@ant-design/icons": "^4.0.5",
     "@testing-library/jest-dom": "^4.2.4",

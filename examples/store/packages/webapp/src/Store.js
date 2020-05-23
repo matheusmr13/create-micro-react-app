@@ -61,7 +61,6 @@ const ConnectedContainer = withMicrofrontend(Container);
 const Store = ({ microfrontend: cart }) => {
   const [showCart, setShouldShowCart] = useState(false);
   const [showMicrofrontends, setShowMicrofrontends] = useState(false);
-  console.info(DesignSystem.getComponents());
   const { Button } = DesignSystem.getComponents();
   const { CartWidget, CartScreen } = cart.view;
 

@@ -6,13 +6,9 @@ import { Redirect, useLocation } from 'react-router-dom';
 
 import { useApiRequest } from 'base/hooks/request';
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
-function Login(props: { handleLogin: Function, handleError: Function }) {
-  const { handleLogin, handleError } = props;
-  const query = useQuery();
-  const code = query.get('code');
+function Login(props: { handleLogin: Function, handleError: Function, code: string }) {
+  const { handleLogin, handleError, code } = props;
+
   const [{ data, loading, error }, refetch] = useApiRequest({
     url: `/oauth/github?code=${code}`,
     method: 'POST',
@@ -21,6 +17,7 @@ function Login(props: { handleLogin: Function, handleError: Function }) {
   useEffect(() => {
     if (data) {
       handleLogin(data);
+      window.location.href = './';
     } else if (error) {
       handleError();
     }

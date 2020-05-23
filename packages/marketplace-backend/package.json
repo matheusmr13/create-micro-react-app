@@ -13,7 +13,7 @@
     "build": "tsc -p . --outDir ./dist",
     "build:watch": "npm run build -- --watch",
     "gcp-build": "npm run build",
-    "deploy": "npm run build && gcloud app deploy app.yaml"
+    "deploy": "npm run build && gcloud app deploy app.yaml --quiet"
   },
   "repository": {
     "type": "git",

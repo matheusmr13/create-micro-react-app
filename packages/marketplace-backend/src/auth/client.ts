@@ -1,9 +1,12 @@
 import axios from 'axios';
+import { getGithubConfig } from 'config';
+
+const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = getGithubConfig();
 
 export const getGithubAccessToken = (code: string) => {
   return axios({
     method: 'post',
-    url: `https://github.com/login/oauth/access_token?client_id=${process.env.GITHUB_CLIENT_ID}&client_secret=${process.env.GITHUB_CLIENT_SECRET}&code=${code}`,
+    url: `https://github.com/login/oauth/access_token?client_id=${GITHUB_CLIENT_ID}&client_secret=${GITHUB_CLIENT_SECRET}&code=${code}`,
     headers: {
       accept: 'application/json',
     },

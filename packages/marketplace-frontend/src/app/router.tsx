@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { Switch, Route, useHistory, Redirect } from 'react-router-dom';
+import { Switch, Route, useHistory, Redirect, useLocation } from 'react-router-dom';
 
 import Home from './home';
 import Login from 'modules/github/login';
@@ -16,9 +16,15 @@ const LOGGED_HOME_URL = '/home';
 function Router() {
   const history = useHistory();
   const [loggedUser, setLoggedUser] = useLoggedUser();
+  const location = useLocation();
+  const code = window.location.search.split('=')[1];
 
   if (loggedUser) {
     configureLoggedUser(loggedUser);
+  }
+
+  if (code) {
+    return <Login handleLogin={setLoggedUser} handleError={() => history.push('/')} code={code} />;
   }
 
   if (history.location.pathname.startsWith('/logout')) {
@@ -37,9 +43,6 @@ function Router() {
     <Switch>
       <Route exact path="/">
         <LandingPage />
-      </Route>
-      <Route path="/login">
-        <Login handleLogin={setLoggedUser} handleError={() => history.push('/')} />
       </Route>
       <Route path="/home">
         <Home />
