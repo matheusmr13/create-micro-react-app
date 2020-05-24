@@ -36,16 +36,36 @@
 
 ## Next steps
 
-[ ] Permission - Separate application between users/company
-[ ] Deploy - Schedule deploy
-[ ] Deploy - Recurrent deploy with approved versions
-[ ] New integrations - Integrate with gitlab (same as github if possible)
-[ ] New integrations - Integrate with amazon s3 (get artifacts and publish them)
-[ ] New integrations - Integrate with npm (get built packages from npm registry)
-[ ] Microfrontend types and metainfos (eg: by url, by menu, by custom field)
-[ ] Create a base library (with microfrontend-controller passing uuid and installing this lib)
-[ ] Define flux between namespaces (alpha -> beta -> prod)
-[ ] Cannary deploy based on some request that checks if it is all fine with app (integrate with quality platforms?)
+- Permission
+  - get things separate between users (currently works if you create your own environment)
+- Deploy
+  - Schedule deploy to date
+  - Recurrent deploy
+  - Integrations to publish final package to:
+    - Amazon s3
+- Package management integration, get packages from:
+  - NPM
+  - Amazon s3
+  - Gitlab?
+- Extends command line
+  - Application template (create-micro-react-app --from <APPLICATION_UUID>)
+  - CLI for general uses such as preparing a next deploy
+- Flux between multiple namespaces
+  - Define an order for each namespace (such as alpha->beta->main)
+- Expand namespaces
+  - Create hidden "next deploy preview"
+  - Integrate react-microfrontend with setting namespaces
+- Custom microfrontends
+  - Set microfrontends meta infos (nav bar label? url? custom field)
+  - Changelog by version ()
+- Notifications
+  - Changes to next deploy on namespace
+  - Next deploy started (and done)
+  - Integrations:
+    - slack
+    - email
+- Cannary deploy Vs Quality checks
+  - Define some rules to get things checked and move to next deploy (really next to flux iniciative)
 
 # Configuration
 
