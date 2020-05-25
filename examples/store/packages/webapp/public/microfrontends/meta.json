@@ -1,0 +1,14 @@
+{
+  "cart": {
+    "host": "http://localhost:3001"
+  },
+  "design-system": {
+    "host": "http://localhost:3002"
+  },
+  "promotion": {
+    "host": "http://localhost:3003"
+  },
+  "showcase": {
+    "host": "http://localhost:3004"
+  }
+}

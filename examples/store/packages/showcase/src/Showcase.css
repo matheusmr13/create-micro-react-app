@@ -1,0 +1,38 @@
+.Showcase__products {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.Product {
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 5px;
+  margin: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.Product__image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.Product__name {
+  margin-bottom: 16px;
+  flex: 1;
+}
+
+.Product__rating {
+}
+
+.Product__price {
+  font-weight: bold;
+}
+
+.Product__actions {
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+}

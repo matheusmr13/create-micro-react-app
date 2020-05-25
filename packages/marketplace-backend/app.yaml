@@ -1,0 +1,7 @@
+runtime: nodejs12
+env: standard
+
+handlers:
+  - url: /
+    static_files: ../marketplace-frontend/build/\1
+    upload: ../marketplace-frontend/build/(.*)

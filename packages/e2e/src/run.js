@@ -21,9 +21,7 @@ const createSymlinks = async () => {
     const pathToLib = `${pathToNodeModules}/${library}`;
     try {
       await rm(pathToLib);
-    } catch (e) {
-      console.info(e);
-    }
+    } catch (e) {}
     await symlink(mountPath(library), pathToLib);
   };
 

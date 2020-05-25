@@ -1,6 +1,7 @@
 const buildAll = require('./all');
 const packageAll = require('./package');
 const buildSingle = require('./single');
+const buildLibrary = require('./library');
 
 const TYPE = {
   SINGLE: 'SINGLE',
@@ -17,7 +18,8 @@ const start = (type, opts) => {
     },
     [TYPE.ALL]: () => buildAll(opts),
     [TYPE.PACKAGE]: () => packageAll(opts),
-  }[type])();
+    [TYPE.LIBRARY]: () => buildLibrary(opts),
+  }[type]());
 };
 
 start.TYPE = TYPE;

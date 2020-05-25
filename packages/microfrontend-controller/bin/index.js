@@ -2,11 +2,12 @@
 
 const chalk = require('chalk');
 const program = require('commander');
-const packageJson = require('./../package.json');
+const packageJson = require('../package.json');
 
 const create = require('../scripts/create');
 const start = require('../scripts/start');
 const build = require('../scripts/build');
+const publish = require('../scripts/publish');
 
 program
   .name(Object.keys(packageJson.bin)[0])
@@ -142,6 +143,13 @@ program
     opts.shouldBuildStandalone = options.standAlone || !options.microfrontend;
 
     build(type, opts);
+  });
+
+program
+  .command('publish')
+  .description('Publish on a git branch')
+  .action(() => {
+    publish();
   });
 
 program

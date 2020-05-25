@@ -1,7 +1,7 @@
 import Communication from './communication';
 
 const getScriptSrcs = () => {
-  let jsSrcs  : Array<string> = [];
+  let jsSrcs: Array<string> = [];
   document.querySelectorAll('script').forEach(scriptTag => {
     jsSrcs.push(scriptTag.src.toString());
   });
@@ -18,9 +18,9 @@ const ExportMicrofrontend = (objectToExport) => {
     communicate.send(Communication.TYPE.LOAD);
     communicate.send(Communication.TYPE.SCRIPT, getScriptSrcs());
 
-    const mutationObserver = new MutationObserver(function(mutations) {
+    const mutationObserver = new MutationObserver(function (mutations) {
       setTimeout(() => {
-        const styleList : Array<string>  = [];
+        const styleList: Array<string> = [];
         document.querySelectorAll('style').forEach(a => styleList.push(a.innerHTML));
 
         communicate.send(Communication.TYPE.STYLE, styleList);
@@ -30,7 +30,8 @@ const ExportMicrofrontend = (objectToExport) => {
 
     if (head) {
       mutationObserver.observe(head.getRootNode(), {
-        childList: true
+        childList: true,
+        subtree: true
       });
     }
   }

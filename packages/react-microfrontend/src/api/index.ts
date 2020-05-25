@@ -8,8 +8,8 @@ import Shared from './shared';
 enum ACCESS {
   INTERNAL,
   PUBLIC_API,
-  PRIVATE_API
-};
+  PRIVATE_API,
+}
 
 enum TYPE {
   PROPERTY,
@@ -19,47 +19,64 @@ enum TYPE {
 
 class Api {
   static ACCESS = ACCESS;
-  static TYPE = TYPE
+  static TYPE = TYPE;
 
   static Clazzes = {
     [Api.TYPE.FUNCTION]: MetaFunction,
     [Api.TYPE.PROPERTY]: MetaProperty,
     [Api.TYPE.TOPIC]: MetaTopic,
-  }
+  };
 
   packageName: string;
   shared: Shared;
-  properties ?: any;
+  properties?: any;
   view: any;
+  definition: any;
 
   constructor(schema, meta) {
     this.packageName = schema.name || meta.packageName;
     this.shared = new Shared(this.packageName);
     this.view = schema.view;
+    this.definition = schema.definition;
     if (schema.interface) {
-      this.properties = Object.keys(schema.interface)
-        .map(propertyName => Meta.create(
+      this.properties = Object.keys(schema.interface).map((propertyName) =>
+        Meta.create(
           Api.Clazzes[schema.interface[propertyName].type || Api.TYPE.PROPERTY],
-          { ...schema.interface[propertyName], name: propertyName },
+          { ...schema.interface[propertyName], name: propertyName, packageName: this.packageName },
           this.shared.withScope(propertyName)
-        ));
+        )
+      );
     }
   }
 
-  getName() { return this.packageName; }
+  getName() {
+    return this.packageName;
+  }
   getReducers() {
     if (!this.properties) return {};
 
     return this.properties
+      .filter((property) => property instanceof MetaProperty)
       .reduce((agg, property) => Object.assign(agg, property.getReducers()), {});
   }
 
-  build(apiAccess) {
-    if (!apiAccess) throw new Error('Api access required!');
+  getInitialState() {
     if (!this.properties) return {};
 
     return this.properties
-      .reduce((agg, property) => Object.assign(agg, property.build(apiAccess)), {});
+      .filter((property) => property instanceof MetaProperty)
+      .reduce((agg, property) => Object.assign(agg, { [property.name]: property.initialState }), {});
+  }
+
+  build(apiAccess = Api.ACCESS.PRIVATE_API) {
+    if (!apiAccess) throw new Error('Api access required!');
+    if (!this.properties) return {};
+
+    return this.properties.reduce((agg, property) => Object.assign(agg, property.build(apiAccess)), {});
+  }
+
+  hasType(type) {
+    return this.definition.type === type;
   }
 }
 

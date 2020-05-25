@@ -1,6 +1,6 @@
 {
   "name": "microfrontend-controller",
-  "version": "2.1.18",
+  "version": "3.0.0",
   "description": "Microfrontend ruler",
   "main:src": "src/index.js",
   "main": "index.js",
@@ -19,6 +19,7 @@
     "customize-cra": "^0.8.0",
     "express": "^4.17.1",
     "express-http-proxy": "^1.6.0",
+    "gh-pages": "^2.2.0",
     "ora": "^4.0.3",
     "react-app-rewired": "^2.1.5",
     "react-scripts": "^3.2.0",
@@ -41,7 +42,7 @@
     "node": ">=12.10"
   },
   "jest": {
-    "testPathIgnorePatterns" : [
+    "testPathIgnorePatterns": [
       "<rootDir>/test/__snapshots__"
     ],
     "testTimeout": 10000000

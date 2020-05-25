@@ -18,9 +18,9 @@ const start = (type, opts) => {
     [TYPE.PROXY]: () => {
       const { url } = opts;
       startProxyServer(url);
-      startSingle();
+      startSingle({ port: 3001, isMicro: true });
     },
-  }[type])();
+  }[type]());
 };
 
 start.TYPE = TYPE;

@@ -1,0 +1,31 @@
+.Promotion {
+}
+
+.Promotion__item {
+  position: relative;
+  overflow: hidden;
+  padding: 36px;
+  margin: 8px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+}
+
+.Promotion__item:hover .Promotion__item-image {
+  opacity: 0.4;
+}
+
+.Promotion__item-image {
+  opacity: 0.3;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+.Promotion__item-title {
+  font-weight: bold;
+  font-size: 46px;
+  color: black;
+}

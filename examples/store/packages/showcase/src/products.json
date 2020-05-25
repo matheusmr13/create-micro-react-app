@@ -1,0 +1,355 @@
+{
+  "5432285": {
+    "id": "5432285",
+    "name": "Vodka Absolut 1 Litro",
+    "rating": 4.645161,
+    "price": 72.9,
+    "tag": "DRINK",
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/image/5432/2/5432286P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/image/5432/2/5432286G1.jpg"
+    }
+  },
+  "5949268": {
+    "id": "5949268",
+    "name": "Gin Tanqueray 750ml",
+    "rating": 4.714286,
+    "price": 99.9,
+    "tag": "DRINK",
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/image/5949/2/5949269P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/image/5949/2/5949269G1.jpg"
+    }
+  },
+  "34336471": {
+    "id": "34336471",
+    "name": "Gift Card Digital Uber R$ 50 Pré-Pago",
+    "rating": 4.5454545,
+    "price": 50,
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/image/34336/4/34336472P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/image/34336/4/34336472G1.jpg"
+    }
+  },
+  "34336512": {
+    "id": "34336512",
+    "name": "Gift Card Digital Riot League Of Legends R$ 20",
+    "rating": 4.5,
+    "tag": "GAME",
+    "price": 20,
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/img/34336/5/34336510P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/img/34336/5/34336510G1.jpg"
+    }
+  },
+  "34522020": {
+    "id": "34522020",
+    "name": "Gift Card Digital Xbox Live 12 Meses",
+    "rating": 4.7391305,
+    "tag": "GAME",
+    "price": 149,
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/img10/34522/0/34522022P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/img10/34522/0/34522022G1.jpg"
+    }
+  },
+  "41780842": {
+    "id": "41780842",
+    "name": "Kit 10 Cuecas Boxer Em Microfibra Adulto",
+    "rating": 3.2173913,
+    "price": 36.9,
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/img/41780/8/41780843P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/img/41780/8/41780843G1.jpg"
+    }
+  },
+  "49692594": {
+    "id": "49692594",
+    "name": "Ar Condicionado Split Hw Lg Dual Inverter 9000 Btus Frio 220v S4nq09wa5wb.eb2gamz",
+    "rating": 3.5,
+    "price": 1618,
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/img/49692/5/49692592P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/img/49692/5/49692592G1.jpg"
+    }
+  },
+  "77891462": {
+    "id": "77891462",
+    "name": "Relógio Bluetooth Inteligente Smartband M3 Monitor Cardiaco Lançamento",
+    "rating": 2.4782608,
+    "tag": "TECH",
+    "price": 31.49,
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/img/77891/4/77891460P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/img/77891/4/77891460G1.jpg"
+    }
+  },
+  "117966044": {
+    "id": "117966044",
+    "name": "Geladeira/Refrigerador Brastemp Frost Free Side by Side BRO80AKANA Inverse 540L - Evox",
+    "rating": 4.607143,
+    "price": 4598.99,
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/item/117966/0/117966044P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/item/117966/0/117966044G1.png"
+    }
+  },
+  "123804025": {
+    "id": "123804025",
+    "name": "Coleção Harry Potter - 7 volumes",
+    "rating": 4.6618705,
+    "price": 149.99,
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/imagens/123804025/123804033P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/imagens/123804025/123804033G1.jpg"
+    }
+  },
+  "129048398": {
+    "id": "129048398",
+    "name": "Gin Beefeater Dry - 750ml",
+    "rating": 4,
+    "price": 82.9,
+    "tag": "DRINK",
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/item/129048/3/129048398P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/item/129048/3/129048398G1.jpg"
+    }
+  },
+  "132490742": {
+    "id": "132490742",
+    "name": "MacBook Air MQD32BZ/A com Intel Core i5 Dual Core 8GB 128GB SSD 13'' Prata - Apple",
+    "rating": 4.773292,
+    "price": 4942.12,
+    "tag": "TECH",
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/132490/7/132490742P1.png",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/132490/7/132490742G1.png"
+    }
+  },
+  "132627403": {
+    "id": "132627403",
+    "name": "Aparador De Pelos Multigroom com 6 Acessórios MG3712 - Philips.",
+    "rating": 4.2290077,
+    "price": 89.99,
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/img/132627/4/132627411P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/img/132627/4/132627411G1.jpg"
+    }
+  },
+  "133240729": {
+    "id": "133240729",
+    "name": "Lavadora de Roupas Electrolux 8,5Kg LAC09 - Branca",
+    "rating": 4.1868134,
+    "price": 999,
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/img7/01/00/item/133240/7/133240729P1.png",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/img7/01/00/item/133240/7/133240729G1.png"
+    }
+  },
+  "133730963": {
+    "id": "133730963",
+    "name": "Smartphone Samsung Galaxy S9 Dual Chip Android 8.0 Tela 5.8\" Octa-Core 2.8GHz 128GB 4G Câmera 12MP - Azul",
+    "rating": 4.6538463,
+    "price": 1887.78,
+    "tag": "TECH",
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/133730/9/133730963P1.png",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/133730/9/133730963G1.png"
+    }
+  },
+  "133731042": {
+    "id": "133731042",
+    "name": "Smartphone Samsung Galaxy S9+ Dual Chip Android 8.0 Tela 6.2\" Octa-Core 2.8GHz 128GB 4G Câmera 12MP Dual Cam - Azul",
+    "rating": 4.836066,
+    "price": 2271.59,
+    "tag": "TECH",
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/133731/0/133731042P1.png",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/133731/0/133731042G1.png"
+    }
+  },
+  "133766827": {
+    "id": "133766827",
+    "name": "SSD Kingston A400 480GB - 500mb/s para Leitura e 450mb/s para Gravação",
+    "rating": 4.75,
+    "price": 287.5,
+    "tag": "TECH",
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/item/133766/8/133766827P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/item/133766/8/133766827G1.jpg"
+    }
+  },
+  "133791184": {
+    "id": "133791184",
+    "name": "Smart TV LED 32\" Samsung 32J4290 HD com Conversor Digital 2 HDMI 1 USB Wi-Fi 60Hz - Preta",
+    "rating": 3.586777,
+    "price": 899,
+    "tag": "TECH",
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/offers/01/03/item/133791/1/133791184P1.png",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/offers/01/03/item/133791/1/133791184G1.png"
+    }
+  },
+  "133855758": {
+    "id": "133855758",
+    "name": "Fritadeira Elétrica Mondial Grand Family 5,5L Inox - 1900W",
+    "rating": 4,
+    "price": 409.99,
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/item/133855/7/133855758P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/item/133855/7/133855758G1.jpg"
+    }
+  },
+  "134123153": {
+    "id": "134123153",
+    "name": "Smartphone ZenFone Asus Max Pro (M1) ZB602KL-4A136BRR 64GB Dual Chip Android Tela 6\" Qualcomm Câmera 13 + 5MP (Dual Traseira) - Preto",
+    "rating": 4.5555553,
+    "price": 949,
+    "tag": "TECH",
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/134123/1/134123153P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/offers/01/00/item/134123/1/134123153G1.jpg"
+    }
+  },
+  "134217328": {
+    "id": "134217328",
+    "name": "Smartphone Samsung Galaxy S10+ 1TB Dual Chip Android 9.0 Tela 6,4\" Octa-Core 4G Câmera Tripla Traseira 12MP + 12MP + 16MP - Ceramic Preto",
+    "rating": 4.5,
+    "price": 4499,
+    "tag": "TECH",
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/img/134217/3/134217336P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/img/134217/3/134217336G1.jpg"
+    }
+  },
+  "134217344": {
+    "id": "134217344",
+    "name": "Smartphone Samsung Galaxy S10 128GB Nano Chip Android Tela 6.1\" Octa-Core 4G Câmera Tripla Traseira 12MP + 12MP + 16MP - Preto",
+    "rating": 4.7619047,
+    "price": 2999,
+    "tag": "TECH",
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/img7/01/00/item/134217/3/134217344P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/img7/01/00/item/134217/3/134217344G1.jpg"
+    }
+  },
+  "134217361": {
+    "id": "134217361",
+    "name": "Smartphone Samsung Galaxy S10e 128GB Dual Chip Android 9.0 Tela 5,8\" Octa-Core 4G Câmera 12MP + 16MP - Preto",
+    "rating": 4.4210525,
+    "price": 2499,
+    "tag": "TECH",
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/img7/01/00/item/134217/3/134217361P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/img7/01/00/item/134217/3/134217361G1.jpg"
+    }
+  },
+  "134218187": {
+    "id": "134218187",
+    "name": "Smartphone Samsung Galaxy S10+ 128GB Dual Chip Android 9.0 Tela 6.4¿ Octa-Core 4G Câmera Tripla Traseira 12MP + 12MP + 16MP - Azul",
+    "rating": 4.9166665,
+    "price": 3499,
+    "tag": "TECH",
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/img7/01/00/item/134218/1/134218187P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/img7/01/00/item/134218/1/134218187G1.jpg"
+    }
+  },
+  "134220341": {
+    "id": "134220341",
+    "name": "Iphone 8 Plus 64GB Ouro  Tela 5.5\" iOS 12 4G Câmera 12MP - Apple",
+    "rating": 4.575,
+    "price": 3499,
+    "tag": "TECH",
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/oferta/134220/3/134220359P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/oferta/134220/3/134220359G1.jpg"
+    }
+  },
+  "134240561": {
+    "id": "134240561",
+    "name": "Smart TV LED 65\" Samsung 65RU7100 Ultra HD 4K com Conversor Digital 3 HDMI 2 USB Wi-Fi Visual Livre de Cabos Controle Remoto Único e Bluetooth",
+    "rating": 4.428571,
+    "price": 3699,
+    "tag": "TECH",
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/image/134240/5/134240579P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/image/134240/5/134240579G1.jpg"
+    }
+  },
+  "134240624": {
+    "id": "134240624",
+    "name": "Smart TV LED 55\" Samsung 55RU7100 Ultra HD 4K com Conversor Digital 3 HDMI 2 USB Wi-Fi Visual Livre de Cabos Controle Remoto Único e Bluetooth",
+    "rating": 4.3421054,
+    "price": 2499,
+    "tag": "TECH",
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/image/134240/6/134240632P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/image/134240/6/134240632G1.jpg"
+    }
+  },
+  "134240667": {
+    "id": "134240667",
+    "name": "Smart TV LED 43'' Samsung 43RU7100 Ultra HD 4K com Conversor Digital 3 HDMI 2 USB Wi-Fi Hdr Premium Controle Remoto Único e Bluetooth",
+    "rating": 4.2883434,
+    "price": 1599,
+    "tag": "TECH",
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/img/134240/6/134240675P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/img/134240/6/134240675G1.jpg"
+    }
+  },
+  "134241723": {
+    "id": "134241723",
+    "name": "Smart TV LED 50\" Samsung 50RU7100 Ultra HD 4K com Conversor Digital 3 HDMI 2 USB Wi-Fi Visual Livre de Cabos Controle Remoto Único e Bluetooth",
+    "rating": 4.289256,
+    "price": 1999,
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/image/134241/7/134241731P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/image/134241/7/134241731G1.jpg"
+    }
+  },
+  "134409805": {
+    "id": "134409805",
+    "name": "Fritadeira Elétrica Sem Óleo - Air Fryer Mondial AF-30 Family IV 3,5L Preta com Timer",
+    "rating": 3.857143,
+    "price": 249.99,
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/img/134409/8/134409821P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/img/134409/8/134409821G1.jpg"
+    }
+  },
+  "134544880": {
+    "id": "134544880",
+    "name": "Game EFootball PES 2020 - PS4",
+    "rating": 4.3207545,
+    "price": 99.99,
+    "tag": "GAME",
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/img/134544/8/134544898P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/img/134544/8/134544898G1.jpg"
+    }
+  },
+  "513385874": {
+    "id": "513385874",
+    "name": "Fone de Ouvido Xiaomi Redmi Airdots Earbuds Sem Fio Bluetooth 5.0 Duplo Tws Original - Versão Global",
+    "rating": 2.75,
+    "price": 113.49,
+    "tag": "TECH",
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/img/513384/9/513384986P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/img/513384/9/513384986G1.jpg"
+    }
+  },
+  "1227812177": {
+    "id": "1227812177",
+    "name": "Game God of War Hits - PS4",
+    "rating": 4.866667,
+    "price": 62.9,
+    "tag": "GAME",
+    "image": {
+      "small": "https://images-submarino.b2w.io/produtos/01/00/img/1227812/3/1227812329P1.jpg",
+      "medium": "https://images-submarino.b2w.io/produtos/01/00/img/1227812/3/1227812329G1.jpg"
+    }
+  }
+}

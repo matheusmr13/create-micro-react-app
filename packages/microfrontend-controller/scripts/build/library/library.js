@@ -3,7 +3,6 @@ const { escapePackageName } = require('../../utils/paths');
 const {
   readJson, rm, mkdir, copyFile, writeFile,
 } = require('../../utils/fs');
-const createPrivateFile = require('')
 
 const getExtension = (file) => {
   const parts = file.split('.');

@@ -7,11 +7,13 @@ enum ACCESS {
 class Meta {
   static ACCESS = ACCESS;
   name: string;
+  packageName: string;
   access: ACCESS;
   private shared: any;
 
   constructor(props, shared) {
     this.name = props.name;
+    this.packageName = props.packageName;
     this.access = props.access || Meta.ACCESS.PRIVATE;
     this.shared = shared;
   }
@@ -24,8 +26,12 @@ class Meta {
     throw new Error('Not implemented');
   }
 
-  getShared(key) { return this.shared.get(key); }
-  setShared(key, value) { this.shared.set(key, value); }
+  getShared(key) {
+    return this.shared.get(key);
+  }
+  setShared(key, value) {
+    this.shared.set(key, value);
+  }
   updateShared(key, map) {
     const oldValue = this.getShared(key);
     const newValue = map(oldValue);
@@ -33,14 +39,13 @@ class Meta {
     return newValue;
   }
 
-
   connectMethod = (component) => {
-    return connector(component, 'test', this.name);
-  }
+    return connector(component, this.packageName, this.name);
+  };
 
   dispatch = (action, payload) => {
     dispatcher(action, payload);
-  }
+  };
 
   static create(Clazz, props, shared) {
     return new Clazz(props, shared);

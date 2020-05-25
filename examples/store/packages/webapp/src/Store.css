@@ -1,0 +1,97 @@
+.Store {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+}
+
+.Store__container {
+  width: 100%;
+  max-width: 1200px;
+}
+
+.Store__header {
+}
+
+.Store__top {
+  color: white;
+  background-color: black;
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.Store__title {
+  flex: 1;
+  padding: 0 16px;
+}
+
+.Store__cart {
+}
+
+.Store__nav {
+  display: flex;
+  justify-content: center;
+  background-color: #575f6d;
+}
+
+.Store__nav-item {
+  border: 0;
+  background-color: #373f4e;
+  padding: 16px;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  outline: 0;
+  cursor: pointer;
+}
+
+.Store__nav-item:not(:last-child) {
+  border-left: #575f6d;
+}
+
+.Store__nav-item:hover {
+  background-color: #2c3340;
+}
+
+.Store__nav-item--selected {
+  background-color: #242b38;
+}
+
+.Store__nav-item--selected:hover {
+  background-color: #242b38;
+}
+
+.Store__content {
+}
+
+.Hightlight {
+  position: relative;
+}
+
+.Hightlight__overlay {
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Hightlight__text {
+  background-color: white;
+  border-radius: 8px;
+  padding: 8px;
+  pointer-events: none;
+  font-weight: bold;
+  font-size: 24px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: black;
+  z-index: 9999;
+}

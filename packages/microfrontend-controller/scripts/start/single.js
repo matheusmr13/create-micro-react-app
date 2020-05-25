@@ -6,6 +6,8 @@ const { getEnvString } = require('../utils/env');
 const startSingle = async (opts = {}) => {
   const {
     isRunningAll,
+    port,
+    isMicro,
   } = opts;
 
   let startou = false;
@@ -13,8 +15,6 @@ const startSingle = async (opts = {}) => {
   if (isRunningAll) {
     const {
       pathToPackage,
-      port,
-      isMicro,
     } = opts;
     const envString = getEnvString({ isMicrofrontend: isMicro, port });
 
@@ -36,7 +36,7 @@ const startSingle = async (opts = {}) => {
     });
   } else {
     const packageJson = await readJson(appPackageJson);
-    const envString = getEnvString({ packageJson, isMicrofrontend: process.env.IS_MICROFRONTEND });
+    const envString = getEnvString({ packageJson, isMicrofrontend: process.env.IS_MICROFRONTEND || isMicro, port });
     const reactAppRewiredPath = await getReactAppRewiredPath();
     await exec(`${envString} ${reactAppRewiredPath} start --config-overrides ${__dirname}/../../config/cra-webpack-config-override.js`, {
       onStdout: data => process.stdout.write(data),

@@ -134,4 +134,5 @@ module.exports = {
   getDirectories,
   symlink: fs.symlink,
   isDirectory,
+  appendFile: fs.appendFile,
 };
