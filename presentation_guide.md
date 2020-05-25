@@ -43,5 +43,4 @@ Show application
 - Promotions -> List some promotions that filters itens on Showcase
 - Design System -> Responsible for all buttons on the page
 
-D
 Design System -> Version 1 (black and white, hard corners, monospaced) | Version 2 (colorfull, rounded, comic sans)

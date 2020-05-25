@@ -6,24 +6,27 @@ import Namespace from 'namespace/model';
 import User from 'user/user';
 import Microfrontend, { TYPE } from 'microfrontend/model';
 import CompiledDeploy from 'deploy/model';
+import Notification from 'notification/notification';
 
 class ApplicationController extends BaseController<typeof Application> {
   constructor() {
     super(Application);
   }
-  public import = async (req: Request, res: Response) => {
-    const { id } = req.locals.tokenAuth;
+  public import = this.withContext(async (req: Request, res: Response, context) => {
+    const user = await context.getUser();
     const repository = await getGithubRepository(req.body.repositoryName);
-    const application = await Application.createFromRepository(repository, req.body, id);
+    const application = await Application.createFromRepository(repository, req.body, user.id);
     res.json(application.toJSON());
-  };
+  });
 
   public deploy = this.createInstanceAction(async (application, req: Request, res: Response) => {
     const [user] = await User.find(application.ownerId);
     if (!user) throw new Error();
 
-    const deploysToDo = await CompiledDeploy.buildAll(application, user);
-    CompiledDeploy.deploy(application, user, deploysToDo);
+    await Notification.sendBeforeDeploy(user, application);
+    const deploysToDo = await CompiledDeploy.mount(application, user);
+    await CompiledDeploy.deploy(application, user, deploysToDo);
+    await Notification.sendAfterDeploy(user, application, deploysToDo);
     return application;
   });
 }

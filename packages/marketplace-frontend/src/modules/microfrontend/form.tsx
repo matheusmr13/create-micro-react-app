@@ -2,8 +2,7 @@ import React from 'react';
 import { useLoggedApiRequest } from 'base/hooks/request';
 
 import { useHistory } from 'react-router-dom';
-import { Form, Input, Button, Select, Card, Typography, Timeline, Table } from 'antd';
-import useQuery from 'base/hooks/query-param';
+import { Form, Input, Button, Typography, Timeline } from 'antd';
 import Page from 'base/components/page';
 const { Title } = Typography;
 
@@ -13,7 +12,7 @@ const NewMicrofrontend: React.FC<{
   const isNew = !microfrontend.id;
   const history = useHistory();
 
-  const [a, syncMicrofrontend] = useLoggedApiRequest(
+  const [, syncMicrofrontend] = useLoggedApiRequest(
     {
       url: `/microfrontends/${microfrontend.id}/sync`,
       method: 'POST',
@@ -23,7 +22,7 @@ const NewMicrofrontend: React.FC<{
 
   const [{ data: versions = [] }] = useLoggedApiRequest(`/versions?microfrontendId=${microfrontend.id}`);
 
-  const [{ data: result, loading, error }, createmicrofrontend] = useLoggedApiRequest(
+  const [{ data: result }, createmicrofrontend] = useLoggedApiRequest(
     {
       url: `/microfrontends${isNew ? '' : `/${microfrontend.id}`}`,
       method: isNew ? 'POST' : 'PUT',
@@ -43,40 +42,6 @@ const NewMicrofrontend: React.FC<{
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
-
-  const columns = [
-    {
-      title: 'Created at',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
-    },
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-    },
-    {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
-    },
-    {
-      title: 'Action',
-      render: (asd: any) => {
-        return (
-          <span>
-            <Button>Aprove</Button>
-          </span>
-        );
-      },
-      //   render: (text, record) => (
-      // 	<span>
-      // 	  <a style={{ marginRight: 16 }}>Invite {record.name}</a>
-      // 	  <a>Delete</a>
-      // 	</span>
-      //   ),
-    },
-  ];
 
   const handleSyncClick = async () => {
     await syncMicrofrontend();
@@ -114,15 +79,6 @@ const NewMicrofrontend: React.FC<{
 
       {isNew ? null : (
         <>
-          <Title>Versions</Title>
-          <Table
-            columns={columns}
-            dataSource={versions.map((v: any) => ({
-              ...v,
-              key: v.id,
-            }))}
-          />
-
           <Title>History</Title>
           <Timeline>
             {versions.map((version: any) => (

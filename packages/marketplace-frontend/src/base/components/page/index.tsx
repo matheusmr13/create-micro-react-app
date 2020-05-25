@@ -1,11 +1,9 @@
 import * as React from 'react';
 
-import { Typography, Row, Col, Divider, Spin, PageHeader } from 'antd';
+import { Row, Divider, Spin, PageHeader } from 'antd';
 import { useHistory } from 'react-router-dom';
 
 import './page.css';
-
-const { Title } = Typography;
 
 export interface IPageProps {
   title: string;

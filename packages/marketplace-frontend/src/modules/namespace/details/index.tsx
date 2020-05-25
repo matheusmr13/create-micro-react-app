@@ -1,8 +1,7 @@
 import React from 'react';
-import { useLoggedApiRequest } from 'base/hooks/request';
 
-import { Redirect, Link, useParams } from 'react-router-dom';
-import { Form, Input, Button, Card, Space, Modal, Tooltip } from 'antd';
+import { Redirect, Link } from 'react-router-dom';
+import { Form, Input, Button, Space, Modal, Tooltip } from 'antd';
 import {
   ExclamationCircleOutlined
 } from '@ant-design/icons';

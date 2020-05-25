@@ -29,7 +29,13 @@ class CompiledDeploy {
   public versionsByMicrofrontend: MicroVersion[];
   public user: User;
 
-  static async buildAll(application: Application, user: User) {
+  static async mountSingle(application: Application, user: User, namespace: Namespace) {
+    const deploy = await namespace.getNextDeploy();
+    const versionsByMicrofrontend = await deploy.getVersionsToDeployByMicrofrontend();
+    return new CompiledDeploy(application, namespace, deploy, versionsByMicrofrontend, user);
+  }
+
+  static async mount(application: Application, user: User) {
     const [namespaces] = await Namespace.query().filter('applicationId', '=', application.id).run();
     if (!namespaces.length) {
       return [];

@@ -1,5 +1,4 @@
 import BaseController from 'base/controller';
-import { Request, Response } from 'express';
 import User from './user';
 
 class UserController extends BaseController<typeof User> {
@@ -7,30 +6,16 @@ class UserController extends BaseController<typeof User> {
     super(User);
   }
 
-  public getMe = async (req: Request, res: Response) => {
-    const { id } = req.locals.tokenAuth;
-    const [user] = await User.find(id);
-
-    if (!user) {
-      res.status(500).send();
-      return;
-    }
-
+  public getMe = this.withContext(async (req, res, context) => {
+    const user = await context.getUser();
     res.json(user.toJSON());
-  };
+  });
 
-  public updateMe = async (req: Request, res: Response) => {
-    const { id } = req.locals.tokenAuth;
-    const [user] = await User.find(id);
-
-    if (!user) {
-      res.status(500).send();
-      return;
-    }
-
+  public updateMe = this.withContext(async (req, res, context) => {
+    const user = await context.getUser();
     await user.update(req.body);
     res.json(user.toJSON());
-  };
+  });
 }
 
 export default new UserController();

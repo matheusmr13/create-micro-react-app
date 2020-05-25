@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Card, Col, Row, Typography } from 'antd';
+import { Card, Col, Row } from 'antd';
 import { useLoggedApiRequest } from 'base/hooks/request';
 import { Link } from 'react-router-dom';
 import Section from 'base/components/section';
@@ -13,7 +13,7 @@ const MicrofrontendList: React.FunctionComponent<IMicrofrontendListProps> = ({ a
 
   useEffect(() => {
     refetch();
-  }, []);
+  }, [refetch]);
   return (
     <Section title="Microfrontends" loading={loading}>
       <Row gutter={[16, 24]}>

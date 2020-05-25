@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { useLoggedApiRequest } from 'base/hooks/request';
 
-import { Redirect, Link, useParams } from 'react-router-dom';
-import { Form, Input, Button, Card, Space } from 'antd';
+import { Redirect, Link } from 'react-router-dom';
+import { Form, Input, Button, Space } from 'antd';
 
-import Page from 'base/components/page';
 import useApiAction from 'base/hooks/api-action';
 import MicrofrontendList from './microfrontend-list';
 import NamespaceList from './namespace-list';
@@ -31,7 +30,7 @@ const ApplicationDetails: React.FunctionComponent<IApplicationDetailsProps> = ({
 
   useEffect(() => {
     refetchNamespaces();
-  }, []);
+  }, [refetchNamespaces]);
 
   const onFinish = async (data: any) => {
     await saveApplication({ data });
@@ -45,6 +44,10 @@ const ApplicationDetails: React.FunctionComponent<IApplicationDetailsProps> = ({
     <>
       <Form onFinish={onFinish} initialValues={application}>
         <Form.Item label="Name" name="name">
+          <Input />
+        </Form.Item>
+
+        <Form.Item label="Slack Channel Id" name="slackChannelId">
           <Input />
         </Form.Item>
 

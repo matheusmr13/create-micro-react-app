@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Card, Col, Row, Typography } from 'antd';
-import { useLoggedApiRequest } from 'base/hooks/request';
+import { Card, Col, Row } from 'antd';
 import { Link } from 'react-router-dom';
 import Section from 'base/components/section';
 

@@ -7,7 +7,7 @@ import VersionForm from './form';
 
 function VersionDetails() {
   let { versionId } = useParams();
-  const [{ data: version, loading, error }, refetch] = useLoggedApiRequest(`/versions/${versionId}`);
+  const [{ data: version, loading }] = useLoggedApiRequest(`/versions/${versionId}`);
 
   if (loading) return <div>loading</div>;
 

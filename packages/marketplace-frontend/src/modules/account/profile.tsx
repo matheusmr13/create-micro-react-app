@@ -7,7 +7,7 @@ import Page from 'base/components/page';
 import { Form, Input, Button, Space, Spin } from 'antd';
 
 function Profiile() {
-  const [{ data: profile, loading, error }, refetch] = useLoggedApiRequest('/users/me');
+  const [{ data: profile, loading }] = useLoggedApiRequest('/users/me');
 
   const [{ loading: savingProfile }, saveProfile] = useApiAction('/users/me', {
     method: 'put',
@@ -16,11 +16,9 @@ function Profiile() {
     },
   });
 
-  const onFinish = async (fields: any) => {
+  const onFinish = async (data: any) => {
     await saveProfile({
-      data: {
-        githubToken: fields.githubToken,
-      },
+      data,
     });
   };
 
@@ -34,11 +32,15 @@ function Profiile() {
               <Input />
             </Form.Item>
 
+            <Form.Item label="Slack Token" name="slackToken">
+              <Input />
+            </Form.Item>
+
             <Form.Item>
               <Space>
                 <Button type="primary" htmlType="submit" loading={savingProfile}>
                   Save
-              </Button>
+                </Button>
                 <Link to="/logout">
                   <Button type="ghost">Logout</Button>
                 </Link>

@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 
-import { List, Avatar, Typography, Input } from 'antd';
-import { MessageOutlined, LikeOutlined, StarOutlined, GithubOutlined, SearchOutlined } from '@ant-design/icons';
+import { List, Avatar, Input } from 'antd';
+import { MessageOutlined, StarOutlined, GithubOutlined, SearchOutlined } from '@ant-design/icons';
 
-import useLoggedUser from 'base/hooks/user';
 import { useGithubApiRequest } from 'base/hooks/request';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Page from 'base/components/page';
 import useQuery from 'base/hooks/query-param';
 
@@ -21,7 +20,7 @@ const IconText: React.FC<{
 
 const Repos: React.FC<{}> = () => {
   const [searchText, setSearchText] = useState('');
-  const [{ data: repos, loading }, fetchRepos] = useGithubApiRequest('/user/repos?type=owner');
+  const [{ data: repos, loading }] = useGithubApiRequest('/user/repos?type=owner');
 
   const queryParam = useQuery();
 
@@ -59,7 +58,6 @@ const Repos: React.FC<{}> = () => {
               title={repo.name}
               description={repo.description}
             />
-            {'asd'}
           </List.Item>
         )}
       />

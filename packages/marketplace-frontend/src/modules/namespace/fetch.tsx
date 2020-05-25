@@ -7,7 +7,7 @@ import Page from 'base/components/page';
 function FetchNamespace(props: { children: Function; title?: string; namespaceId?: string }) {
   const { children, title, namespaceId: namespaceIdProp } = props;
   const { namespaceId = namespaceIdProp } = useParams();
-  const [{ data: namespace, loading: loadingNamespace, error }] = useLoggedApiRequest(
+  const [{ data: namespace, loading: loadingNamespace }] = useLoggedApiRequest(
     `/namespaces/${namespaceId}`
   );
 

@@ -3,6 +3,7 @@ import { datastoreOrm } from 'ts-datastore-orm';
 
 import AuthRouter from './auth/router';
 import AuthFilter from './auth/filter';
+import ErrorFilter from 'base/error-filter';
 
 import MicrofrontendRouter from './microfrontend/router';
 import ApplicationRouter from './application/router';
@@ -38,10 +39,7 @@ app.use('/applications', ApplicationRouter);
 app.use('/namespaces', NamespaceRouter);
 app.use('/versions', VersionRouter);
 app.use('/users', UserRouter);
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.error(err);
-  res.status(500).send('Something broke!');
-});
+app.use(ErrorFilter);
 
 datastoreOrm.addConnection('default', getGoogleCloudConfig());
 

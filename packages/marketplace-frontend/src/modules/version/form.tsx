@@ -13,7 +13,7 @@ const NewVersion: React.FC<{
 }> = ({ version }) => {
   const isNew = !version.id;
   const history = useHistory();
-  const [{ data: result, loading, error }, createVersion] = useLoggedApiRequest(
+  const [{ data: result }, createVersion] = useLoggedApiRequest(
     {
       url: `/versions${isNew ? '' : `/${version.id}`}`,
       method: isNew ? 'POST' : 'PUT',
@@ -21,7 +21,7 @@ const NewVersion: React.FC<{
     { manual: true }
   );
 
-  const [_, approveVersion] = useLoggedApiRequest(
+  const [, approveVersion] = useLoggedApiRequest(
     {
       url: `/versions/${version.id}/approve`,
       method: 'PUT',

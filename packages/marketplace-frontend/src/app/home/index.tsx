@@ -5,7 +5,7 @@ import Microfrontend from 'modules/microfrontend';
 import { Menu } from 'antd';
 import { GithubFilled, SolutionOutlined, UserOutlined, HomeOutlined, UnorderedListOutlined } from '@ant-design/icons';
 
-import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch, useHistory } from 'react-router-dom';
+import { Switch, Route, Link, useRouteMatch, useHistory } from 'react-router-dom';
 
 import Version from 'modules/version';
 import Github from 'modules/github';

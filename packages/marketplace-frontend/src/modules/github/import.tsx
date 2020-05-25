@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLoggedApiRequest, useGithubApiRequest } from 'base/hooks/request';
+import { useGithubApiRequest } from 'base/hooks/request';
 import Page from 'base/components/page';
 import { Redirect, useParams } from 'react-router-dom';
 
@@ -14,9 +14,12 @@ function ImportRepository(props: { application?: any }) {
   const repositoryFullName = `${owner}/${repositoryName}`;
   const [form] = Form.useForm();
   const [importType, setImportType] = useState('application');
+  const [nameAlreadyChanged, setNameAlreadyChanged] = useState(false);
 
   const onFormChanged = (values: any) => {
     if (values.importType) setImportType(values.importType);
+    if (values.name) setNameAlreadyChanged(true);
+    if (values.packageName !== undefined && !nameAlreadyChanged) form.setFieldsValue({ name: values.packageName });
   };
 
   const shouldShowImportType = !application;
@@ -73,6 +76,7 @@ function ImportRepository(props: { application?: any }) {
       initialValues={{
         importType,
         name: repository.name,
+        packageName: repository.name,
       }}
       onValuesChange={onFormChanged}
       onFinish={onFinish}
@@ -83,10 +87,10 @@ function ImportRepository(props: { application?: any }) {
         </Descriptions>
       )}
 
-      <Form.Item label="Name" name="name">
+      <Form.Item label="Package name" name="packageName">
         <Input />
       </Form.Item>
-      <Form.Item label="Package name" name="packageName">
+      <Form.Item label="Name" name="name">
         <Input />
       </Form.Item>
       {shouldShowImportType && (

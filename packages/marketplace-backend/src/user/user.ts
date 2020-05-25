@@ -9,6 +9,7 @@ interface IUser {
   login: string;
   email: string;
   githubToken?: string;
+  slackToken?: string;
 }
 
 @Entity({ kind: 'user' })
@@ -24,6 +25,9 @@ class User extends Model {
 
   @Column()
   public githubToken: string = '';
+
+  @Column()
+  public slackToken: string = '';
 
   static async createUser(payload: IUser) {
     const user = User.create({

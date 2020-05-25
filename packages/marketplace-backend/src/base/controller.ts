@@ -1,6 +1,26 @@
 import { Request, Response } from 'express';
 import Model from './model';
 import { BaseEntity } from 'ts-datastore-orm';
+import User from 'user/user';
+import NotFoundError from './errors/not-found';
+
+class Context<T extends typeof Model> {
+  constructor(private req: Request, private res: Response, private classRef: T) {}
+
+  getUser = async () => {
+    const { id } = this.req.locals.tokenAuth;
+    const [user] = await User.find(id);
+    return user!;
+  };
+
+  getInstance = async () => {
+    const [instance] = await this.classRef.find(this.req.params.uuid);
+    if (!instance) {
+      throw new NotFoundError();
+    }
+    return instance;
+  };
+}
 
 class Controller<T extends typeof Model> {
   constructor(private classRef: T) {}
@@ -15,24 +35,25 @@ class Controller<T extends typeof Model> {
     res.json(instances.map((instance) => instance.toJSON()));
   };
 
+  public withContext(callback: (req: Request, res: Response, context: Context<T>) => void) {
+    return async (req: Request, res: Response) => {
+      await callback(req, res, new Context(req, res, this.classRef));
+    };
+  }
+
   public createInstanceAction(
     callback: (instance: InstanceType<T>, req: Request, res: Response) => Promise<InstanceType<T> | undefined>
   ) {
-    return async (req: Request, res: Response) => {
-      let [instance] = await this.classRef.find(req.params.uuid);
-      if (!instance) {
-        res.status(404).send();
-        return;
-      }
-
-      instance = await callback(instance, req, res);
-      if (!instance) {
+    return this.withContext(async (req: Request, res: Response, context: Context<T>) => {
+      const instance = await context.getInstance();
+      const newInstance = await callback(instance, req, res);
+      if (!newInstance) {
         res.send();
         return;
       }
 
-      res.json(instance.toJSON());
-    };
+      res.json(newInstance.toJSON());
+    });
   }
 
   public createFilteredByList<K extends Exclude<keyof InstanceType<T>, keyof BaseEntity>>(fields: Array<K>) {
@@ -51,36 +72,22 @@ class Controller<T extends typeof Model> {
     };
   }
 
-  public read = async (req: Request, res: Response) => {
-    const [instance] = await this.classRef.find(req.params.uuid);
-    if (!instance) {
-      res.status(404).send();
-      return;
-    }
-    res.json(instance);
-  };
+  public read = this.withContext(async (req: Request, res: Response, context: Context<T>) => {
+    const instance = await context.getInstance();
+    res.json(instance.toJSON());
+  });
 
-  public update = async (req: Request, res: Response) => {
-    let [instance] = await this.classRef.find(req.params.uuid);
-    if (!instance) {
-      res.status(404).send();
-      return;
-    }
+  public update = this.withContext(async (req: Request, res: Response, context: Context<T>) => {
+    let instance = await context.getInstance();
     instance = await instance.update(req.body);
     res.json(instance.toJSON());
-  };
+  });
 
-  public delete = async (req: Request, res: Response) => {
-    const [instance] = await this.classRef.find(req.params.uuid);
-    if (!instance) {
-      res.status(404).send();
-      return;
-    }
-
+  public delete = this.withContext(async (req: Request, res: Response, context: Context<T>) => {
+    const instance = await context.getInstance();
     await instance.delete();
-
     res.json(instance.toJSON());
-  };
+  });
 
   public clear = async (req: Request, res: Response) => {
     await this.classRef.clear();

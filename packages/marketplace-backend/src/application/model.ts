@@ -9,12 +9,16 @@ import Namespace from 'namespace/model';
 interface IApplication {
   name: string;
   packageName: string;
+  slackChannelId: string;
 }
 
 @Entity({ kind: 'application' })
 class Application extends BasicEntity {
   @Column()
   public githubId: string = '';
+
+  @Column()
+  public slackChannelId: string = '';
 
   static async createFromRepository(repository: any, payload: IApplication, ownerId: string) {
     const applicationName = repository.name;

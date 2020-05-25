@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import { Switch, Route, useHistory, Redirect, useLocation } from 'react-router-dom';
+import { Switch, Route, useHistory, Redirect } from 'react-router-dom';
 
 import Home from './home';
 import Login from 'modules/github/login';
@@ -9,14 +9,12 @@ import LandingPage from 'modules/landing';
 import useLoggedUser from 'base/hooks/user';
 import { configureLoggedUser } from 'base/hooks/request';
 
-const LOGIN_URL = '/login';
 const LANDING_PAGE_URL = '/';
 const LOGGED_HOME_URL = '/home';
 
 function Router() {
   const history = useHistory();
   const [loggedUser, setLoggedUser] = useLoggedUser();
-  const location = useLocation();
   const code = window.location.search.split('=')[1];
 
   if (loggedUser) {

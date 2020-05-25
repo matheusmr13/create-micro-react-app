@@ -1,13 +1,12 @@
 import React from 'react';
 import { useLoggedApiRequest, useApiAction } from 'base/hooks/request';
-import { useParams } from 'react-router-dom';
 import Page from 'base/components/page';
 import { Form, Select, Space, Button } from 'antd';
 import FetchNamespace from './fetch';
 
 function MicrofrontendVersion(props: { microfrontend: any }) {
   const { microfrontend } = props;
-  const [{ data: versions, loading, error }] = useLoggedApiRequest(
+  const [{ data: versions, loading }] = useLoggedApiRequest(
     `/versions?microfrontendId=${microfrontend.id}`
   );
 

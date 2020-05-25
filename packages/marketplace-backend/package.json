@@ -29,6 +29,7 @@
     "@google-cloud/datastore": "^5.1.0",
     "@google-cloud/tasks": "^1.9.0",
     "@octokit/rest": "^17.6.0",
+    "@slack/web-api": "^5.9.0",
     "@types/cors": "^2.8.6",
     "@types/express": "^4.17.4",
     "@types/jsonwebtoken": "^8.3.9",

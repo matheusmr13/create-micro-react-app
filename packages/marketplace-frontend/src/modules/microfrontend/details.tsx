@@ -7,7 +7,7 @@ import MicrofrontendForm from './form';
 
 function MicrofrontendDetails() {
   let { microfrontendId } = useParams();
-  const [{ data: microfrontend, loading, error }, refetch] = useLoggedApiRequest(`/microfrontends/${microfrontendId}`);
+  const [{ data: microfrontend, loading }] = useLoggedApiRequest(`/microfrontends/${microfrontendId}`);
 
   if (loading) return <div>loading</div>;
 
