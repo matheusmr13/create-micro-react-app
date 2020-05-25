@@ -17,7 +17,7 @@ function Login(props: { handleLogin: Function, handleError: Function, code: stri
     } else if (error) {
       handleError();
     }
-  });
+  }, [data, error, handleLogin, handleError]);
 
   return <div>Loading</div>;
 }

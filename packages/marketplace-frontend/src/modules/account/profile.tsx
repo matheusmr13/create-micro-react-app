@@ -1,7 +1,6 @@
 import React from 'react';
 import { useLoggedApiRequest } from 'base/hooks/request';
 import useApiAction from 'base/hooks/api-action';
-import { Link } from 'react-router-dom';
 import Page from 'base/components/page';
 
 import { Form, Input, Button, Space, Spin } from 'antd';
@@ -23,7 +22,7 @@ function Profiile() {
   };
 
   return (
-    <Page title="Profile">
+    <Page title="Profile" rootPage>
       {loading ? (
         <Spin size="large" />
       ) : (
@@ -41,9 +40,6 @@ function Profiile() {
                 <Button type="primary" htmlType="submit" loading={savingProfile}>
                   Save
                 </Button>
-                <Link to="/logout">
-                  <Button type="ghost">Logout</Button>
-                </Link>
               </Space>
             </Form.Item>
           </Form>

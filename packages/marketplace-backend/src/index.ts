@@ -5,6 +5,7 @@ import AuthRouter from './auth/router';
 import AuthFilter from './auth/filter';
 import ErrorFilter from 'base/error-filter';
 
+import DashboardsRouter from './dashboard/router';
 import MicrofrontendRouter from './microfrontend/router';
 import ApplicationRouter from './application/router';
 import NamespaceRouter from './namespace/router';
@@ -34,6 +35,7 @@ app.get('/clear', async (req, res) => {
   res.send();
 }); // TODO: remove
 app.use(AuthFilter);
+app.use('/dashboards', DashboardsRouter);
 app.use('/microfrontends', MicrofrontendRouter);
 app.use('/applications', ApplicationRouter);
 app.use('/namespaces', NamespaceRouter);

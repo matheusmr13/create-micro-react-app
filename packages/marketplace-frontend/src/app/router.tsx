@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Switch, Route, useHistory, Redirect } from 'react-router-dom';
 
@@ -12,38 +12,49 @@ import { configureLoggedUser } from 'base/hooks/request';
 const LANDING_PAGE_URL = '/';
 const LOGGED_HOME_URL = '/home';
 
-function Router() {
-  const history = useHistory();
+const NotLoggedIn = () => {
   const [loggedUser, setLoggedUser] = useLoggedUser();
+  const history = useHistory();
   const code = window.location.search.split('=')[1];
 
   if (loggedUser) {
-    configureLoggedUser(loggedUser);
+    return <Redirect to={LOGGED_HOME_URL} />;
   }
 
   if (code) {
     return <Login handleLogin={setLoggedUser} handleError={() => history.push('/')} code={code} />;
   }
 
-  if (history.location.pathname.startsWith('/logout')) {
-    return <Logout />;
-  }
+  return <LandingPage />
+}
 
-  if (!history.location.pathname.startsWith(LOGGED_HOME_URL) && !!loggedUser) {
-    return <Redirect to={LOGGED_HOME_URL} />;
-  }
+const LoggedIn = () => {
+  const [loggedUser] = useLoggedUser();
+  const [requestConfigured, setRequestConfigured] = useState(false);
 
-  if (history.location.pathname.startsWith(LOGGED_HOME_URL) && !loggedUser) {
+  if (!loggedUser) {
     return <Redirect to={LANDING_PAGE_URL} />;
   }
 
+  if (!requestConfigured) {
+    configureLoggedUser(loggedUser);
+    setRequestConfigured(true);
+  }
+
+  return <Home />
+}
+
+function Router() {
   return (
     <Switch>
       <Route exact path="/">
-        <LandingPage />
+        <NotLoggedIn />
       </Route>
       <Route path="/home">
-        <Home />
+        <LoggedIn />
+      </Route>
+      <Route path="/logout">
+        <Logout />
       </Route>
     </Switch>
   );

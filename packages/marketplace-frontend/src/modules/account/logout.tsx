@@ -6,9 +6,9 @@ function Logout() {
 
   if (auth) {
     clearValue();
+    window.location.href = '/';
     return <></>;
   }
-  window.location.href = '/';
   return <></>;
 }
 
