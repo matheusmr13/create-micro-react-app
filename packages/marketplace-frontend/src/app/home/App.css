@@ -60,6 +60,8 @@
 }
 .App__header-actions {
   padding: 0 16px;
+  display: flex;
+  align-items: center;
 }
 
 .ant-layout-sider {

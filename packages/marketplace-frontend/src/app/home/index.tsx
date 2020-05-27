@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import './App.css';
 import Application from 'modules/application';
 import Microfrontend from 'modules/microfrontend';
-import { Layout, Menu, Avatar, Dropdown } from 'antd';
-import { GithubFilled, SolutionOutlined, HomeOutlined, UnorderedListOutlined, MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
+import { Layout, Menu, Avatar, Dropdown, Space } from 'antd';
+import { GithubFilled, SolutionOutlined, HomeOutlined, UnorderedListOutlined, MenuUnfoldOutlined, MenuFoldOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
 import { Switch, Route, Link, useRouteMatch, useHistory } from 'react-router-dom';
 
@@ -90,17 +90,20 @@ function FullApp() {
         <Header className="App__header">
           {collapsed ? <MenuUnfoldOutlined {...iconProps} /> : <MenuFoldOutlined {...iconProps} />}
           <div className="App__header-actions">
-            <Dropdown overlay={(
-              <Menu style={{ marginTop: '8px' }}>
-                <Menu.Item key="0">
-                  <Link to={`${match.path}/profile`}>Profile</Link>
-                </Menu.Item>
-                <Menu.Divider />
-                <Menu.Item><Link to="/logout">Logout</Link></Menu.Item>
-              </Menu>
-            )} trigger={['click']}>
-              <Avatar className="App__header-avatar" style={{ backgroundColor: intToRGB(hashCode(loggedUser.name)) }} alt="avatar">{loggedUser.name.split(' ').map((name: string) => name.charAt(0)).join('')}</Avatar>
-            </Dropdown>
+            <Space>
+              <a href="/create-micro-react-app/docs/getting-started" style={{ display: 'flex', alignItems: 'center' }}><QuestionCircleOutlined style={{ fontSize: '24px' }} /></a>
+              <Dropdown overlay={(
+                <Menu style={{ marginTop: '8px' }}>
+                  <Menu.Item key="0">
+                    <Link to={`${match.path}/profile`}>Profile</Link>
+                  </Menu.Item>
+                  <Menu.Divider />
+                  <Menu.Item><Link to="/logout">Logout</Link></Menu.Item>
+                </Menu>
+              )} trigger={['click']}>
+                <Avatar className="App__header-avatar" style={{ backgroundColor: intToRGB(hashCode(loggedUser.name)) }} alt="avatar">{loggedUser.name.split(' ').map((name: string) => name.charAt(0)).join('')}</Avatar>
+              </Dropdown>
+            </Space>
           </div>
         </Header>
         <Content style={{ padding: '18px' }}>

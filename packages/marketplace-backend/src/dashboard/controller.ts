@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 class DashboardController {
-  public getDashboard = async (req, res, context) => {
+  public getDashboard = async (req: Request, res: Response) => {
     res.json({
       applicationCount: 1,
       microfrontendCount: 5,

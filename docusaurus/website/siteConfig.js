@@ -25,6 +25,7 @@ const siteConfig = {
   projectName: 'create-micro-react-app',
   organizationName: 'matheusmr13',
 
+  gaTrackingId: 'UA-167556761-1',
   headerLinks: [
     { href: `${baseUrl}app`, label: 'App' },
     { doc: 'getting-started', label: 'Docs' },

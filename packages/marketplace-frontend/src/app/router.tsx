@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { Switch, Route, useHistory, Redirect } from 'react-router-dom';
-
+import { Switch, Route, useHistory, Redirect, withRouter } from 'react-router-dom';
 import Home from './home';
 import Login from 'modules/github/login';
 import Logout from 'modules/account/logout';
 import LandingPage from 'modules/landing';
 import useLoggedUser from 'base/hooks/user';
 import { configureLoggedUser } from 'base/hooks/request';
+import ReactGA from 'react-ga';
 
 const LANDING_PAGE_URL = '/';
 const LOGGED_HOME_URL = '/home';
@@ -44,7 +44,20 @@ const LoggedIn = () => {
   return <Home />
 }
 
-function Router() {
+ReactGA.initialize('UA-167556761-1');
+const sendPageView = (location: any) => {
+  ReactGA.pageview(location.pathname + location.search);
+}
+
+function Router(props: { history: any }) {
+  const { history } = props;
+
+  useEffect(() => {
+    sendPageView(history.location);
+    history.listen((location: any) => {
+      sendPageView(location);
+    });
+  }, []);
   return (
     <Switch>
       <Route exact path="/">
@@ -60,4 +73,4 @@ function Router() {
   );
 }
 
-export default Router;
+export default withRouter(Router);

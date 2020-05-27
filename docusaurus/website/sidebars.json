@@ -3,6 +3,7 @@
     "Getting Started": ["getting-started"],
     "Core features": ["watch-mode"],
     "CLI": ["start", "build", "create"],
-    "Build and deploy": ["build-and-deploy"]
+    "Build and deploy": ["build-and-deploy"],
+    "Microfrontend Marketplace": ["organizing-microfrontends"]
   }
 }
