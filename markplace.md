@@ -34,39 +34,6 @@
 
   - Easy to use and maintain
 
-## Next steps
-
-- Permission
-  - get things separate between users (currently works if you create your own environment)
-- Deploy
-  - Schedule deploy to date
-  - Recurrent deploy
-  - Integrations to publish final package to:
-    - Amazon s3
-- Package management integration, get packages from:
-  - NPM
-  - Amazon s3
-  - Gitlab?
-- Extends command line
-  - Application template (create-micro-react-app --from <APPLICATION_UUID>)
-  - CLI for general uses such as preparing a next deploy
-- Flux between multiple namespaces
-  - Define an order for each namespace (such as alpha->beta->main)
-- Expand namespaces
-  - Create hidden "next deploy preview"
-  - Integrate react-microfrontend with setting namespaces
-- Custom microfrontends
-  - Set microfrontends meta infos (nav bar label? url? custom field)
-  - Changelog by version ()
-- Notifications
-  - Changes to next deploy on namespace
-  - Next deploy started (and done)
-  - Integrations:
-    - slack
-    - email
-- Cannary deploy Vs Quality checks
-  - Define some rules to get things checked and move to next deploy (really next to flux iniciative)
-
 # Configuration
 
 Create two files

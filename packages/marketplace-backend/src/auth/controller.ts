@@ -1,28 +1,30 @@
 import { Request, Response } from 'express';
 import User from 'user/user';
-import { getGithubAccessToken, getGithubUserInfo } from './client';
+import FirebaseWrapper from './firebase-wrapper';
 
 class AuthController {
-  public auth = async (req: Request, res: Response) => {
-    const { code } = req.query;
-    const githubAuth = await getGithubAccessToken(code.toString());
+  public oauth = async (req: Request, res: Response) => {
+    const { idToken } = req.body;
+    const firebaseUser = await FirebaseWrapper.verifyIdToken(idToken);
 
-    const userInfos = await getGithubUserInfo(githubAuth);
+    const { name, email, picture, user_id: userId } = firebaseUser;
+    if (!email || !name || !userId) throw new Error();
 
-    let [user] = await User.query().filter('login', '=', userInfos.login).runOnce();
+    let [user] = await User.find(userId);
 
     if (!user) {
       user = await User.createUser({
-        name: userInfos.name,
-        login: userInfos.login,
-        email: userInfos.email,
+        id: userId,
+        name,
+        login: email,
+        email,
+        picture,
       });
     }
 
     res.json({
       ...user.toJSON(),
-      github: githubAuth,
-      api: user.getJWT(),
+      access_token: idToken,
     });
   };
 }

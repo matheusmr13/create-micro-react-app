@@ -17,3 +17,5 @@ export const getGithubConfig = () => {
     GITHUB_CLIENT_SECRET: configJson.GITHUB_CLIENT_SECRET,
   };
 };
+
+export const getGoogleApplicationCredentialsPath = () => configJson.GOOGLE_APPLICATION_CREDENTIALS;

@@ -38,6 +38,7 @@
     "cors": "^2.8.5",
     "dayjs": "^1.8.24",
     "express": "^4.17.1",
+    "firebase-admin": "^8.12.1",
     "jsonwebtoken": "^8.5.1",
     "npm-api": "^1.0.0",
     "octokat": "^0.10.0",

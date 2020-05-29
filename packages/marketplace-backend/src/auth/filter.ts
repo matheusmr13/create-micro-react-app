@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import Auth from './auth';
+import FirebaseWrapper from './firebase-wrapper';
 
-const AuthFilter = (req: Request, res: Response, next: NextFunction) => {
+const AuthFilter = async (req: Request, res: Response, next: NextFunction) => {
   console.log(req.url);
 
   const { authorization } = req.headers;
@@ -10,16 +11,14 @@ const AuthFilter = (req: Request, res: Response, next: NextFunction) => {
     return;
   }
 
-  const tokenAuth = Auth.validateToken(authorization);
-  if (!tokenAuth) {
+  try {
+    const auth = await FirebaseWrapper.verifyIdToken(authorization);
+    req.locals = { auth };
+    next();
+  } catch (e) {
     res.status(401).send();
     return;
   }
-
-  req.locals = {
-    tokenAuth,
-  };
-  next();
 };
 
 export default AuthFilter;

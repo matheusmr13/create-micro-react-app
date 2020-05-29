@@ -3,6 +3,6 @@ import AuthController from './controller';
 import { asyncRequestHandler } from 'base/router';
 
 const AuthRouter = express.Router();
-AuthRouter.post('/github', asyncRequestHandler(AuthController.auth));
+AuthRouter.post('/', asyncRequestHandler(AuthController.oauth));
 
 export default AuthRouter;

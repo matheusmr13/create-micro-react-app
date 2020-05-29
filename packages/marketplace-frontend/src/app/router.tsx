@@ -44,9 +44,13 @@ const LoggedIn = () => {
   return <Home />
 }
 
-ReactGA.initialize('UA-167556761-1', { debug: process.env.NODE_ENV === 'development' });
+if (process.env.NODE_ENV !== 'development') {
+  ReactGA.initialize('UA-167556761-1');
+}
 const sendPageView = (location: any) => {
-  ReactGA.pageview(location.pathname + location.search);
+  if (process.env.NODE_ENV !== 'development') {
+    ReactGA.pageview(location.pathname + location.search);
+  }
 }
 
 function Router(props: { history: any }) {

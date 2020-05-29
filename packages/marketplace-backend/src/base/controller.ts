@@ -8,7 +8,7 @@ class Context<T extends typeof Model> {
   constructor(private req: Request, private res: Response, private classRef: T) {}
 
   getUser = async () => {
-    const { id } = this.req.locals.tokenAuth;
+    const { id } = this.req.locals.auth;
     const [user] = await User.find(id);
     return user!;
   };
