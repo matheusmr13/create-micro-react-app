@@ -45,7 +45,7 @@ function FullApp() {
     { label: 'Applications', icon: SolutionOutlined, rootComponent: Application, url: '/application' },
     { label: 'Microfrontends', icon: UnorderedListOutlined, rootComponent: Microfrontend, url: '/microfrontend' },
     { rootComponent: Profile, url: '/profile' },
-    { rootComponent: Namespace, url: '/namespaces' },
+    { rootComponent: Namespace, url: '/namespace' },
   ];
 
   const reverseItems: Array<any> = Object.assign([], items);

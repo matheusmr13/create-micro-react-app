@@ -16,7 +16,9 @@ const run = async () => {
     cwd: './packages/marketplace-backend/dist',
   });
 
-  exec(`REACT_APP_GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID} npm start`, { cwd: './packages/marketplace-frontend' });
+  exec(`REACT_APP_GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID} PORT=3333 npm start`, {
+    cwd: './packages/marketplace-frontend',
+  });
 
   exec('$(gcloud beta emulators datastore env-init) && npm run start:watch', {
     cwd: './packages/marketplace-backend',
