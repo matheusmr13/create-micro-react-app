@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Redirect, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import Home from './home';
 import Login from 'modules/account/login';
 import { configureLoggedUser } from 'base/hooks/request';
@@ -9,8 +9,6 @@ import firebase from 'modules/account/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Spin } from 'antd';
 
-const LANDING_PAGE_URL = '/';
-const LOGGED_HOME_URL = '/home';
 
 if (process.env.NODE_ENV !== 'development') {
   ReactGA.initialize('UA-167556761-1');
@@ -24,7 +22,7 @@ const sendPageView = (location: any) => {
 function Router(props: { history: any }) {
   const { history } = props;
 
-  const [user, loading, error] = useAuthState(firebase.auth());
+  const [user, loading] = useAuthState(firebase.auth());
   const [requestConfigured, setRequestConfigured] = useState(false);
   const [gaConfigured, setGaConfigured] = useState(false);
 
@@ -47,7 +45,7 @@ function Router(props: { history: any }) {
       }
     }
     exec();
-  }, [gaConfigured, requestConfigured, user]);
+  }, [gaConfigured, requestConfigured, user, history]);
 
   if (loading || !requestConfigured) {
     return <Spin size="large"></Spin>;
