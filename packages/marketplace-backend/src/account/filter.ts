@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import Auth from './auth';
 import FirebaseWrapper from './firebase-wrapper';
+import User from './user';
 
 const AuthFilter = async (req: Request, res: Response, next: NextFunction) => {
   console.log(req.url);
@@ -12,8 +12,10 @@ const AuthFilter = async (req: Request, res: Response, next: NextFunction) => {
   }
 
   try {
-    const auth = await FirebaseWrapper.verifyIdToken(authorization);
-    req.locals = { auth };
+    const firebaseUser = await FirebaseWrapper.verifyIdToken(authorization);
+    req.locals = {
+      user: new User(firebaseUser),
+    };
     next();
   } catch (e) {
     res.status(401).send();

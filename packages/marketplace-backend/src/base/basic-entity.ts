@@ -7,6 +7,9 @@ class BasicEntity extends Model {
 
   @Column({ index: true })
   public ownerId: string = '';
+
+  @Column({ index: true })
+  public createdAt: string = '';
 }
 
 export default BasicEntity;

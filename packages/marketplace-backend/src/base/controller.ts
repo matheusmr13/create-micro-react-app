@@ -1,15 +1,13 @@
 import { Request, Response } from 'express';
 import Model from './model';
 import { BaseEntity } from 'ts-datastore-orm';
-import User from 'user/user';
 import NotFoundError from './errors/not-found';
 
 class Context<T extends typeof Model> {
   constructor(private req: Request, private res: Response, private classRef: T) {}
 
   getUser = async () => {
-    const { id } = this.req.locals.auth;
-    const [user] = await User.find(id);
+    const user = this.req.locals?.user;
     return user!;
   };
 

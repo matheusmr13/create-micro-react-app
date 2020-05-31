@@ -5,7 +5,7 @@ import { asyncRequestHandler } from 'base/router';
 const UserRouter = express.Router();
 UserRouter.get('/', asyncRequestHandler(UserController.list));
 
-UserRouter.get('/me', asyncRequestHandler(UserController.getMe));
-UserRouter.put('/me', asyncRequestHandler(UserController.updateMe));
+UserRouter.get('/:uuid/extra', asyncRequestHandler(UserController.getExtra));
+UserRouter.put('/:uuid/extra', asyncRequestHandler(UserController.updateExtra));
 
 export default UserRouter;

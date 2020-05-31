@@ -15,10 +15,14 @@ export const useLoggedApiRequest = makeUseAxios({
 });
 
 const configureLoggedApiRequest = (token: any) => {
+  if (!token) {
+    useLoggedApiRequest.configure({ axios: null });
+    return;
+  }
   const axios = Axios.create({
     baseURL: BASE_URL,
     headers: {
-      Authorization: `${token.token_type} ${token.access_token}`,
+      Authorization: token,
     },
   });
   axios.interceptors.response.use(
@@ -54,8 +58,8 @@ const configureGithubApiRequest = (token: any) => {
 };
 
 export const configureLoggedUser = (loggedUser: any) => {
-  configureLoggedApiRequest(loggedUser.api);
-  configureGithubApiRequest(loggedUser.github);
+  configureLoggedApiRequest(loggedUser.accessToken);
+  configureGithubApiRequest('asd');
 };
 
 export { default as useApiAction } from './api-action';

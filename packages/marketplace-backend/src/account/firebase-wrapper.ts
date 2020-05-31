@@ -11,7 +11,7 @@ Firebase.initializeApp({
   databaseURL: 'https://microfrontend-marketplace.firebaseio.com',
 });
 
-interface FirebaseUser {
+export interface FirebaseUser {
   user_id?: string;
   name?: string;
   email?: string;

@@ -4,9 +4,6 @@ class Model extends BaseEntity {
   @Column({ index: true })
   public id: string = '';
 
-  @Column({ index: true })
-  public createdAt: string = '';
-
   static async clear() {
     const [instances] = await this.query().run();
     await Promise.all(

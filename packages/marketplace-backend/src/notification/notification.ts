@@ -2,7 +2,7 @@ import { Column, Entity, namespaceStats } from 'ts-datastore-orm';
 import BasicEntity from 'base/basic-entity';
 import SlackMessage from './integrations/slack';
 import Application from 'application/model';
-import User from 'user/user';
+import User from 'account/user-extra';
 import CompiledDeploy from 'deploy/model';
 import Deploy from 'deploy/state';
 import Namespace from 'namespace/model';

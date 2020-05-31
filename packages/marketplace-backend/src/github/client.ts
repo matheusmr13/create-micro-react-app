@@ -1,5 +1,5 @@
 import axios from 'axios';
-import User from '../user/user';
+import User from '../account/user-extra';
 import Application from '../application/model';
 import { default as filesystem } from 'fs';
 

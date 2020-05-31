@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import dayJs from 'dayjs';
 import BasicEntity from 'base/basic-entity';
 import { getTree, downloadTree, uploadTree } from '../github/client';
-import User from 'user/user';
+import User from 'account/user-extra';
 import Version from 'version/model';
 import PackageAll from 'external/package-folder';
 import getTreeFromFolder from 'external/list-folder';

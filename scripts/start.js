@@ -1,29 +1,20 @@
 #!/usr/bin/env node
 
+const dotEnv = require('dotenv');
 const { exec } = require('./utils');
-require('dotenv').config({ path: '.env.development.local' });
 
-const {
-  GITHUB_CLIENT_ID,
-  GITHUB_CLIENT_SECRET,
-  GOOGLE_CLOUD_CLIENT_EMAIL,
-  GOOGLE_CLOUD_PRIVATE_KEY,
-  GOOGLE_APPLICATION_CREDENTIALS,
-} = process.env;
+const { parsed: newEnvVars } = dotEnv.config({ path: '.env.development.local' });
 
 const run = async () => {
-  const configJson = {
-    GOOGLE_CLOUD_CLIENT_EMAIL,
-    GOOGLE_CLOUD_PRIVATE_KEY: (JSON.stringify(GOOGLE_CLOUD_PRIVATE_KEY) || '').replace(/"/g, ''),
-    GITHUB_CLIENT_SECRET,
-    GITHUB_CLIENT_ID,
-    GOOGLE_APPLICATION_CREDENTIALS,
-  };
-  await exec(`echo '${JSON.stringify(configJson, null, 2)}' > config.json`, {
+  await exec(`echo '${JSON.stringify(newEnvVars, null, 2)}' > config.json`, {
     cwd: './packages/marketplace-backend/dist',
   });
 
-  exec(`REACT_APP_GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID} PORT=3333 npm start`, {
+  const envVars = Object.keys(newEnvVars)
+    .map((key) => `REACT_APP_${key}='${newEnvVars[key]}'`)
+    .join(' ');
+
+  exec(`${envVars} PORT=3333 npm start`, {
     cwd: './packages/marketplace-frontend',
   });
 

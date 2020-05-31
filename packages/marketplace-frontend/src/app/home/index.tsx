@@ -12,8 +12,9 @@ import Profile from 'modules/account/profile';
 import Namespace from 'modules/namespace';
 import Dashboards from './dashboards';
 
+import firebase from 'modules/account/firebase';
+
 import Logo from 'assets/logo.svg';
-import useLoggedUser from 'base/hooks/user';
 
 const { Sider, Header, Content, Footer } = Layout;
 
@@ -36,16 +37,16 @@ function intToRGB(i: number) {
 function FullApp() {
   const match = useRouteMatch();
   const history = useHistory();
-  const [loggedUser] = useLoggedUser();
+  const { displayName: name = '' } = firebase.auth().currentUser!;
   const [collapsed, setCollapsed] = useState(false);
 
   const items = [
-    { label: 'Home', icon: HomeOutlined, rootComponent: Dashboards, url: '/' },
-    { label: 'Repositories', icon: GithubFilled, rootComponent: Github, url: '/github' },
-    { label: 'Applications', icon: SolutionOutlined, rootComponent: Application, url: '/application' },
-    { label: 'Microfrontends', icon: UnorderedListOutlined, rootComponent: Microfrontend, url: '/microfrontend' },
-    { rootComponent: Profile, url: '/profile' },
-    { rootComponent: Namespace, url: '/namespace' },
+    { label: 'Home', icon: HomeOutlined, rootComponent: Dashboards, url: '' },
+    { label: 'Repositories', icon: GithubFilled, rootComponent: Github, url: 'github' },
+    { label: 'Applications', icon: SolutionOutlined, rootComponent: Application, url: 'application' },
+    { label: 'Microfrontends', icon: UnorderedListOutlined, rootComponent: Microfrontend, url: 'microfrontend' },
+    { rootComponent: Profile, url: 'profile' },
+    { rootComponent: Namespace, url: 'namespace' },
   ];
 
   const reverseItems: Array<any> = Object.assign([], items);
@@ -95,13 +96,13 @@ function FullApp() {
               <Dropdown overlay={(
                 <Menu style={{ marginTop: '8px' }}>
                   <Menu.Item key="0">
-                    <Link to={`${match.path}/profile`}>Profile</Link>
+                    <Link to={`${match.path}profile`}>Profile</Link>
                   </Menu.Item>
                   <Menu.Divider />
-                  <Menu.Item><Link to="/logout">Logout</Link></Menu.Item>
+                  <Menu.Item onClick={() => firebase.auth().signOut()}>Logout</Menu.Item>
                 </Menu>
               )} trigger={['click']}>
-                <Avatar className="App__header-avatar" style={{ backgroundColor: intToRGB(hashCode(loggedUser.name)) }} alt="avatar">{loggedUser.name.split(' ').map((name: string) => name.charAt(0)).join('')}</Avatar>
+                <Avatar className="App__header-avatar" style={{ backgroundColor: intToRGB(hashCode(name!)) }} alt="avatar">{name!.split(' ').map((name: string) => name.charAt(0)).join('')}</Avatar>
               </Dropdown>
             </Space>
           </div>

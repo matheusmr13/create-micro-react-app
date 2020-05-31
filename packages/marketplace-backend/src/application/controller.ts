@@ -3,7 +3,7 @@ import Application from './model';
 import { getGithubRepository } from '../github/client';
 import BaseController from 'base/controller';
 import Namespace from 'namespace/model';
-import User from 'user/user';
+import User from 'account/user-extra';
 import Microfrontend, { TYPE } from 'microfrontend/model';
 import CompiledDeploy from 'deploy/model';
 import Notification from 'notification/notification';

@@ -1,7 +1,7 @@
 import { BaseEntity, Column, Entity } from 'ts-datastore-orm';
 import { v4 as uuidv4 } from 'uuid';
 import dayJs from 'dayjs';
-import User from 'user/user';
+import User from 'account/user-extra';
 import { getFoldersFromGithub } from 'github/client';
 import Version from 'version/model';
 import BasicEntity from '../base/basic-entity';

@@ -1,4 +1,4 @@
-.LandingPage {
+.Login {
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -6,7 +6,7 @@
   align-items: center;
   background-color: lightgray;
 }
-.LandingPage__login-panel {
+.Login__login-panel {
   background-color: white;
   padding: 36px;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);

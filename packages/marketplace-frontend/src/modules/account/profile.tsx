@@ -1,14 +1,15 @@
 import React from 'react';
 import { useLoggedApiRequest } from 'base/hooks/request';
 import useApiAction from 'base/hooks/api-action';
+import useLoggedUser from 'base/hooks/logged-user';
 import Page from 'base/components/page';
 
 import { Form, Input, Button, Space, Spin } from 'antd';
 
 function Profiile() {
-  const [{ data: profile, loading }] = useLoggedApiRequest('/users/me');
-
-  const [{ loading: savingProfile }, saveProfile] = useApiAction('/users/me', {
+  const user = useLoggedUser();
+  const [{ data: profile, loading }] = useLoggedApiRequest(`/users/${user.uid}/extra`);
+  const [{ loading: savingProfile }, saveProfile] = useApiAction(`/users/${user.uid}/extra`, {
     method: 'put',
     message: {
       success: 'User saved',
