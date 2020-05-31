@@ -23,8 +23,10 @@ function Router(props: { history: any }) {
   const { history } = props;
 
   const [user, loading] = useAuthState(firebase.auth());
-  const [requestConfigured, setRequestConfigured] = useState(false);
+  const [isLoggedIn, setLoggedIn] = useState(false);
   const [gaConfigured, setGaConfigured] = useState(false);
+
+  const isTransitioning = isLoggedIn !== !!user;
 
   useEffect(() => {
     const exec = async () => {
@@ -36,18 +38,23 @@ function Router(props: { history: any }) {
         setGaConfigured(true);
       }
 
-      if (!requestConfigured && user) {
+      if (!isLoggedIn && user) {
         const idToken = await user.getIdToken();
         configureLoggedUser({
           accessToken: idToken
         });
-        setRequestConfigured(true);
+        setLoggedIn(true);
+      } else if (isLoggedIn && !user) {
+        configureLoggedUser({
+          accessToken: null
+        });
+        setLoggedIn(false);
       }
     }
     exec();
-  }, [gaConfigured, requestConfigured, user, history]);
+  }, [gaConfigured, user, history, loading, isLoggedIn]);
 
-  if (loading || !requestConfigured) {
+  if (loading || isTransitioning) {
     return <Spin size="large"></Spin>;
   }
 
