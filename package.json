@@ -16,7 +16,6 @@
     "lerna-bootstrap": "lerna bootstrap"
   },
   "dependencies": {
-    "dotenv": "^8.2.0",
     "eslint-import-resolver-lerna": "^1.1.0",
     "gh-pages": "^2.2.0"
   }

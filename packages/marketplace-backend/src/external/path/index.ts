@@ -1,7 +1,7 @@
-import Namespace from 'entity/namespace';
-import { MicroVersion } from 'entity/compiled-deploy';
-import Microfrontend, { TYPE } from 'entity/microfrontend';
-import Version from 'entity/version';
+import Namespace from '../../entity/namespace';
+import { MicroVersion } from '../../entity/compiled-deploy';
+import Microfrontend, { TYPE } from '../../entity/microfrontend';
+import Version from '../../entity/version';
 
 const DEFAULT_PATHS = {
   DIST: 'build',

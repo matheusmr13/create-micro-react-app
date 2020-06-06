@@ -1,8 +1,9 @@
 {
   "name": "@cmra/webapp",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
-  "homepage": "/create-micro-react-app/app/",
+  "homepage": "./",
+  "main": "./lib/index.js",
   "dependencies": {
     "@ant-design/icons": "^4.0.5",
     "@testing-library/jest-dom": "^4.2.4",
@@ -27,6 +28,7 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
+    "postinstall": "npm run build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "CI=true react-scripts test --passWithNoTests",

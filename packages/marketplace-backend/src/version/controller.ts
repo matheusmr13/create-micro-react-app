@@ -1,4 +1,4 @@
-import BaseController from 'base/controller';
+import BaseController from '../base/controller';
 import { Request, Response } from 'express';
 import Version from '../entity/version';
 

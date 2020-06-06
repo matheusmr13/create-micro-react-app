@@ -1,9 +1,9 @@
 import { Column, Entity, BaseEntity, PrimaryGeneratedColumn } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import dayJs from 'dayjs';
-import Version from 'entity/version';
+import Version from '../entity/version';
 
-import Microfrontend from 'entity/microfrontend';
+import Microfrontend from '../entity/microfrontend';
 
 interface IDeploy {
   versions: { [key: string]: string };

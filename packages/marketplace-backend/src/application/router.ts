@@ -1,6 +1,6 @@
 import express from 'express';
 import ApplicationController from './controller';
-import { asyncRequestHandler } from 'base/router';
+import { asyncRequestHandler } from '../base/router';
 
 const ApplicationRouter = express.Router();
 ApplicationRouter.get('/:uuid', asyncRequestHandler(ApplicationController.read));

@@ -1,5 +1,5 @@
-import BaseController from 'base/controller';
-import ForbiddenError from 'base/errors/forbidden';
+import BaseController from '../base/controller';
+import ForbiddenError from '../base/errors/forbidden';
 import UserExtra from '../entity/user-extra';
 
 class UserController extends BaseController<typeof UserExtra> {

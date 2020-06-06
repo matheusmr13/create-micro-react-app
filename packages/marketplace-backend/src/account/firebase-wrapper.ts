@@ -1,15 +1,12 @@
 import Firebase from 'firebase-admin';
-import { getGoogleApplicationCredentialsPath } from '../config';
 
-const googleApplicationCredentials = getGoogleApplicationCredentialsPath();
-if (!googleApplicationCredentials) throw new Error('Configure GOOGLE_APPLICATION_CREDENTIALS env');
-var serviceAccount = require(googleApplicationCredentials);
-
-Firebase.initializeApp({
-  credential: Firebase.credential.cert(serviceAccount),
-  projectId: 'microfrontend-marketplace',
-  databaseURL: 'https://microfrontend-marketplace.firebaseio.com',
-});
+export const initializeFirebase = (serviceAccountJson: any) => {
+  Firebase.initializeApp({
+    credential: Firebase.credential.cert(serviceAccountJson),
+    projectId: 'microfrontend-marketplace',
+    databaseURL: 'https://microfrontend-marketplace.firebaseio.com',
+  });
+};
 
 export interface FirebaseUser {
   user_id?: string;

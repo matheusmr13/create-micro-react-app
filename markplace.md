@@ -36,27 +36,46 @@
 
 # Configuration
 
-Create two files
+`yarn add @cmra/node-app @cmra/webapp`
 
-- `.env.local` needed to deploy
-- `.env.development.local` needed to local development
+```
+  const NodeApp = require('@cmra/server');
+  const Webapp = require('@cmra/webapp');
 
-## Github setup
+  const configJson = require('./config.json');
+  /*
+  {
+    "firebase": {
+      ...config from firebase console...
+    },
+    "firebaseAdmin": {
+      ...config from google cloud api console...
+    },
+    "database": {
+      "host": "...",
+      "port": "...",
+      "username": "...",
+      "password": "...",
+      "database": "..."
+    },
+    "baseUrl": "http://localhost:8080/"
+  }
+  */
 
-Generate an OAuth Application on github settings: https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/
+  if (!configJson) throw new Error('No config.json found');
 
-Define these two vars on env file:
-GITHUB_CLIENT_ID
-GITHUB_CLIENT_SECRET
+  const run = async () => {
+    const destFolder = await Webapp.build({
+      env: {
+        FIREBASE_CONFIG_JSON: JSON.stringify(configJson.firebase),
+        BASE_URL: configJson.baseUrl,
+      },
+    });
+    NodeApp.withDatabase(configJson.database)
+      .withFirebaseConfig(configJson.firebaseAdmin)
+      .withStaticFiles(destFolder)
+      .run(8080);
+  };
 
-To use deployed application, after logged in, you will need to generate a personal access token and save it on Profile page.
-Generate a personal access token: https://help.github.com/en/enterprise/2.17/user/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line#creating-a-token
-
-## Google App Engine
-
-Create app on Google App Engine: https://cloud.google.com/appengine/docs/standard/nodejs/quickstart
-
-Configure your connection with datastore: https://cloud.google.com/datastore/docs/activate
-To setup your datastore configs, use this env vars:
-GOOGLE_CLOUD_PRIVATE_KEY
-GOOGLE_CLOUD_CLIENT_EMAIL
+  run();
+```

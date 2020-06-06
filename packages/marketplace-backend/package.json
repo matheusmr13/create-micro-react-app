@@ -9,12 +9,11 @@
     "posttest": "npm run lint",
     "test": "echo 'pass'",
     "lint": "tslint -p .",
-    "start": "NODE_PATH=./dist/src node ./dist/src/index.js",
-    "start:watch": "npm run build:watch & NODE_PATH=./dist/src nodemon ./dist/src/index.js",
+    "start": "NODE_PATH=./dist node ./dist/index.js",
+    "start:watch": "npm run build:watch & NODE_PATH=./dist nodemon ./dist/index.js",
     "build": "tsc -p . --outDir ./dist",
     "build:watch": "npm run build -- --watch",
-    "gcp-build": "npm run build",
-    "deploy": "npm run build && gcloud app deploy app.yaml --quiet"
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",

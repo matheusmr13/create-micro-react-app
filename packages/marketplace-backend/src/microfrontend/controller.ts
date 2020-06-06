@@ -1,6 +1,6 @@
 import Microfrontend from '../entity/microfrontend';
-import { getGithubRepository } from 'github/client';
-import BaseController from 'base/controller';
+import { getGithubRepository } from '../github/client';
+import BaseController from '../base/controller';
 
 class MicrofrontendController extends BaseController<typeof Microfrontend> {
   constructor() {

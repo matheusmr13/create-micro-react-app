@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import Namespace from '../entity/namespace';
-import BaseController from 'base/controller';
-import Notification from 'notification/notification';
-import Application from 'entity/application';
-import Deploy from 'entity/deploy';
+import BaseController from '../base/controller';
+import Notification from '../notification/notification';
+import Application from '../entity/application';
+import Deploy from '../entity/deploy';
 
 class NamespaceController extends BaseController<typeof Namespace> {
   constructor() {

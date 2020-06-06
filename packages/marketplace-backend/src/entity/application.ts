@@ -1,8 +1,8 @@
 import { Entity, Column, BaseEntity, PrimaryGeneratedColumn } from 'typeorm';
 import dayJs from 'dayjs';
 
-import Microfrontend, { TYPE } from 'entity/microfrontend';
-import Namespace from 'entity/namespace';
+import Microfrontend, { TYPE } from '../entity/microfrontend';
+import Namespace from '../entity/namespace';
 import Integration from './integration/base';
 import GithubIntegration from './integration/base';
 

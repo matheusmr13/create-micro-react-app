@@ -2,8 +2,7 @@ import { makeUseAxios } from 'axios-hooks';
 
 import Axios from 'axios';
 
-const BASE_URL =
-  process.env.NODE_ENV === 'development' ? 'http://localhost:8080/' : 'https://microfrontend-marketplace.appspot.com/';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 export const useApiRequest = makeUseAxios({
   axios: Axios.create({
     baseURL: BASE_URL,

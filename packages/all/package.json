@@ -1,0 +1,13 @@
+{
+  "name": "all",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@cmra/server": "*",
+    "@cmra/webapp": "*"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}

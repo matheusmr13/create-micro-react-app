@@ -1,8 +1,8 @@
 import { Column, Entity, BaseEntity, PrimaryGeneratedColumn } from 'typeorm';
 import dayJs from 'dayjs';
-import User from 'entity/user-extra';
-import { getFoldersFromGithub } from 'github/client';
-import Version from 'entity/version';
+import User from '../entity/user-extra';
+import { getFoldersFromGithub } from '../github/client';
+import Version from '../entity/version';
 
 enum APPROVAL_TYPE {
   NEEDS_REVISION = 'NEEDS_APROVAL',

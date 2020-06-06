@@ -1,6 +1,6 @@
 import express from 'express';
 import MicrofrontendController from './controller';
-import { asyncRequestHandler } from 'base/router';
+import { asyncRequestHandler } from '../base/router';
 
 const MicrofrontendRouter = express.Router();
 MicrofrontendRouter.get('/:uuid', asyncRequestHandler(MicrofrontendController.read));

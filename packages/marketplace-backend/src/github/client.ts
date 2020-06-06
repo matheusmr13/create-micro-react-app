@@ -4,7 +4,7 @@ import Application from '../entity/application';
 import { default as filesystem } from 'fs';
 
 import { Octokit } from '@octokit/rest';
-import octokat from 'github/octokat';
+import octokat from './octokat';
 
 const { promises: fs } = filesystem;
 

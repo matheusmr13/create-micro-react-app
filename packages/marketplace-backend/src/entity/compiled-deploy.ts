@@ -1,12 +1,10 @@
 import { getTree, downloadTree, uploadTree } from '../github/client';
-import User from 'entity/user-extra';
-import Version from 'entity/version';
-import PackageAll from 'external/package-folder';
-import getTreeFromFolder from 'external/list-folder';
+import User from '../entity/user-extra';
+import Version from '../entity/version';
 import Application from './application';
-import Namespace from 'entity/namespace';
+import Namespace from '../entity/namespace';
 
-import Microfrontend from 'entity/microfrontend';
+import Microfrontend from '../entity/microfrontend';
 import Deploy, { STATUS } from './deploy';
 
 interface IDeploy {

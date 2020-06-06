@@ -2,7 +2,7 @@ import { Column, Entity, BaseEntity, PrimaryGeneratedColumn } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import dayJs from 'dayjs';
 
-import Deploy, { STATUS as DeployStatus } from 'entity/deploy';
+import Deploy, { STATUS as DeployStatus } from '../entity/deploy';
 
 interface INamespace {
   name: string;

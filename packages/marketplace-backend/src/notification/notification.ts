@@ -1,10 +1,10 @@
 import { Column, Entity, BaseEntity, PrimaryGeneratedColumn } from 'typeorm';
 import SlackMessage from './integrations/slack';
-import Application from 'entity/application';
-import UserExtra from 'entity/user-extra';
-import CompiledDeploy from 'entity/compiled-deploy';
-import Deploy from 'entity/deploy';
-import Namespace from 'entity/namespace';
+import Application from '../entity/application';
+import UserExtra from '../entity/user-extra';
+import CompiledDeploy from '../entity/compiled-deploy';
+import Deploy from '../entity/deploy';
+import Namespace from '../entity/namespace';
 
 @Entity()
 class Notification extends BaseEntity {

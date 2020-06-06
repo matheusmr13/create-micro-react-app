@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import Application from '../entity/application';
 import { getGithubRepository } from '../github/client';
-import BaseController from 'base/controller';
-import CompiledDeploy from 'entity/compiled-deploy';
-import Notification from 'notification/notification';
-import UserExtra from 'entity/user-extra';
+import BaseController from '../base/controller';
+import CompiledDeploy from '../entity/compiled-deploy';
+import Notification from '../notification/notification';
+import UserExtra from '../entity/user-extra';
 
 class ApplicationController extends BaseController<typeof Application> {
   constructor() {
