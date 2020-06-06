@@ -1,7 +1,6 @@
 {
   "name": "@cmra/webapp",
   "version": "1.0.0",
-  "private": true,
   "homepage": "./",
   "main": "./lib/index.js",
   "dependencies": {
