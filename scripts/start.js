@@ -7,7 +7,7 @@ const { parsed: newEnvVars } = dotEnv.config({ path: '.env.development.local' })
 
 const run = async () => {
   await exec(`echo '${JSON.stringify(newEnvVars, null, 2)}' > config.json`, {
-    cwd: './packages/marketplace-backend/dist',
+    cwd: './packages/marketplace-backend/dist/src',
   });
 
   const envVars = Object.keys(newEnvVars)
@@ -18,10 +18,9 @@ const run = async () => {
     cwd: './packages/marketplace-frontend',
   });
 
-  exec('$(gcloud beta emulators datastore env-init) && npm run start:watch', {
+  exec('npm run start:watch', {
     cwd: './packages/marketplace-backend',
   });
-  exec('gcloud beta emulators datastore start');
 };
 
 run();

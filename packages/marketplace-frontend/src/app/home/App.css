@@ -41,6 +41,9 @@
 
 .App__label {
   transition: opacity 0.3s;
+  display: flex;
+  align-items: center;
+  padding-left: 8px;
 }
 
 .ant-layout-sider-collapsed .App__label {

@@ -1,17 +1,13 @@
-import { Column, Entity, namespaceStats } from 'ts-datastore-orm';
-import { v4 as uuidv4 } from 'uuid';
-import dayJs from 'dayjs';
-import BasicEntity from 'base/basic-entity';
 import { getTree, downloadTree, uploadTree } from '../github/client';
-import User from 'account/user-extra';
-import Version from 'version/model';
+import User from 'entity/user-extra';
+import Version from 'entity/version';
 import PackageAll from 'external/package-folder';
 import getTreeFromFolder from 'external/list-folder';
-import Application from '../application/model';
-import Namespace from 'namespace/model';
+import Application from './application';
+import Namespace from 'entity/namespace';
 
-import Microfrontend from 'microfrontend/model';
-import Deploy, { STATUS } from './state';
+import Microfrontend from 'entity/microfrontend';
+import Deploy, { STATUS } from './deploy';
 
 interface IDeploy {
   versions: { [key: string]: string };
@@ -36,7 +32,7 @@ class CompiledDeploy {
   }
 
   static async mount(application: Application, user: User) {
-    const [namespaces] = await Namespace.query().filter('applicationId', '=', application.id).run();
+    const namespaces = await Namespace.createQueryBuilder().where(`applicationId = ${application.id}`).getMany();
     if (!namespaces.length) {
       return [];
     }
@@ -92,12 +88,13 @@ class CompiledDeploy {
   }
 
   static async deploy(application: Application, user: User, deploysToDo: CompiledDeploy[]) {
-    const dest = `/tmp/${application.id}`;
-    await CompiledDeploy.downloadAll(dest, deploysToDo, user);
-    await PackageAll({ rootFolder: dest, deploysToDo });
-    const tree = await getTreeFromFolder(`${dest}/build`);
-    await uploadTree(application.githubId, tree, user!, 'my versiion');
-    await CompiledDeploy.updateState(deploysToDo);
+    throw new Error('fix');
+    // const dest = `/tmp/${application.id}`;
+    // await CompiledDeploy.downloadAll(dest, deploysToDo, user);
+    // await PackageAll({ rootFolder: dest, deploysToDo });
+    // const tree = await getTreeFromFolder(`${dest}/build`);
+    // await uploadTree(application.githubId, tree, user!, 'my versiion');
+    // await CompiledDeploy.updateState(deploysToDo);
   }
 
   constructor(

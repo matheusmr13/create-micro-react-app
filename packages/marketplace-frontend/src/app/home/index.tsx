@@ -42,7 +42,7 @@ function FullApp() {
 
   const items = [
     { label: 'Home', icon: HomeOutlined, rootComponent: Dashboards, url: '' },
-    { label: 'Repositories', icon: GithubFilled, rootComponent: Github, url: 'github' },
+    { rootComponent: Github, url: 'github' },
     { label: 'Applications', icon: SolutionOutlined, rootComponent: Application, url: 'application' },
     { label: 'Microfrontends', icon: UnorderedListOutlined, rootComponent: Microfrontend, url: 'microfrontend' },
     { rootComponent: Profile, url: 'profile' },
@@ -71,7 +71,7 @@ function FullApp() {
         <Link to={`${match.path}/`}>
           <div className="App__logo-name">
             <img src={Logo} className="App__logo" alt="logo" />
-            <span className="App__label">Marketplace</span>
+            <span className="App__label">CMRA</span>
           </div>
         </Link>
         <Menu selectedKeys={[selectedMenuIndex.toString()]} theme="dark" mode="inline">

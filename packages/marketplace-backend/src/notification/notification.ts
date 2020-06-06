@@ -1,29 +1,45 @@
-import { Column, Entity, namespaceStats } from 'ts-datastore-orm';
-import BasicEntity from 'base/basic-entity';
+import { Column, Entity, BaseEntity, PrimaryGeneratedColumn } from 'typeorm';
 import SlackMessage from './integrations/slack';
-import Application from 'application/model';
-import User from 'account/user-extra';
-import CompiledDeploy from 'deploy/model';
-import Deploy from 'deploy/state';
-import Namespace from 'namespace/model';
+import Application from 'entity/application';
+import UserExtra from 'entity/user-extra';
+import CompiledDeploy from 'entity/compiled-deploy';
+import Deploy from 'entity/deploy';
+import Namespace from 'entity/namespace';
 
-@Entity({ kind: 'notification' })
-class Notification extends BasicEntity {
+@Entity()
+class Notification extends BaseEntity {
+  @PrimaryGeneratedColumn('uuid')
+  public id: string = '';
+
+  @Column()
+  public name: string = '';
+
+  @Column()
+  public ownerId: string = '';
+
+  @Column()
+  public createdAt: string = '';
+
   @Column()
   public content: string = '';
 
-  @Column({ index: true })
+  @Column()
   public isSent: boolean = false;
 
   static build(content: string) {
     return Notification.create({ content });
   }
 
-  static async sendBeforeDeploy(user: User, application: Application) {
+  static async sendBeforeDeploy(user: UserExtra, application: Application) {
     await SlackMessage.sendSimple(user.slackToken, application.slackChannelId, 'Starting deploy');
   }
 
-  static async sendChangeNextDeploy(user: User, application: Application, namespace: Namespace, nextDeploy: Deploy) {
+  static async sendChangeNextDeploy(
+    user: UserExtra,
+    application: Application,
+    namespace: Namespace,
+    nextDeploy: Deploy
+  ) {
     const slackMessage = new SlackMessage(user.slackToken, application.slackChannelId);
     slackMessage.addText(`Next deploy from application "${application.name}" namespace "${namespace.name}" changed:`);
 
@@ -39,7 +55,7 @@ class Notification extends BasicEntity {
     slackMessage.send();
   }
 
-  static async sendAfterDeploy(user: User, application: Application, deploysDone: CompiledDeploy[]) {
+  static async sendAfterDeploy(user: UserExtra, application: Application, deploysDone: CompiledDeploy[]) {
     const slackMessage = new SlackMessage(user.slackToken, application.slackChannelId);
     slackMessage.addText('Deploy done, current namespaces:');
 

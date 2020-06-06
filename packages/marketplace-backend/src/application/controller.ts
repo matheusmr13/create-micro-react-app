@@ -1,12 +1,10 @@
 import { Request, Response } from 'express';
-import Application from './model';
+import Application from '../entity/application';
 import { getGithubRepository } from '../github/client';
 import BaseController from 'base/controller';
-import Namespace from 'namespace/model';
-import User from 'account/user-extra';
-import Microfrontend, { TYPE } from 'microfrontend/model';
-import CompiledDeploy from 'deploy/model';
+import CompiledDeploy from 'entity/compiled-deploy';
 import Notification from 'notification/notification';
+import UserExtra from 'entity/user-extra';
 
 class ApplicationController extends BaseController<typeof Application> {
   constructor() {
@@ -16,18 +14,20 @@ class ApplicationController extends BaseController<typeof Application> {
     const user = await context.getUser();
     const repository = await getGithubRepository(req.body.repositoryName);
     const application = await Application.createFromRepository(repository, req.body, user.id);
-    res.json(application.toJSON());
+    res.json(application);
   });
 
-  public deploy = this.createInstanceAction(async (application, req: Request, res: Response) => {
-    const [user] = await User.find(application.ownerId);
+  public deploy = this.withContext(async (req: Request, res: Response, context) => {
+    const application = await context.getInstance();
+    const user = await UserExtra.findOne(application.ownerId);
     if (!user) throw new Error();
 
     await Notification.sendBeforeDeploy(user, application);
     const deploysToDo = await CompiledDeploy.mount(application, user);
     await CompiledDeploy.deploy(application, user, deploysToDo);
     await Notification.sendAfterDeploy(user, application, deploysToDo);
-    return application;
+
+    res.json(application);
   });
 }
 

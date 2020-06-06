@@ -11,17 +11,16 @@ function Login() {
     try {
       await firebase.auth().signInWithPopup(provider);
     } catch (e) {
+      console.error(e);
       message.error('Something went wrong!');
     }
   }
 
-  const handleGithubLogin = handleLogin(new firebase.auth.GithubAuthProvider());
   const handleGoogleLogin = handleLogin(new firebase.auth.GoogleAuthProvider());
   return (
     <div className="Login">
       <div className="Login__login-panel">
         <Space direction="vertical">
-          <Button icon={<GithubFilled />} onClick={handleGithubLogin}>Login with github</Button>
           <Button icon={<GoogleCircleFilled />} onClick={handleGoogleLogin}>Login with google</Button>
         </Space>
       </div>

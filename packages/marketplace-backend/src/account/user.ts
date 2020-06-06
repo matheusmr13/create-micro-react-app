@@ -1,5 +1,5 @@
 import { FirebaseUser } from './firebase-wrapper';
-import UserExtra from './user-extra';
+import UserExtra from '../entity/user-extra';
 
 class User {
   id: string;
@@ -17,7 +17,7 @@ class User {
   }
 
   async getExtra() {
-    const [extra] = await UserExtra.find(this.id);
+    const extra = await UserExtra.findOne(this.id);
     if (!extra) return UserExtra.create({ id: this.id });
     return extra;
   }

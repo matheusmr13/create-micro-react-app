@@ -31,6 +31,7 @@ const configureLoggedApiRequest = (token: any) => {
     },
     (error) => {
       const { response } = error;
+      console.info(error);
       if (response.status === 401) {
         localStorage.removeItem('auth');
         window.location.reload();
@@ -46,12 +47,12 @@ export const useGithubApiRequest = makeUseAxios({
   axios: null,
 });
 
-const configureGithubApiRequest = (token: any) => {
+const configureGithubApiRequest = (token: string) => {
   useGithubApiRequest.configure({
     axios: Axios.create({
       baseURL: 'https://api.github.com',
       headers: {
-        Authorization: `${token.token_type} ${token.access_token}`,
+        Authorization: `Bearer ${token}`,
       },
     }),
   });
@@ -59,7 +60,12 @@ const configureGithubApiRequest = (token: any) => {
 
 export const configureLoggedUser = (loggedUser: any) => {
   configureLoggedApiRequest(loggedUser.accessToken);
-  configureGithubApiRequest('asd');
+
+  console.info(loggedUser);
+
+  // loggedUser.getIdToken().then((asd: string) => {
+  configureGithubApiRequest(loggedUser.accessToken);
+  // });
 };
 
 export { default as useApiAction } from './api-action';

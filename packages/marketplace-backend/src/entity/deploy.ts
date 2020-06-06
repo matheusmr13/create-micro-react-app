@@ -1,15 +1,9 @@
-import { Column, Entity } from 'ts-datastore-orm';
+import { Column, Entity, BaseEntity, PrimaryGeneratedColumn } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import dayJs from 'dayjs';
-import BasicEntity from 'base/basic-entity';
-import { getTree, downloadTree, uploadTree } from '../github/client';
-import User from 'account/user-extra';
-import Version from 'version/model';
-import PackageAll from 'external/package-folder';
-import getTreeFromFolder from 'external/list-folder';
-import Application from '../application/model';
+import Version from 'entity/version';
 
-import Microfrontend from 'microfrontend/model';
+import Microfrontend from 'entity/microfrontend';
 
 interface IDeploy {
   versions: { [key: string]: string };
@@ -21,15 +15,27 @@ export enum STATUS {
   PREVIOUS = 'PREVIOUS',
 }
 
-@Entity({ kind: 'deploy' })
-class Deploy extends BasicEntity {
+@Entity()
+class Deploy extends BaseEntity {
+  @PrimaryGeneratedColumn('uuid')
+  public id: string = '';
+
   @Column()
+  public name: string = '';
+
+  @Column()
+  public ownerId: string = '';
+
+  @Column()
+  public createdAt: string = '';
+
+  @Column('simple-json')
   public versions: { [key: string]: string } = {};
 
-  @Column({ index: true })
+  @Column()
   public applicationId: string = '';
 
-  @Column({ index: true })
+  @Column()
   public namespaceId: string = '';
 
   @Column()
@@ -59,8 +65,8 @@ class Deploy extends BasicEntity {
       Object.entries(this.versions).map(async ([microfrontendId, versionId]) => {
         if (typeof versionId !== 'string') return null;
 
-        const [microfrontend] = await Microfrontend.find(microfrontendId);
-        const [version] = await Version.find(versionId);
+        const microfrontend = await Microfrontend.findOne(microfrontendId);
+        const version = await Version.findOne(versionId);
         if (!version || !microfrontend) return null;
 
         return {

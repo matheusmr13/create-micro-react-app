@@ -1,6 +1,6 @@
 import axios from 'axios';
-import User from '../account/user-extra';
-import Application from '../application/model';
+import User from '../entity/user-extra';
+import Application from '../entity/application';
 import { default as filesystem } from 'fs';
 
 import { Octokit } from '@octokit/rest';

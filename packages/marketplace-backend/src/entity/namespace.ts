@@ -1,10 +1,8 @@
-import { Column, Entity, namespaceStats } from 'ts-datastore-orm';
+import { Column, Entity, BaseEntity, PrimaryGeneratedColumn } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import dayJs from 'dayjs';
-import BasicEntity from 'base/basic-entity';
 
-import Microfrontend from 'microfrontend/model';
-import Deploy, { STATUS as DeployStatus } from 'deploy/state';
+import Deploy, { STATUS as DeployStatus } from 'entity/deploy';
 
 interface INamespace {
   name: string;
@@ -12,21 +10,33 @@ interface INamespace {
   applicationId: string;
 }
 
-@Entity({ kind: 'namespace' })
-class Namespace extends BasicEntity {
+@Entity()
+class Namespace extends BaseEntity {
+  @PrimaryGeneratedColumn('uuid')
+  public id: string = '';
+
+  @Column()
+  public name: string = '';
+
+  @Column()
+  public ownerId: string = '';
+
+  @Column()
+  public createdAt: string = '';
+
   @Column()
   public path: string = '';
 
-  @Column({ index: true })
+  @Column()
   public applicationId: string = '';
 
   @Column()
   public isMain: boolean = false;
 
-  @Column({ index: true })
+  @Column()
   public currentDeployId: string = '';
 
-  @Column({ index: true })
+  @Column()
   public nextDeployId: string = '';
 
   static async createEntity(payload: INamespace, ownerId: string) {
@@ -55,7 +65,7 @@ class Namespace extends BasicEntity {
   }
 
   async getNextDeploy() {
-    const [nextDeploy] = await Deploy.find(this.nextDeployId);
+    const nextDeploy = await Deploy.findOne(this.nextDeployId);
     return nextDeploy!;
   }
 
@@ -68,7 +78,7 @@ class Namespace extends BasicEntity {
   };
 
   getDeployHistory = async () => {
-    const [deploys] = await Deploy.query().filter('namespaceId', '=', this.id).run();
+    const deploys = await Deploy.createQueryBuilder().where(`namespaceId = ${this.id}`).getMany();
     return deploys;
   };
 }

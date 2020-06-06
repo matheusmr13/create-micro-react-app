@@ -1,9 +1,9 @@
 import { copyFolder, rm, mkdir, writeJson, getDirsFrom, getAllFilesFromDir } from './utils/fs';
-import Namespace from 'namespace/model';
-import Deploy from 'deploy/state';
-import CompiledDeploy, { MicroVersion } from 'deploy/model';
-import Microfrontend, { TYPE } from 'microfrontend/model';
-import Version from 'version/model';
+import Namespace from 'entity/namespace';
+import Deploy from 'entity/deploy';
+import CompiledDeploy, { MicroVersion } from 'entity/compiled-deploy';
+import Microfrontend, { TYPE } from 'entity/microfrontend';
+import Version from 'entity/version';
 
 import { PathToNamespace, PathTo } from './path';
 

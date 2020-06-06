@@ -1,10 +1,10 @@
-import { Column, Entity } from 'ts-datastore-orm';
-import { v4 as uuidv4 } from 'uuid';
+import { Entity, Column, BaseEntity, PrimaryGeneratedColumn } from 'typeorm';
 import dayJs from 'dayjs';
-import BasicEntity from 'base/basic-entity';
 
-import Microfrontend, { TYPE } from 'microfrontend/model';
-import Namespace from 'namespace/model';
+import Microfrontend, { TYPE } from 'entity/microfrontend';
+import Namespace from 'entity/namespace';
+import Integration from './integration/base';
+import GithubIntegration from './integration/base';
 
 interface IApplication {
   name: string;
@@ -12,10 +12,22 @@ interface IApplication {
   slackChannelId: string;
 }
 
-@Entity({ kind: 'application' })
-class Application extends BasicEntity {
+@Entity()
+class Application extends BaseEntity {
+  @PrimaryGeneratedColumn('uuid')
+  public id: string = '';
+
   @Column()
-  public githubId: string = '';
+  public name: string = '';
+
+  @Column()
+  public ownerId: string = '';
+
+  @Column()
+  public createdAt: string = '';
+
+  @Column('simple-json', { nullable: true })
+  public destIntegration?: Integration;
 
   @Column()
   public slackChannelId: string = '';
@@ -23,12 +35,14 @@ class Application extends BasicEntity {
   static async createFromRepository(repository: any, payload: IApplication, ownerId: string) {
     const applicationName = repository.name;
 
+    const destIntegration = new GithubIntegration({
+      repository: repository.full_name,
+    });
     const application = Application.create({
       name: applicationName,
-      githubId: repository.full_name,
       ownerId,
       createdAt: dayJs().format(),
-      id: uuidv4(),
+      destIntegration,
     });
     await application.save();
 

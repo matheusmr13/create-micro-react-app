@@ -1,5 +1,4 @@
-import { Column, Entity } from 'ts-datastore-orm';
-import Model from 'base/model';
+import { Column, Entity, PrimaryColumn, BaseEntity } from 'typeorm';
 
 interface IUserExtra {
   id: string;
@@ -7,8 +6,11 @@ interface IUserExtra {
   slackToken?: string;
 }
 
-@Entity({ kind: 'userExtra' })
-class UserExtra extends Model {
+@Entity()
+class UserExtra extends BaseEntity {
+  @PrimaryColumn()
+  public id: string = '';
+
   @Column()
   public githubToken: string = '';
 

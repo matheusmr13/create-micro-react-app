@@ -1,9 +1,8 @@
-import { Column, Entity } from 'ts-datastore-orm';
+import { Column, Entity, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import dayJs from 'dayjs';
-import BasicEntity from 'base/basic-entity';
 
-enum STATUS {
+export enum STATUS {
   NEEDS_APROVAL = 'NEEDS_APROVAL',
   APPROVED = 'APPROVED',
 }
@@ -14,17 +13,24 @@ interface IVersion {
   sha: string;
 }
 
-@Entity({ kind: 'version' })
-class Version extends BasicEntity {
-  static STATUS = STATUS;
+@Entity()
+class Version extends BaseEntity {
+  @PrimaryGeneratedColumn('uuid')
+  public id: string = '';
 
-  @Column({ index: true })
+  @Column()
+  public name: string = '';
+
+  @Column()
+  public createdAt: string = '';
+
+  @Column()
   public microfrontendId?: string = '';
 
   @Column()
   public sha: string = '';
 
-  @Column({ index: true })
+  @Column()
   public status: STATUS = STATUS.NEEDS_APROVAL;
 
   static build(payload: IVersion) {

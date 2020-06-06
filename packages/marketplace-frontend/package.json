@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "@cmra/webapp",
   "version": "0.1.0",
   "private": true,
   "homepage": "/create-micro-react-app/app/",

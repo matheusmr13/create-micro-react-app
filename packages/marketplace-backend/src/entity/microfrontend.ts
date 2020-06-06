@@ -1,10 +1,8 @@
-import { BaseEntity, Column, Entity } from 'ts-datastore-orm';
-import { v4 as uuidv4 } from 'uuid';
+import { Column, Entity, BaseEntity, PrimaryGeneratedColumn } from 'typeorm';
 import dayJs from 'dayjs';
-import User from 'account/user-extra';
+import User from 'entity/user-extra';
 import { getFoldersFromGithub } from 'github/client';
-import Version from 'version/model';
-import BasicEntity from '../base/basic-entity';
+import Version from 'entity/version';
 
 enum APPROVAL_TYPE {
   NEEDS_REVISION = 'NEEDS_APROVAL',
@@ -23,15 +21,27 @@ interface IMicrofrontend {
   type?: TYPE;
 }
 
-@Entity({ kind: 'microfrontend' })
-class Microfrontend extends BasicEntity {
+@Entity()
+class Microfrontend extends BaseEntity {
+  @PrimaryGeneratedColumn('uuid')
+  public id: string = '';
+
+  @Column()
+  public name: string = '';
+
+  @Column()
+  public ownerId: string = '';
+
+  @Column()
+  public createdAt: string = '';
+
   @Column()
   public packageName: string = '';
 
   @Column()
   public githubId: string = '';
 
-  @Column({ index: true })
+  @Column()
   public applicationId: string = '';
 
   @Column()
@@ -47,7 +57,6 @@ class Microfrontend extends BasicEntity {
       githubId: repository.full_name,
       ownerId,
       createdAt: dayJs().format(),
-      id: uuidv4(),
     });
     await microfrontend.save();
     await microfrontend.syncVersions();
@@ -55,11 +64,11 @@ class Microfrontend extends BasicEntity {
   }
 
   async syncVersions() {
-    const [user] = await User.find(this.ownerId);
+    const user = await User.findOne(this.ownerId);
     const githubUrl = `/repos/${this.githubId}/contents/versions/${this.packageName}`;
     const versions = await getFoldersFromGithub(githubUrl, user!);
 
-    const [microfrontendVersions] = await Version.query().filter('microfrontendId', '=', this.id).run();
+    const microfrontendVersions = await Version.createQueryBuilder().where(`microfrontendId = ${this.id}`).getMany();
 
     await Promise.all(
       versions
