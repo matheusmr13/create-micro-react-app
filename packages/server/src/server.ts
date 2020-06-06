@@ -38,6 +38,7 @@ class Server {
   firebaseInitialized = false;
   databaseConnection?: Promise<void>;
   staticFolder?: string;
+  modifyApp?: Function;
 
   withFirebaseConfig(firebaseConfig: any) {
     initializeFirebase(firebaseConfig);
@@ -55,11 +56,20 @@ class Server {
     return this;
   }
 
+  customizeApp(modifyApp: Function) {
+    this.modifyApp = modifyApp;
+    return this;
+  }
+
   run(port: number) {
     if (!this.firebaseInitialized) throw new Error('Firebase admin not initialized');
     if (!this.databaseConnection) throw new Error('Database connection not configured');
 
     const app = mountApp(this.staticFolder);
+
+    if (this.modifyApp) {
+      this.modifyApp(app);
+    }
     this.databaseConnection.then(() => {
       app.listen(port, () => {
         console.log(`Example app listening at http://localhost:${port}`);
