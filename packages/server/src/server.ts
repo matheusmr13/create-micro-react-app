@@ -16,10 +16,12 @@ import connectToDb from './database';
 
 import cors from 'cors';
 
-const mountApp = (staticFolder?: string) => {
+const mountApp = (staticFolder?: string, modifyApp?: Function) => {
   const app = express();
   app.use(express.json());
-  // app.use(cors());
+  if (modifyApp) {
+    modifyApp(app);
+  }
   if (staticFolder) {
     app.use(express.static(staticFolder));
   }
@@ -65,11 +67,8 @@ class Server {
     if (!this.firebaseInitialized) throw new Error('Firebase admin not initialized');
     if (!this.databaseConnection) throw new Error('Database connection not configured');
 
-    const app = mountApp(this.staticFolder);
+    const app = mountApp(this.staticFolder, this.modifyApp);
 
-    if (this.modifyApp) {
-      this.modifyApp(app);
-    }
     this.databaseConnection.then(() => {
       app.listen(port, () => {
         console.log(`Example app listening at http://localhost:${port}`);
