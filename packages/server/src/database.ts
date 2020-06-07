@@ -5,7 +5,6 @@ const startDatabase = async (config: any) => {
     ...config,
     type: 'postgres',
     entities: [__dirname + '/entity/*.js'],
-    synchronize: true,
   });
 };
 

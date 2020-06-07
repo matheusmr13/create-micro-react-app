@@ -3,8 +3,6 @@ import Firebase from 'firebase-admin';
 export const initializeFirebase = (serviceAccountJson: any) => {
   Firebase.initializeApp({
     credential: Firebase.credential.cert(serviceAccountJson),
-    projectId: 'microfrontend-marketplace',
-    databaseURL: 'https://microfrontend-marketplace.firebaseio.com',
   });
 };
 
