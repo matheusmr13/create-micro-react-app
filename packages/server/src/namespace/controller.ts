@@ -12,7 +12,10 @@ class NamespaceController extends BaseController<typeof Namespace> {
 
   public create = this.withContext(async (req, res, context) => {
     const user = await context.getUser();
-    const namespace = await Namespace.createEntity(req.body, user.id);
+    const namespace = await Namespace.createInstance({
+      ownerId: user.id,
+      ...req.body,
+    });
     res.json(namespace);
   });
 
@@ -22,6 +25,7 @@ class NamespaceController extends BaseController<typeof Namespace> {
     const user = await context.getUser();
     let nextDeploy = await namespace.getOrCreateNextDeploy();
     nextDeploy = Deploy.merge(nextDeploy, req.body);
+    await nextDeploy.save();
     const userExtra = await user.getExtra();
 
     Notification.sendChangeNextDeploy(userExtra, application!, namespace, nextDeploy);

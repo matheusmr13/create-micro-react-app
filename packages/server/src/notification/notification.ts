@@ -2,7 +2,7 @@ import { Column, Entity, BaseEntity, PrimaryGeneratedColumn } from 'typeorm';
 import SlackMessage from './integrations/slack';
 import Application from '../entity/application';
 import UserExtra from '../entity/user-extra';
-import CompiledDeploy from '../entity/compiled-deploy';
+import CompiledDeploy from '../entity/deploy/application-deploy';
 import Deploy from '../entity/deploy';
 import Namespace from '../entity/namespace';
 
@@ -43,14 +43,14 @@ class Notification extends BaseEntity {
     const slackMessage = new SlackMessage(user.slackToken, application.slackChannelId);
     slackMessage.addText(`Next deploy from application "${application.name}" namespace "${namespace.name}" changed:`);
 
-    const nextDeployToDo = await CompiledDeploy.mountSingle(application, user, namespace);
-    const { versionsByMicrofrontend } = nextDeployToDo;
-    slackMessage.addSeparator();
-    slackMessage.addText(
-      versionsByMicrofrontend
-        .map(({ microfrontend, version }) => `\`${microfrontend.name} (${version.name})\``)
-        .join(' ')
-    );
+    // const nextDeployToDo = await CompiledDeploy.mountSingle(application, user, namespace);
+    // const { versionsByMicrofrontend } = nextDeployToDo;
+    // slackMessage.addSeparator();
+    // slackMessage.addText(
+    //   versionsByMicrofrontend
+    //     .map(({ microfrontend, version }) => `\`${microfrontend.name} (${version.name})\``)
+    //     .join(' ')
+    // );
 
     slackMessage.send();
   }
@@ -59,16 +59,16 @@ class Notification extends BaseEntity {
     const slackMessage = new SlackMessage(user.slackToken, application.slackChannelId);
     slackMessage.addText('Deploy done, current namespaces:');
 
-    deploysDone.forEach((deployToDo) => {
-      const { namespace, versionsByMicrofrontend } = deployToDo;
-      slackMessage.addSeparator();
-      slackMessage.addText(namespace.name);
-      slackMessage.addText(
-        versionsByMicrofrontend
-          .map(({ microfrontend, version }) => `\`${microfrontend.name} (${version.name})\``)
-          .join(' ')
-      );
-    });
+    // deploysDone.forEach((deployToDo) => {
+    //   const { namespace, versionsByMicrofrontend } = deployToDo;
+    //   slackMessage.addSeparator();
+    //   slackMessage.addText(namespace.name);
+    //   slackMessage.addText(
+    //     versionsByMicrofrontend
+    //       .map(({ microfrontend, version }) => `\`${microfrontend.name} (${version.name})\``)
+    //       .join(' ')
+    //   );
+    // });
 
     await slackMessage.send();
   }

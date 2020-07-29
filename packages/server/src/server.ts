@@ -10,6 +10,7 @@ import ApplicationRouter from './application/router';
 import NamespaceRouter from './namespace/router';
 import VersionRouter from './version/router';
 import UserRouter from './account/router';
+import IntegrationRouter from './integration/router';
 
 import { initializeFirebase } from './account/firebase-wrapper';
 import connectToDb from './database';
@@ -19,6 +20,7 @@ import cors from 'cors';
 const mountApp = (staticFolder?: string, modifyApp?: Function) => {
   const app = express();
   app.use(express.json());
+  app.use(cors());
   if (modifyApp) {
     modifyApp(app);
   }
@@ -32,6 +34,7 @@ const mountApp = (staticFolder?: string, modifyApp?: Function) => {
   app.use('/namespaces', NamespaceRouter);
   app.use('/versions', VersionRouter);
   app.use('/users', UserRouter);
+  app.use('/integrations', IntegrationRouter);
   app.use(ErrorFilter);
   return app;
 };

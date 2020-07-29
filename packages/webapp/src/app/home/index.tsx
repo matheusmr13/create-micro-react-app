@@ -34,26 +34,31 @@ function intToRGB(i: number) {
   return `#${"00000".substring(0, 6 - c.length) + c}`;
 }
 
+
+const items = [
+  { label: 'Home', icon: HomeOutlined, rootComponent: Dashboards, url: '' },
+  { rootComponent: Github, url: 'github' },
+  { label: 'Applications', icon: SolutionOutlined, rootComponent: Application, url: 'application' },
+  { label: 'Microfrontends', icon: UnorderedListOutlined, rootComponent: Microfrontend, url: 'microfrontend' },
+  { rootComponent: Profile, url: 'profile' },
+  { rootComponent: Namespace, url: 'namespace' },
+];
+
+const reverseItems: Array<any> = Object.assign([], items);
+reverseItems.reverse();
+const menuItems = reverseItems.filter((item) => item.label && item.icon)
+
+
 function FullApp() {
   const match = useRouteMatch();
   const history = useHistory();
   const { displayName: name = '' } = firebase.auth().currentUser!;
   const [collapsed, setCollapsed] = useState(false);
 
-  const items = [
-    { label: 'Home', icon: HomeOutlined, rootComponent: Dashboards, url: '' },
-    { rootComponent: Github, url: 'github' },
-    { label: 'Applications', icon: SolutionOutlined, rootComponent: Application, url: 'application' },
-    { label: 'Microfrontends', icon: UnorderedListOutlined, rootComponent: Microfrontend, url: 'microfrontend' },
-    { rootComponent: Profile, url: 'profile' },
-    { rootComponent: Namespace, url: 'namespace' },
-  ];
-
-  const reverseItems: Array<any> = Object.assign([], items);
-  reverseItems.reverse();
   const selectedMenuIndex =
-    reverseItems.length -
-    reverseItems.findIndex((item) => history.location.pathname.replace(match.path, '').startsWith(item.url)) -
+    menuItems.length -
+    menuItems
+      .findIndex((item) => history.location.pathname.replace(match.path, '').startsWith(item.url)) -
     1;
 
   const iconProps = {

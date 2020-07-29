@@ -8,6 +8,7 @@ interface INamespace {
   name: string;
   path: string;
   applicationId: string;
+  ownerId: string;
 }
 
 @Entity()
@@ -39,10 +40,9 @@ class Namespace extends BaseEntity {
   @Column()
   public nextDeployId: string = '';
 
-  static async createEntity(payload: INamespace, ownerId: string) {
+  static async createInstance(payload: INamespace) {
     const namespace = Namespace.create({
       ...payload,
-      ownerId,
       createdAt: dayJs().format(),
       id: uuidv4(),
     });
@@ -78,7 +78,10 @@ class Namespace extends BaseEntity {
   };
 
   getDeployHistory = async () => {
-    const deploys = await Deploy.createQueryBuilder().where(`namespaceId = ${this.id}`).getMany();
+    const deploys = await Deploy.createQueryBuilder()
+      .where(`Deploy.applicationId = :id`)
+      .setParameter('id', this.id)
+      .getMany();
     return deploys;
   };
 }

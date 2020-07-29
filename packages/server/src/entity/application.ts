@@ -3,19 +3,21 @@ import dayJs from 'dayjs';
 
 import Microfrontend, { TYPE } from '../entity/microfrontend';
 import Namespace from '../entity/namespace';
-import Integration from './integration/base';
-import GithubIntegration from './integration/base';
+import { INTEGRATION_TYPE } from './integration/types';
 
 interface IApplication {
+  ownerId: string;
   name: string;
   packageName: string;
-  slackChannelId: string;
+  slackChannelId?: string;
+  integrationType?: INTEGRATION_TYPE;
+  destinationId?: string;
 }
 
 @Entity()
 class Application extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  public id: string = '';
+  public id?: string;
 
   @Column()
   public name: string = '';
@@ -26,46 +28,37 @@ class Application extends BaseEntity {
   @Column()
   public createdAt: string = '';
 
-  @Column('simple-json', { nullable: true })
-  public destIntegration?: Integration;
+  @Column({ nullable: true })
+  public integrationType?: INTEGRATION_TYPE;
 
-  @Column()
+  @Column({ nullable: true })
+  public destinationId: string = '';
+
+  @Column({ nullable: true })
   public slackChannelId: string = '';
 
-  static async createFromRepository(repository: any, payload: IApplication, ownerId: string) {
-    const applicationName = repository.name;
-
-    const destIntegration = new GithubIntegration({
-      repository: repository.full_name,
-    });
+  static async createInstance(payload: IApplication) {
     const application = Application.create({
-      name: applicationName,
-      ownerId,
+      ...payload,
       createdAt: dayJs().format(),
-      destIntegration,
     });
     await application.save();
 
-    const containerMicrofrontend = await Microfrontend.createFromRepository(
-      repository,
-      {
-        name: 'Container',
-        applicationId: application.id,
-        packageName: payload.packageName,
-      },
-      ownerId
-    );
+    const containerMicrofrontend = await Microfrontend.createInstance({
+      name: `${payload.packageName} Container`,
+      applicationId: application.id!,
+      packageName: payload.packageName,
+      ownerId: payload.ownerId,
+    });
     containerMicrofrontend.type = TYPE.CONTAINER;
     await containerMicrofrontend.save();
 
-    const mainNamespace = await Namespace.createEntity(
-      {
-        name: 'Main namespace',
-        path: '/',
-        applicationId: application.id,
-      },
-      ownerId
-    );
+    const mainNamespace = await Namespace.createInstance({
+      ownerId: payload.ownerId,
+      name: 'Main namespace',
+      path: '/',
+      applicationId: application.id!,
+    });
     mainNamespace.isMain = true;
     await mainNamespace.save();
 

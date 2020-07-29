@@ -10,7 +10,8 @@ export enum STATUS {
 interface IVersion {
   name: string;
   microfrontendId: string;
-  sha: string;
+  sha?: string;
+  path?: string;
 }
 
 @Entity()
@@ -29,6 +30,9 @@ class Version extends BaseEntity {
 
   @Column()
   public sha: string = '';
+
+  @Column()
+  public path: string = '';
 
   @Column()
   public status: STATUS = STATUS.NEEDS_APROVAL;

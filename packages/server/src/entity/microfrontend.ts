@@ -3,6 +3,8 @@ import dayJs from 'dayjs';
 import User from '../entity/user-extra';
 import { getFoldersFromGithub } from '../github/client';
 import Version from '../entity/version';
+import { INTEGRATION_TYPE } from './integration/types';
+import AwsS3Integration from './integration/aws-s3';
 
 enum APPROVAL_TYPE {
   NEEDS_REVISION = 'NEEDS_APROVAL',
@@ -18,13 +20,16 @@ interface IMicrofrontend {
   name?: string;
   applicationId: string;
   packageName: string;
+  ownerId: string;
   type?: TYPE;
+  integrationType?: INTEGRATION_TYPE;
+  originId?: string;
 }
 
 @Entity()
 class Microfrontend extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  public id: string = '';
+  public id?: string;
 
   @Column()
   public name: string = '';
@@ -38,8 +43,11 @@ class Microfrontend extends BaseEntity {
   @Column()
   public packageName: string = '';
 
-  @Column()
-  public githubId: string = '';
+  @Column({ nullable: true })
+  public integrationType?: INTEGRATION_TYPE;
+
+  @Column({ nullable: true })
+  public originId: string = '';
 
   @Column()
   public applicationId: string = '';
@@ -50,12 +58,9 @@ class Microfrontend extends BaseEntity {
   @Column()
   public type: TYPE = TYPE.MICROFRONTEND;
 
-  static async createFromRepository(repository: any, payload: IMicrofrontend, ownerId: string) {
+  static async createInstance(payload: IMicrofrontend) {
     const microfrontend = Microfrontend.create({
-      name: payload.packageName,
       ...payload,
-      githubId: repository.full_name,
-      ownerId,
       createdAt: dayJs().format(),
     });
     await microfrontend.save();
@@ -65,25 +70,33 @@ class Microfrontend extends BaseEntity {
 
   async syncVersions() {
     const user = await User.findOne(this.ownerId);
-    const githubUrl = `/repos/${this.githubId}/contents/versions/${this.packageName}`;
-    const versions = await getFoldersFromGithub(githubUrl, user!);
 
-    const microfrontendVersions = await Version.createQueryBuilder().where(`microfrontendId = ${this.id}`).getMany();
+    let versions = [];
+    if (this.integrationType === INTEGRATION_TYPE.GITHUB) {
+      const githubUrl = `/repos/${this.originId}/contents/versions/${this.packageName}`;
+      versions = await getFoldersFromGithub(githubUrl, user!);
+    } else if (this.integrationType === INTEGRATION_TYPE.AWS_S3) {
+      versions = await AwsS3Integration.getVersions(this.originId, this.packageName);
+    }
+
+    const microfrontendVersions = await Version.createQueryBuilder()
+      .where(`Version.microfrontendId = :id`)
+      .setParameter('id', this.id)
+      .getMany();
+
+    const notSynchedVersions = versions.filter(
+      (version: any) => !microfrontendVersions.find((applicationVersion) => applicationVersion.name === version.name)
+    );
 
     await Promise.all(
-      versions
-        .filter(
-          (version: any) =>
-            !microfrontendVersions.find((applicationVersion) => applicationVersion.name === version.name)
-        )
-        .map(async (version: any) => {
-          const newVersion = Version.build({
-            microfrontendId: this.id,
-            name: version.name,
-            sha: version.sha,
-          });
-          await newVersion.save();
-        })
+      notSynchedVersions.map(async (version: any) => {
+        const newVersion = Version.build({
+          microfrontendId: this.id!,
+          name: version.name,
+          path: version.path,
+        });
+        await newVersion.save();
+      })
     );
   }
 }

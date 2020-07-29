@@ -58,15 +58,18 @@ class Controller<T extends typeof BaseEntity> {
 
   public createFilteredByList<K extends Exclude<keyof InstanceType<T>, keyof BaseEntity>>(fields: Array<K>) {
     return async (req: Request, res: Response) => {
-      const query = this.classRef.createQueryBuilder();
+      const query = this.classRef.createQueryBuilder('entity');
       fields.forEach((field) => {
         const fieldString = field.toString();
         const queryParam = req.query[fieldString];
         if (!queryParam) return;
         const valueString = queryParam.toString();
+        // agg[fieldString] = valueString;
 
-        query.where(`${fieldString} = ${valueString}`);
+        query.andWhere(`entity.${fieldString} = :${fieldString}`, { [fieldString]: valueString });
       });
+
+      // this.classRef.find({ where });
       const instances = await query.getMany();
       res.json(instances.map((microfrontend) => microfrontend));
     };

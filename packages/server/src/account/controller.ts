@@ -21,9 +21,7 @@ class UserController extends BaseController<typeof UserExtra> {
 
     extra = UserExtra.merge(extra, req.body);
 
-    console.info(extra);
     extra = await extra.save();
-    console.info(extra);
     res.json(extra);
   });
 }

@@ -4,7 +4,7 @@ import { useLoggedApiRequest } from 'base/hooks/request';
 import { Link } from 'react-router-dom';
 
 import Page from 'base/components/page';
-import { List } from 'antd';
+import { List, Button } from 'antd';
 
 function ApplicationList() {
   const [{ data: applications }, refetch] = useLoggedApiRequest('/applications', { manual: true });
@@ -15,7 +15,11 @@ function ApplicationList() {
 
   if (!applications) return null;
   return (
-    <Page title="Applications" rootPage>
+    <Page
+      title="Applications"
+      rootPage
+      actions={[<Link to="./application/new" key={1}><Button type="primary">New</Button></Link>]}
+    >
       <List
         itemLayout="vertical"
         size="large"
@@ -32,7 +36,7 @@ function ApplicationList() {
           </List.Item>
         )}
       />
-    </Page>
+    </Page >
   );
 }
 

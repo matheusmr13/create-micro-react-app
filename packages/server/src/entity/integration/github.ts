@@ -5,9 +5,16 @@ interface GithubConfig {
 }
 
 class GithubIntegration extends Integration {
-  getArtifact() {
-    const config: GithubConfig = this.config;
+  public listDestinationOptions(): Promise<string[]> {
+    throw new Error('Method not implemented.');
   }
+  public listOriginOptions(): Promise<string[]> {
+    throw new Error('Method not implemented.');
+  }
+  async listOptions() {
+    return ['asd'];
+  }
+  getArtifact() {}
 
   publish() {}
 }

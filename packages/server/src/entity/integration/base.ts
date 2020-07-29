@@ -1,18 +1,21 @@
-export enum TYPE {
-  GITHUB_PAGES = 'GITHUB_PAGES',
-  AWS_S3 = 'AWS_S3',
+export interface IIntegration {
+  config: any;
+  getArtifact(): void;
+  publish(): void;
+  listDestinationOptions(): Promise<string[]>;
+  listOriginOptions(): Promise<string[]>;
 }
 
-class Integration {
-  constructor(protected config: any) {}
+abstract class Integration implements IIntegration {
+  constructor(public config: any) {}
 
-  public getArtifact() {
-    throw new Error('Not implemented');
-  }
+  public abstract getArtifact(): void;
 
-  public publish() {
-    throw new Error('Not implemented');
-  }
+  public abstract publish(): void;
+
+  public abstract async listDestinationOptions(): Promise<string[]>;
+
+  public abstract async listOriginOptions(): Promise<string[]>;
 }
 
 export default Integration;

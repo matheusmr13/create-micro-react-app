@@ -30,8 +30,7 @@ const configureLoggedApiRequest = (token: any) => {
     },
     (error) => {
       const { response } = error;
-      console.info(error);
-      if (response.status === 401) {
+      if (response && response.status === 401) {
         localStorage.removeItem('auth');
         window.location.reload();
         return;
@@ -60,10 +59,8 @@ const configureGithubApiRequest = (token: string) => {
 export const configureLoggedUser = (loggedUser: any) => {
   configureLoggedApiRequest(loggedUser.accessToken);
 
-  console.info(loggedUser);
-
   // loggedUser.getIdToken().then((asd: string) => {
-  configureGithubApiRequest(loggedUser.accessToken);
+  // configureGithubApiRequest(loggedUser.accessToken);
   // });
 };
 

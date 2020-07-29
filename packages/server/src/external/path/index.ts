@@ -1,5 +1,5 @@
 import Namespace from '../../entity/namespace';
-import { MicroVersion } from '../../entity/compiled-deploy';
+import MicrofrontendDeploy from '../../entity/deploy/microfrontend-deploy';
 import Microfrontend, { TYPE } from '../../entity/microfrontend';
 import Version from '../../entity/version';
 
@@ -42,6 +42,6 @@ export class PathTo {
   microVersionsFolder = () => `${this.rootFolder}/${DEFAULT_PATHS.MICRO_VERSIONS_FOLDER}`;
 
   withNamespace = (namespace: Namespace) => new PathToNamespace(this.distFolder(), namespace);
-  microVersion = (microVersion: MicroVersion) =>
+  microVersion = (microVersion: MicrofrontendDeploy) =>
     `${this.microVersionsFolder()}/${microVersion.microfrontend.packageName}/${microVersion.version.name}`;
 }

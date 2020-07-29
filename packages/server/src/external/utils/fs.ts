@@ -81,7 +81,7 @@ export const getDirectories = async (source: string) => {
 };
 
 export const mv = async (origin: string, dest: string) => fs.rename(origin, dest);
-export const getAllFilesFromDir = async (dir: string, allFiles: any = []) => {
+export const getAllFilesFromDir = async (dir: string, allFiles: any = []): Promise<string[]> => {
   const all = await fs.readdir(dir);
 
   await Promise.all(

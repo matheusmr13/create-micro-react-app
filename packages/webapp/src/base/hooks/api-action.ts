@@ -40,10 +40,13 @@ const useApiAction = (
     try {
       await makeRequest(config);
       showMessage('success');
-    } catch ({ response }) {
+    } catch (error) {
+      console.info(error);
+      const { response } = error;
+      const isRequestError = !response || response.status >= 500;
       console.log(`Error on request ${method} to ${url}`, response);
       showMessage('error', {
-        default: response.status >= 500 ? 'Server error. Try again later!' : 'Error processing your request.',
+        default: isRequestError ? 'Server error. Try again later!' : 'Error processing your request.',
         params: [response],
       });
     }
