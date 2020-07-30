@@ -1,6 +1,6 @@
 {
   "name": "@cmra/server",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
@@ -13,8 +13,7 @@
     "start:watch": "npm run build:watch & NODE_PATH=./dist nodemon ./dist/index.js",
     "build": "tsc -p . --outDir ./dist",
     "build:watch": "npm run build -- --watch",
-    "typeorm": "ts-node --files ./src ./node_modules/typeorm/cli.js",
-    "postinstall": "npm run build"
+    "typeorm": "ts-node --files ./src ./node_modules/typeorm/cli.js"
   },
   "repository": {
     "type": "git",
@@ -34,6 +33,7 @@
     "@types/mime-types": "^2.1.0",
     "@types/node": "^14.0.6",
     "@types/tar-fs": "^2.0.0",
+    "@types/testing-library__dom": "^7.5.0",
     "@types/uuid": "^7.0.2",
     "aws-sdk": "^2.719.0",
     "axios": "^0.19.2",
