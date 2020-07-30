@@ -16,7 +16,7 @@ const run = async () => {
   });
 
   exec(`${backendEnv} npm run start:watch`, {
-    cwd: './packages/server',
+    cwd: './packages/my-nest-project',
   });
 };
 
