@@ -1,13 +1,13 @@
 import { Column, Entity, PrimaryColumn, BaseEntity } from 'typeorm';
 
-interface IUserExtra {
+interface IUser {
   id: string;
   githubToken?: string;
   slackToken?: string;
 }
 
 @Entity()
-class UserExtra extends BaseEntity {
+class User extends BaseEntity {
   @PrimaryColumn()
   public id: string = '';
 
@@ -17,8 +17,8 @@ class UserExtra extends BaseEntity {
   @Column()
   public slackToken: string = '';
 
-  static async createUserExtra(payload: IUserExtra) {
-    const user = UserExtra.create({
+  static async createUser(payload: IUser) {
+    const user = User.create({
       ...payload,
     });
     await user.save();
@@ -26,4 +26,4 @@ class UserExtra extends BaseEntity {
   }
 }
 
-export default UserExtra;
+export default User;

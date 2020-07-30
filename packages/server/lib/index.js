@@ -1,3 +1,3 @@
-const server = require('../dist/server');
+const server = require('../dist/src/server');
 
 module.exports = server.default;

@@ -1,7 +1,7 @@
 import { FirebaseUser } from './firebase-wrapper';
-import UserExtra from '../entity/user-extra';
+import User from '../entity/user';
 
-class User {
+class LoggedUser {
   id: string;
   name?: string;
   email?: string;
@@ -17,10 +17,10 @@ class User {
   }
 
   async getExtra() {
-    const extra = await UserExtra.findOne(this.id);
-    if (!extra) return UserExtra.create({ id: this.id });
+    const extra = await User.findOne(this.id);
+    if (!extra) return User.create({ id: this.id });
     return extra;
   }
 }
 
-export default User;
+export default LoggedUser;

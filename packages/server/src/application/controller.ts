@@ -4,7 +4,7 @@ import { getGithubRepository } from '../github/client';
 import BaseController from '../base/controller';
 import CompiledDeploy from '../entity/deploy/application-deploy';
 import Notification from '../notification/notification';
-import UserExtra from '../entity/user-extra';
+import User from '../entity/user';
 import { INTEGRATION_TYPE } from '../entity/integration/types';
 import ApplicationDeploy from '../entity/deploy/application-deploy';
 
@@ -26,7 +26,7 @@ class ApplicationController extends BaseController<typeof Application> {
 
   public deploy = this.withContext(async (req: Request, res: Response, context) => {
     const application = await context.getInstance();
-    const user = await UserExtra.findOne(application.ownerId);
+    const user = await User.findOne(application.ownerId);
 
     const applicationDeploy = new ApplicationDeploy(application, user!);
     await applicationDeploy.execute();

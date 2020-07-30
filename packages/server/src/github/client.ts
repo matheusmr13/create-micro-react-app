@@ -1,5 +1,5 @@
 import axios from 'axios';
-import User from '../entity/user-extra';
+import User from '../entity/user';
 import Application from '../entity/application';
 import { default as filesystem } from 'fs';
 

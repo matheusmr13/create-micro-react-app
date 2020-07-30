@@ -1,0 +1,13 @@
+{
+  "host": "localhost",
+  "port": 5432,
+  "username": "typeormtest",
+  "password": "password",
+  "database": "cmra",
+  "type": "postgres",
+  "migrations": ["migration/*.js"],
+  "entities": ["./dist/src/entity/*.js"],
+  "cli": {
+    "migrationsDir": "migration"
+  }
+}

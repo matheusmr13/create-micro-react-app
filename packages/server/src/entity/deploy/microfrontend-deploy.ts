@@ -1,5 +1,5 @@
 import { getTree, downloadTree, uploadTree } from '../../github/client';
-import User from '../user-extra';
+import User from '../user';
 import Version from '../version';
 
 import Microfrontend, { TYPE } from '../microfrontend';

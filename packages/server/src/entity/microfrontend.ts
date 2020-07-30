@@ -1,6 +1,6 @@
 import { Column, Entity, BaseEntity, PrimaryGeneratedColumn } from 'typeorm';
 import dayJs from 'dayjs';
-import User from '../entity/user-extra';
+import User from './user';
 import { getFoldersFromGithub } from '../github/client';
 import Version from '../entity/version';
 import { INTEGRATION_TYPE } from './integration/types';

@@ -1,4 +1,4 @@
-import User from '../user-extra';
+import User from '../user';
 import Application from '../application';
 import Namespace from '../namespace';
 

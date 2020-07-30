@@ -1,6 +1,6 @@
 {
   "name": "@cmra/server",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
@@ -9,8 +9,8 @@
     "posttest": "npm run lint",
     "test": "echo 'pass'",
     "lint": "tslint -p .",
-    "start": "NODE_PATH=./dist node ./dist/index.js",
-    "start:watch": "npm run build:watch & NODE_PATH=./dist nodemon ./dist/index.js",
+    "start": "NODE_PATH=./dist node ./dist/src/index.js",
+    "start:watch": "npm run build:watch & NODE_PATH=./dist nodemon ./dist/src/index.js",
     "build": "tsc -p . --outDir ./dist",
     "build:watch": "npm run build -- --watch",
     "typeorm": "ts-node --files ./src ./node_modules/typeorm/cli.js"

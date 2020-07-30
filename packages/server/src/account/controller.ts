@@ -1,10 +1,10 @@
 import BaseController from '../base/controller';
 import ForbiddenError from '../base/errors/forbidden';
-import UserExtra from '../entity/user-extra';
+import User from '../entity/user';
 
-class UserController extends BaseController<typeof UserExtra> {
+class UserController extends BaseController<typeof User> {
   constructor() {
-    super(UserExtra);
+    super(User);
   }
 
   public getExtra = this.withContext(async (req, res, context) => {
@@ -19,7 +19,7 @@ class UserController extends BaseController<typeof UserExtra> {
     if (user.id !== req.params.uuid) throw new ForbiddenError();
     let extra = await user.getExtra();
 
-    extra = UserExtra.merge(extra, req.body);
+    extra = User.merge(extra, req.body);
 
     extra = await extra.save();
     res.json(extra);
