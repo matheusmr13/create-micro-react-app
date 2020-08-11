@@ -4,6 +4,7 @@ const { createStandaloneLibrary } = require('./library');
 
 const TYPE = {
   APP: 'APP',
+  WEBAPP: 'WEBAPP',
   MICROFRONTEND: 'MICROFRONTEND',
   LIBRARY: 'LIBRARY',
 };
@@ -15,8 +16,11 @@ const create = async (types, name, opts) => {
   } = opts;
 
   const hasType = (type) => types.indexOf(type) > -1;
+
+  if (hasType(create.TYPE.WEBAPP)) throw new Error('Webapp creation alone not implemented yet.');
+
   const shouldCreateApp = hasType(create.TYPE.APP);
-  const shouldCreateMicro = hasType(create.TYPE.MICROFRONTEND);
+  const shouldCreateMicro = hasType(create.TYPE.MICROFRONTEND) || hasType(create.TYPE.APP);
   const shouldCreateLib = hasType(create.TYPE.LIBRARY);
 
   if (shouldCreateApp) {

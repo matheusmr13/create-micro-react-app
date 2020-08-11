@@ -50,4 +50,4 @@
 
 [SYS] Get all versions from all microfrontend repositories
 
-[SYS] Package with `microfrontend-controller build -p`
+[SYS] Package with `@cmra/cli build -p`

@@ -6,7 +6,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-    "microfrontend-controller": "^2.1.18",
+    "@cmra/cli": "^2.1.18",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-microfrontend": "^2.1.3",
@@ -14,8 +14,8 @@
     "showcase": "*"
   },
   "scripts": {
-    "start": "microfrontend-controller start",
-    "build": "microfrontend-controller build -s",
+    "start": "cmra start",
+    "build": "cmra build -s",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

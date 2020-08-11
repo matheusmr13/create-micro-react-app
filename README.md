@@ -13,7 +13,7 @@ Create simple microfrontend architecture with tools like [Create React App](http
 ## Quick Overview
 
 ```
-  npx microfrontend-controller create my-app --app --microfrontend
+  npx @cmra/cli create my-app --app --microfrontend
   cd my-app
   npm start
 ```
@@ -48,13 +48,13 @@ Check our [site](https://matheusmr13.github.io/create-micro-react-app) for a dem
 
 ## CLI Docs
 
-Contained on microfrontend-controller package.
+Contained on @cmra/cli package.
 
 ```
-  npx microfrontend-controller --help
-  npx microfrontend-controller start --help
-  npx microfrontend-controller build --help
-  npx microfrontend-controller create --help
+  npx @cmra/cli --help
+  npx @cmra/cli start --help
+  npx @cmra/cli build --help
+  npx @cmra/cli create --help
 ```
 
 Icon made by [Freepik](https://www.flaticon.com/authors/freepik) from [www.flaticon.com](https://www.flaticon.com/)
@@ -63,7 +63,7 @@ Icon made by [Freepik](https://www.flaticon.com/authors/freepik) from [www.flati
 
 - Rename packages
   - Create "cmra" namespace
-  - microfrontend-controller -> "@cmra/cli"
+  - @cmra/cli -> "@cmra/cli"
   - react-microfrontend -> "@cmra/lib"
   - marketplace-frontend -> "@cmra/web"
   - marketplace-backend -> "@cmra/server"

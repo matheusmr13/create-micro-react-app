@@ -10,7 +10,7 @@ title: start
 On your root project just use a script command on your `package.json`, specifing what project is the container.
 
 ```json
-  "start": "microfrontend-controller start -a webapp"
+  "start": "cmra start -a webapp"
 ```
 
 ### Multi repo
@@ -34,7 +34,7 @@ On your root project just use a script command on your `package.json`, specifing
 Example:
 
 ```json
-  "start": "microfrontend-controller start -c microfrontends.json"
+  "start": "cmra start -c microfrontends.json"
 ```
 
 ## Simulate production environment
@@ -44,5 +44,5 @@ Example:
 On your specific microfrontend, add a script to your `package.json`:
 
 ```json
-  "start:prod": "microfrontend-controller start -p https://myapp.site.com"
+  "start:prod": "cmra start -p https://myapp.site.com"
 ```

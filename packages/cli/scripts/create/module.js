@@ -1,16 +1,16 @@
-const {
-  copyTemplateTo, writeJson, readJson, appendFile,
-} = require('../utils/fs');
+const { copyTemplateTo, writeJson, readJson, appendFile } = require('../utils/fs');
 const { createExecutionContext } = require('../utils/process');
 
-const getModuleScripts = isMicrofrontend => ({
-  ...(isMicrofrontend ? {
-    build: 'microfrontend-controller build -m',
-    'build:standalone': 'microfrontend-controller build -s',
-  } : {
-    build: 'microfrontend-controller build -s',
-  }),
-  start: 'microfrontend-controller start',
+const getModuleScripts = (isMicrofrontend) => ({
+  ...(isMicrofrontend
+    ? {
+        build: 'cmra build -m',
+        'build:standalone': 'cmra build -s',
+      }
+    : {
+        build: 'cmra build -s',
+      }),
+  start: 'cmra start',
 });
 
 const addScriptsToPackageJson = async (packageJsonPath, scripts) => {
@@ -26,10 +26,13 @@ const createModule = async (name, template, rootAppPath) => {
   await appendFile(`${rootAppPath}/packages/${name}/.gitignore`, ['build-lib', 'public/meta.json'].join('\n'));
   await copyTemplateTo(template, `${rootAppPath}/packages/${name}`);
 
-  await execInApp('yarn add microfrontend-controller');
+  await execInApp('yarn add @cmra/cli');
   await execInApp('yarn add react-microfrontend');
 
-  await addScriptsToPackageJson(`${rootAppPath}/packages/${name}/package.json`, getModuleScripts(template === 'microfrontend'));
+  await addScriptsToPackageJson(
+    `${rootAppPath}/packages/${name}/package.json`,
+    getModuleScripts(template === 'microfrontend')
+  );
 };
 
 module.exports = {

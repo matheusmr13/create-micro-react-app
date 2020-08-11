@@ -5,18 +5,16 @@ const { mkdir, copyTemplateTo } = require('../utils/fs');
 const { resolveApp } = require('../utils/paths');
 const { createExecutionContext } = require('../utils/process');
 
-const rootAppScripts = webappName => ({
+const rootAppScripts = (webappName) => ({
   postinstall: 'lerna bootstrap',
   build: 'yarn build:packages && yarn package',
-  'build:packages': `microfrontend-controller build -a ${webappName}`,
-  package: `microfrontend-controller build -p ${webappName}`,
-  start: `microfrontend-controller start -a ${webappName}`,
+  'build:packages': `cmra build -a ${webappName}`,
+  package: `cmra build -p ${webappName}`,
+  start: `cmra start -a ${webappName}`,
 });
 
 const createApp = async (name, opts = {}) => {
-  const {
-    webappName = 'webapp',
-  } = opts;
+  const { webappName = 'webapp' } = opts;
 
   const rootAppPath = resolveApp(name);
 
@@ -27,22 +25,15 @@ const createApp = async (name, opts = {}) => {
     await copyTemplateTo('app', rootAppPath);
 
     await execInRoot('yarn add lerna@"<4.0.0"');
-    await execInRoot('yarn add microfrontend-controller');
+    await execInRoot('yarn add @cmra/cli');
 
     await addScriptsToPackageJson(`${rootAppPath}/package.json`, rootAppScripts(webappName));
   };
 
-  await explain(
-    'Creating folder',
-    () => mkdir(`${name}/packages`),
-  );
+  await explain('Creating folder', () => mkdir(`${name}/packages`));
 
-  await explain(
-    'Configuring root app and webapp',
-    () => Promise.all([
-      configureRootApp(),
-      createModule(webappName, 'webapp', rootAppPath),
-    ]),
+  await explain('Configuring root app and webapp', () =>
+    Promise.all([configureRootApp(), createModule(webappName, 'webapp', rootAppPath)])
   );
 };
 

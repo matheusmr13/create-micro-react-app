@@ -4,7 +4,7 @@
 
 Create a repository on github and name it "my-microfrontend-market"
 Clone it
-`microfrontend-controller create -am`
+`@cmra/cli create -am`
 push && build && publish it
 
 ## Marketplace
@@ -20,7 +20,7 @@ Deploy application && show changes
 
 Create new repo
 Clone it
-`microfrontend-controller create -m`
+`@cmra/cli create -m`
 push && build && publish it
 Import microfrontend
 Deploy application && show changes

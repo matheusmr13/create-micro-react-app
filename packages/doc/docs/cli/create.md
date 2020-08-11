@@ -4,5 +4,5 @@ title: create
 ---
 
 ```bash
-  npx microfrontend-controller create --help
+  npx @cmra/cli create --help
 ```

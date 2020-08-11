@@ -1,13 +1,12 @@
 {
-  "name": "microfrontend-controller",
-  "version": "3.0.0",
-  "description": "Microfrontend ruler",
+  "name": "@cmra/cli",
+  "version": "0.0.2",
   "main:src": "src/index.js",
   "main": "index.js",
   "author": "Matheus Martins",
   "license": "MIT",
   "bin": {
-    "microfrontend-controller": "./bin/index.js"
+    "cmra": "./bin/index.js"
   },
   "optionalDependencies": {
     "node-sass": "^4.13.0"

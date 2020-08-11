@@ -4,5 +4,5 @@ title: build
 ---
 
 ```bash
-  npx microfrontend-controller build --help
+  npx @cmra/cli build --help
 ```

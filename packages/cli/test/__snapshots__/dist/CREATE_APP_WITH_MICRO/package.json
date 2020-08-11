@@ -5,13 +5,13 @@
   "license": "MIT",
   "dependencies": {
     "lerna": "<4.0.0",
-    "microfrontend-controller": "^2.1.18"
+    "@cmra/cli": "^2.1.18"
   },
   "scripts": {
     "postinstall": "lerna bootstrap",
     "build": "yarn build:packages && yarn package",
-    "build:packages": "microfrontend-controller build -a webapp",
-    "package": "microfrontend-controller build -p webapp",
-    "start": "microfrontend-controller start -a webapp"
+    "build:packages": "cmra build -a webapp",
+    "package": "cmra build -p webapp",
+    "start": "cmra start -a webapp"
   }
 }
