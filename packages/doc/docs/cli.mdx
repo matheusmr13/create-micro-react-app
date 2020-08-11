@@ -1,0 +1,26 @@
+---
+id: cli
+title: Overview
+---
+
+import { BetaTag } from './components/tag';
+
+Our cli aims to help you creating, developing and shipping your project.
+
+```bash
+  npx @cmra/cli [command] <options>
+```
+
+Core features:
+
+- `create` enables you creating an entire `app` or just some `microfrontend` or `library`;
+- `build` wraps some build logic around `react-scripts`;
+- `start` helps with development experience with tools like hot reload and previewing a microfrontend inside a webapp;
+- `publish` <BetaTag /> integrates with supported platforms (eg: github).
+
+```bash
+  npx @cmra/cli --help
+  npx @cmra/cli start --help
+  npx @cmra/cli build --help
+  npx @cmra/cli create --help
+```

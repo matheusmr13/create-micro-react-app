@@ -1,0 +1,83 @@
+/* stylelint-disable docusaurus/copyright-header */
+
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+.heroBanner {
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 966px) {
+  .heroBanner {
+    padding: 2rem;
+  }
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.features {
+  display: flex;
+  align-items: center;
+  padding: 2rem 0;
+  width: 100%;
+}
+
+.featureImage {
+  height: 200px;
+  width: 200px;
+}
+
+.heroLogoWhite,
+.heroLogo {
+  width: 150px;
+  margin-bottom: 40px;
+}
+
+[data-theme='dark'] .heroLogo {
+  display: none;
+}
+
+.heroLogoWhite {
+  display: none;
+}
+
+[data-theme='dark'] .heroLogoWhite {
+  display: initial;
+}
+
+.toolTitle {
+  margin: auto;
+  font-size: 30px;
+  margin-bottom: 40px;
+}
+
+.tool {
+  padding: 40px 0;
+}
+
+.tool:nth-child(even) {
+  background-color: var(--ifm-color-primary-darkest);
+  color: white;
+}
+
+.tool:nth-child(even) pre {
+  color: var(--ifm-font-color-secondary);
+}
+
+.toolImage {
+  width: 300px;
+  margin: 40px auto;
+}
+
+.toolFeatures {
+  justify-content: center;
+}

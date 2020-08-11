@@ -1,0 +1,33 @@
+---
+id: backoffice
+title: Overview
+---
+
+import { TodoTag } from './components/tag';
+
+**Create Micro Create App** gives you an out of the box solution for managing your microfrontends with a powerful and open source api/webapp that allow you to:
+
+- Get control of what microfrontend versions are deployed;
+- Deploy multiple microfrontends combination, create beta versions and make sure everything is right;
+- Integrate with multiple platforms such as github or amazon s3;
+- Notify you when things happen on your env.
+
+## Why
+
+Managing microfrontends is not easy and we know that.
+
+This architecture can make your application chaotic if you don't organize things. The best way of keeping your life with multiple microfrontends and possibly multiple applications, organized is with this simple backoffice.
+
+## How to use
+
+Having [this store example](core/examples.md) as our use case, let's explore how could we use this backoffice.
+
+- first of all, if you are using github as your artifact storage, you can publish all your packages (webapp and microfrontends) with `publish` command:
+  ```bash
+    npx @cmra/cli publish
+  ```
+- register new application named `My Cool Store` with container name `webapp` (from `webapp/package.json`);
+- add new microfrontends related to your application: `cart`, `design-system`, `showcase` and `promotions`;
+- all these new microfrontends will have it's own versions synched and ready to be deployed.
+- choose which version for each microfrontend you want to deploy
+- your application is ready: just go to your github.io page!
