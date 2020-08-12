@@ -202,7 +202,7 @@ function Home() {
   const context = useDocusaurusContext();
   const { siteConfig = {} } = context;
   return (
-    <Layout title={`Hello from ${siteConfig.title}`} description="Description will go into a meta tag in <head />">
+    <Layout title={siteConfig.title} description="Create react app with microfrontend architecture.">
       <header className={clsx('hero hero--primary', styles.heroBanner)}>
         <div className="container">
           <img className={styles.heroLogo} src="./img/logo-white.svg" alt="" />
