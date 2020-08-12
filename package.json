@@ -15,7 +15,8 @@
     "test": "lerna run --stream --concurrency=1 test",
     "postinstall": "yarn lerna-bootstrap",
     "lerna-bootstrap": "lerna bootstrap",
-    "start:backoffice": "./scripts/start.js"
+    "start:backoffice": "./scripts/start.js",
+    "deploy:docs": "./scripts/publish-site.js"
   },
   "dependencies": {
     "eslint-import-resolver-lerna": "^1.1.0",
