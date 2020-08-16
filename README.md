@@ -1,4 +1,4 @@
-# Create Micro React App [![Build Status](https://travis-ci.com/matheusmr13/create-microfrontend-react-app.svg?branch=master)](https://travis-ci.com/matheusmr13/create-microfrontend-react-app) [![Build Status](https://dev.azure.com/matheusmr13/create-microfrontend-react-app/_apis/build/status/matheusmr13.create-microfrontend-react-app?branchName=master)](https://dev.azure.com/matheusmr13/create-microfrontend-react-app/_build/latest?definitionId=2&branchName=master) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=matheusmr13_create-microfrontend-react-app&metric=alert_status)](https://sonarcloud.io/dashboard?id=matheusmr13_create-microfrontend-react-app)
+# :sparkles: Create Micro React App [![Build Status](https://travis-ci.com/matheusmr13/create-microfrontend-react-app.svg?branch=master)](https://travis-ci.com/matheusmr13/create-microfrontend-react-app) [![Build Status](https://dev.azure.com/matheusmr13/create-microfrontend-react-app/_apis/build/status/matheusmr13.create-microfrontend-react-app?branchName=master)](https://dev.azure.com/matheusmr13/create-microfrontend-react-app/_build/latest?definitionId=2&branchName=master) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=matheusmr13_create-microfrontend-react-app&metric=alert_status)](https://sonarcloud.io/dashboard?id=matheusmr13_create-microfrontend-react-app)
 
 <img align="right" src="icon.png" width="23%">
 
@@ -11,7 +11,7 @@ Most complete approach to microfrontend architecture:
 
 If you want to know more about microfrontends and why you should (or shouldn't) use it, check [this article](https://matheusmr13.github.io/create-micro-react-app/docs/core/microfrontend).
 
-## Quick Overview
+## :zap: Quick Overview
 
 ```
   npx @cmra/cli create my-app
@@ -19,11 +19,11 @@ If you want to know more about microfrontends and why you should (or shouldn't) 
   npm start
 ```
 
-## Demo
+## :rocket: Demo
 
 Microfrontend Store: [Demo](https://github.com/matheusmr13/micro-store)
 
-## Installing
+## :floppy_disk: Installing
 
 To install our cli you need **Node >= 13**.
 
@@ -39,7 +39,7 @@ To install our cli you need **Node >= 13**.
   yarn global add @cmra/cli
 ```
 
-## Using it
+## :computer: Using it
 
 After installing it, you'll have `cmra` command available:
 
@@ -98,10 +98,14 @@ It will generate a folder structure like:
   └── yarn.lock
 ```
 
-## Development
+## :hammer: Development
 
 First of all, check our [contributing guide](https://github.com/matheusmr13/create-micro-react-app/blob/master/CONTRIBUTING.md).
 If you have any questions just [open an issue](https://github.com/matheusmr13/create-micro-react-app/issues/new)!
+
+## :books: Docs
+
+https://matheusmr13.github.io/create-micro-react-app/docs/
 
 ---
 
