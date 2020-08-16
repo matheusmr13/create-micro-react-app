@@ -27,7 +27,7 @@ const createModule = async (name, template, rootAppPath) => {
   await copyTemplateTo(template, `${rootAppPath}/packages/${name}`);
 
   await execInApp('yarn add @cmra/cli');
-  await execInApp('yarn add react-microfrontend');
+  await execInApp('yarn add @cmra/react');
 
   await addScriptsToPackageJson(
     `${rootAppPath}/packages/${name}/package.json`,

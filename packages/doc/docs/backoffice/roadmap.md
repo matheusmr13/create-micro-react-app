@@ -10,17 +10,10 @@ Have suggestions of new features? [Open an issue](https://github.com/matheusmr13
 
 ## Next steps
 
-- Rename packages
-  - Create "cmra" namespace
-  - @cmra/cli -> "@cmra/cli"
-  - react-microfrontend -> "@cmra/lib"
-  - marketplace-frontend -> "@cmra/web"
-  - marketplace-backend -> "@cmra/server"
-  - export models from backend -> "@cmra/model"
 - Make it easy to deploy
   - server -> create package to extend -> `import Server from '@cmra/server'; Server.run();`
   - frontend -> create package to extend -> `import Webapp from '@cmra/web'; await Webapp.build(); Server.addStatic('build');`
-  - docker image with all together
+  - docker image with all together (+heroku)
 - Permission
   - get things separate between users (currently works if you create your own environment)
 - Deploy
@@ -39,7 +32,7 @@ Have suggestions of new features? [Open an issue](https://github.com/matheusmr13
   - Define an order for each namespace (such as alpha->beta->main)
 - Expand namespaces
   - Create hidden "next deploy preview"
-  - Integrate react-microfrontend with setting namespaces
+  - Integrate @cmra/react with setting namespaces
 - Custom microfrontends
   - Set microfrontends meta infos (nav bar label? url? custom field)
   - Lazy loading

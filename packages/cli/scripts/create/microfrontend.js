@@ -5,9 +5,8 @@ const { writeFile } = require('../utils/fs');
 const { explain } = require('../utils/log');
 const { resolveApp, resolvePackageSrc } = require('../utils/paths');
 
-
-const indexJsFile = packageName => `
-import { ExportMicrofrontend } from 'react-microfrontend';
+const indexJsFile = (packageName) => `
+import { ExportMicrofrontend } from '@cmra/react';
 import App from './App';
 
 ExportMicrofrontend({
@@ -22,17 +21,11 @@ const createMicrofrontendWithTemplate = async (name, folder) => {
 };
 
 const createMicrofrontend = async (name, folder = '.') => {
-  await explain(
-    'Creating microfrontend',
-    () => createMicrofrontendWithTemplate(name, folder),
-  );
+  await explain('Creating microfrontend', () => createMicrofrontendWithTemplate(name, folder));
 };
 
 const createMicrofrontendWithLibrary = async (name, folder = '.') => {
-  await explain(
-    'Creating microfrontend with library',
-    () => createLibrary(name, folder, 'microfrontend-library'),
-  );
+  await explain('Creating microfrontend with library', () => createLibrary(name, folder, 'microfrontend-library'));
 };
 
 module.exports = {

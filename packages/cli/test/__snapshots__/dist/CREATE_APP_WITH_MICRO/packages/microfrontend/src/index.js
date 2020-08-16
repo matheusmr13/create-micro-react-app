@@ -1,5 +1,4 @@
-
-import { ExportMicrofrontend } from 'react-microfrontend';
+import { ExportMicrofrontend } from '@cmra/react';
 import App from './App';
 
 ExportMicrofrontend({

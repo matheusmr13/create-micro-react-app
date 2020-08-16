@@ -42,14 +42,14 @@ describe('container', () => {
         data: {
           type: 'LOAD',
           origin: 'my-micro',
-          source: 'react-microfrontend'
+          source: '@cmra/react'
         }
       });
       postMessageCallback({
         data: {
           type: 'SCRIPT',
           origin: 'my-micro',
-          source: 'react-microfrontend',
+          source: '@cmra/react',
           payload: ['my-js-file.js']
         },
       });
@@ -67,7 +67,7 @@ describe('container', () => {
         data: {
           type: 'LOAD',
           origin: 'my-micro',
-          source: 'react-microfrontend'
+          source: '@cmra/react'
         }
       });
 
@@ -79,7 +79,7 @@ describe('container', () => {
         data: {
           type: 'STYLE',
           origin: 'my-micro',
-          source: 'react-microfrontend',
+          source: '@cmra/react',
           payload: ['my-style']
         }
       });

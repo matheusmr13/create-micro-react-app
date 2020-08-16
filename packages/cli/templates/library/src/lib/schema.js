@@ -1,4 +1,4 @@
-import { CreateLib } from 'react-microfrontend';
+import { CreateLib } from '@cmra/react';
 
 export default {
   interface: {

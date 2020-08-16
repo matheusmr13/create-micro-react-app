@@ -12,7 +12,7 @@ const addMainLibToPackageJson = async (packageJsonPath, main) => {
 };
 
 const createLibIndex = async (libIndexPath, name) => {
-  const content = `import { CreateLib } from 'react-microfrontend';
+  const content = `import { CreateLib } from '@cmra/react';
 import schema from './schema';
 
 const api = CreateLib(schema, { apiAccess: CreateLib.BUILD_TYPE.PRIVATE_API, packageName: "${name}" });
@@ -37,43 +37,31 @@ const addBuildLibToGitIgnore = async (rootAppPath, name) => {
 };
 
 const createLibrary = async (name, folder = '.', template = 'library') => {
-  await explain(
-    'Creating library',
-    async () => {
-      const rootAppPath = resolveApp(folder);
-      const basePath = `${rootAppPath}/packages/${name}`;
+  await explain('Creating library', async () => {
+    const rootAppPath = resolveApp(folder);
+    const basePath = `${rootAppPath}/packages/${name}`;
 
-      await createModule(name, template, rootAppPath, true);
-      await addMainLibToPackageJson(`${basePath}/package.json`, './build-lib/index.js');
-      await createLibIndex(`${basePath}/src/lib/index.js`, name);
-      await addBuildLibToGitIgnore(rootAppPath, name);
-    },
-  );
+    await createModule(name, template, rootAppPath, true);
+    await addMainLibToPackageJson(`${basePath}/package.json`, './build-lib/index.js');
+    await createLibIndex(`${basePath}/src/lib/index.js`, name);
+    await addBuildLibToGitIgnore(rootAppPath, name);
+  });
 };
 
 const deleteUnusedFiles = async (name, folder) => {
   const rootAppPath = resolveApp(folder);
   const { execInApp } = createExecutionContext(rootAppPath, name);
 
-  const filesToDelete = [
-    'src/App.*',
-    'src/*.css',
-    'src/serviceWorker.js',
-    'src/setupTests.js',
-    'src/logo.*',
-  ];
+  const filesToDelete = ['src/App.*', 'src/*.css', 'src/serviceWorker.js', 'src/setupTests.js', 'src/logo.*'];
 
   await execInApp(`rm -f ${filesToDelete.join(' ')}`);
 };
 
 const createStandaloneLibrary = async (name, folder = '.') => {
-  await explain(
-    'Creating standalone library',
-    async () => {
-      await createLibrary(name, folder);
-      await deleteUnusedFiles(name, folder);
-    },
-  );
+  await explain('Creating standalone library', async () => {
+    await createLibrary(name, folder);
+    await deleteUnusedFiles(name, folder);
+  });
 };
 
 module.exports = {

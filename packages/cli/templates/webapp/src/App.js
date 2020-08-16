@@ -1,4 +1,4 @@
-import { withMicrofrontend } from 'react-microfrontend';
+import { withMicrofrontend } from '@cmra/react';
 
 import React, { useState } from 'react';
 
@@ -19,26 +19,22 @@ const App = ({ microfrontends }) => {
         Choose a microfrontend to show:
       </p>
       <div className="App__menu">
-        {
-          Object.keys(microfrontends).map(microfrontend => (
-            <button
-              onClick={() => setSelectedMicrofrontendKey(microfrontend)}
-              key={microfrontend}
-              className={`App__menu-item${microfrontend === selectedMicrofrontendKey ? ' App__menu-item--selected' : ''}`}
-            >
-              {microfrontend}
-            </button>
-          ))
-        }
+        {Object.keys(microfrontends).map((microfrontend) => (
+          <button
+            onClick={() => setSelectedMicrofrontendKey(microfrontend)}
+            key={microfrontend}
+            className={`App__menu-item${microfrontend === selectedMicrofrontendKey ? ' App__menu-item--selected' : ''}`}
+          >
+            {microfrontend}
+          </button>
+        ))}
       </div>
       <div className="App__content">
-        {
-          MicrofrontendComponent && (
-            <div className="App__microfrontend-content">
-              <MicrofrontendComponent.view />
-            </div>
-          )
-        }
+        {MicrofrontendComponent && (
+          <div className="App__microfrontend-content">
+            <MicrofrontendComponent.view />
+          </div>
+        )}
       </div>
     </div>
   );

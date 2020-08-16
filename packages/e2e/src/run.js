@@ -26,15 +26,11 @@ const createSymlinks = async () => {
   const checkNodeModulesDevPackage = (pathToNodeModules, library) =>
     checkNodeModules(pathToNodeModules, library, (lib) => `${process.cwd()}/../${lib}`);
   const checkNodeModulesReactPackage = (pathToNodeModules, library) =>
-    checkNodeModules(
-      pathToNodeModules,
-      library,
-      (lib) => `${process.cwd()}/../react-microfrontend/node_modules/${lib}`
-    );
+    checkNodeModules(pathToNodeModules, library, (lib) => `${process.cwd()}/../@cmra/react/node_modules/${lib}`);
 
   const checkAllDepsFromPackage = async (packageName) => {
     await checkNodeModulesDevPackage(`./e2e-dist/my-app/packages/${packageName}/node_modules`, '@cmra/cli');
-    await checkNodeModulesDevPackage(`./e2e-dist/my-app/packages/${packageName}/node_modules`, 'react-microfrontend');
+    await checkNodeModulesDevPackage(`./e2e-dist/my-app/packages/${packageName}/node_modules`, '@cmra/react');
     await checkNodeModulesReactPackage(`./e2e-dist/my-app/packages/${packageName}/node_modules`, 'react');
     await checkNodeModulesReactPackage(`./e2e-dist/my-app/packages/${packageName}/node_modules`, 'react-dom');
   };

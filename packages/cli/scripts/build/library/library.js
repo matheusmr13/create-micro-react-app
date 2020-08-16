@@ -1,8 +1,6 @@
 const { resolveApp, appPackageJson } = require('../../utils/paths');
 const { escapePackageName } = require('../../utils/paths');
-const {
-  readJson, rm, mkdir, copyFile, writeFile,
-} = require('../../utils/fs');
+const { readJson, rm, mkdir, copyFile, writeFile } = require('../../utils/fs');
 
 const getExtension = (file) => {
   const parts = file.split('.');
@@ -19,15 +17,18 @@ const build = async (fileToBuild) => {
 
   await copyFile(resolveApp(fileToBuild), `${buildLibFolder}/schema.${getExtension(fileToBuild)}`);
 
-  await writeFile(`${buildLibFolder}/index.js`, `
-    import { CreateLib } from 'react-microfrontend';
+  await writeFile(
+    `${buildLibFolder}/index.js`,
+    `
+    import { CreateLib } from '@cmra/react';
     import schema from './schema';
 
     export default CreateLib(schema, {
       apiAccess: CreateLib.BUILD_TYPE.PUBLIC_API,
       packageName: "${escapedPackageName}"
     });
-  `);
+  `
+  );
 };
 
 module.exports = build;
