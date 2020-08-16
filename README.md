@@ -19,6 +19,10 @@ If you want to know more about microfrontends and why you should (or shouldn't) 
   npm start
 ```
 
+## Demo
+
+Microfrontend Store: [Demo](https://github.com/matheusmr13/micro-store)
+
 ## Installing
 
 To install our cli you need **Node >= 13**.
