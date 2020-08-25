@@ -121,7 +121,7 @@ function FullApp() {
             ))}
           </Switch>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>Copyright © 2020 Matheus Martins</Footer>
+        <Footer style={{ textAlign: 'center' }}><a href="https://matheusmr13.github.io/create-micro-react-app/docs/">Create Micro React App</a></Footer>
       </Layout>
     </Layout>
   );

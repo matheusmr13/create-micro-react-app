@@ -43,6 +43,9 @@ class Microfrontend extends BaseEntity {
   @Column()
   public packageName: string = '';
 
+  @Column()
+  public projectLink: string = '';
+
   @Column({ nullable: true })
   public integrationType?: INTEGRATION_TYPE;
 

@@ -3,4 +3,6 @@ id: namespace
 title: Namespace
 ---
 
-asd
+import { WipTag } from './components/tag';
+
+<WipTag />

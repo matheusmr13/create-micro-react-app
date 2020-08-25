@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Card, Col, Row } from 'antd';
+import { Card, Col, Row, Tag, Space } from 'antd';
 import { useLoggedApiRequest } from 'base/hooks/request';
 import { Link } from 'react-router-dom';
 import Section from 'base/components/section';
@@ -21,7 +21,10 @@ const MicrofrontendList: React.FunctionComponent<IMicrofrontendListProps> = ({ a
           microfrontends.map((microfrontend: any) => (
             <Col span={6} key={microfrontend.id}>
               <Card title={microfrontend.name} extra={<Link to={`../microfrontend/${microfrontend.id}`}>Edit</Link>}>
-                {microfrontend.name}
+                <Space direction="vertical">
+                  <Tag color="blue">package: {microfrontend.packageName}</Tag>
+                  <Tag color={microfrontend.type === 'CONTAINER' ? 'red' : 'orange'}>type: {microfrontend.type}</Tag>
+                </Space>
               </Card>
             </Col>
           ))}

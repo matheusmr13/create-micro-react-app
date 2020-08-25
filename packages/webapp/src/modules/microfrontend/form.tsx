@@ -2,7 +2,7 @@ import React, { useState, FC } from 'react';
 import { useLoggedApiRequest } from 'base/hooks/request';
 
 import { useHistory } from 'react-router-dom';
-import { Form, Input, Button, Typography, Timeline, Select, AutoComplete } from 'antd';
+import { Form, Input, Button, Typography, Timeline, Select, AutoComplete, Switch } from 'antd';
 import Page from 'base/components/page';
 import useQuery from 'base/hooks/query-param';
 const { Title } = Typography;
@@ -103,6 +103,17 @@ const NewMicrofrontend: React.FC<{
 
         <Form.Item label="Package name" name="packageName">
           <Input />
+        </Form.Item>
+
+        <Form.Item label="Project link" name="projectLink">
+          <Input />
+        </Form.Item>
+
+        <Form.Item label="Type" name="type">
+          <Select>
+            <Select.Option value="MICROFRONTEND">Microfrontend</Select.Option>
+            <Select.Option value="CONTAINER">Container</Select.Option>
+          </Select>
         </Form.Item>
 
         {!loadingIntegrations && (
