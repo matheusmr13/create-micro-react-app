@@ -19,20 +19,36 @@ const addScriptsToPackageJson = async (packageJsonPath, scripts) => {
   await writeJson(packageJsonPath, packageJson);
 };
 
-const createModule = async (name, template, rootAppPath) => {
-  const { execInPackages, execInApp } = createExecutionContext(rootAppPath, name);
+const createModule = async (name, template, rootAppPath, isRootPath = false) => {
+  const { execInPackages, execInApp, execInRootApp, execInRoot } = createExecutionContext(rootAppPath, name);
 
-  await execInPackages(`npx create-react-app ${name}`);
-  await appendFile(`${rootAppPath}/packages/${name}/.gitignore`, ['build-lib', 'public/meta.json'].join('\n'));
-  await copyTemplateTo(template, `${rootAppPath}/packages/${name}`);
+  if (isRootPath) {
+    await execInRoot(`npx create-react-app ${name}`);
 
-  await execInApp('yarn add @cmra/cli');
-  await execInApp('yarn add @cmra/react');
+    await appendFile(`${rootAppPath}/.gitignore`, ['build-lib', 'public/meta.json'].join('\n'));
+    await copyTemplateTo(template, rootAppPath);
 
-  await addScriptsToPackageJson(
-    `${rootAppPath}/packages/${name}/package.json`,
-    getModuleScripts(template === 'microfrontend')
-  );
+    await execInRootApp('yarn add @cmra/cli');
+    await execInRootApp('yarn add @cmra/react');
+
+    await addScriptsToPackageJson(
+      `${rootAppPath}/${name}/package.json`,
+      getModuleScripts(template === 'microfrontend')
+    );
+  } else {
+    await execInPackages(`npx create-react-app ${name}`);
+
+    await appendFile(`${rootAppPath}/packages/${name}/.gitignore`, ['build-lib', 'public/meta.json'].join('\n'));
+    await copyTemplateTo(template, `${rootAppPath}/packages/${name}`);
+
+    await execInApp('yarn add @cmra/cli');
+    await execInApp('yarn add @cmra/react');
+
+    await addScriptsToPackageJson(
+      `${rootAppPath}/packages/${name}/package.json`,
+      getModuleScripts(template === 'microfrontend')
+    );
+  }
 };
 
 module.exports = {

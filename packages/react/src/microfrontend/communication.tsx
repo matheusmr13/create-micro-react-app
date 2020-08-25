@@ -1,4 +1,4 @@
-import Communication from './../base/communication';
+import Communication from '../base/communication';
 
 class MicrofrontendClient extends Communication {
   from: string;

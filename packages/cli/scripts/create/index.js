@@ -33,7 +33,7 @@ const create = async (types, name, opts) => {
     if (shouldCreateLib) {
       await createMicrofrontendWithLibrary(microfrontendName, pathToCreateMicro);
     } else {
-      await createMicrofrontend(microfrontendName, pathToCreateMicro);
+      await createMicrofrontend(microfrontendName, pathToCreateMicro, !shouldCreateApp);
     }
     return;
   }

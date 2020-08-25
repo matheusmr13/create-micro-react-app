@@ -15,13 +15,17 @@ ExportMicrofrontend({
 });
 `;
 
-const createMicrofrontendWithTemplate = async (name, folder) => {
-  await createModule(name, 'microfrontend', resolveApp(folder));
-  await writeFile(resolvePackageSrc(folder, name, 'index.js'), indexJsFile(name));
+const createMicrofrontendWithTemplate = async (name, folder, isRootPath) => {
+  await createModule(name, 'microfrontend', resolveApp(folder), isRootPath);
+  if (isRootPath) {
+    await writeFile(resolveApp(folder, name, 'src', 'index.js'), indexJsFile(name));
+  } else {
+    await writeFile(resolvePackageSrc(folder, name, 'index.js'), indexJsFile(name));
+  }
 };
 
-const createMicrofrontend = async (name, folder = '.') => {
-  await explain('Creating microfrontend', () => createMicrofrontendWithTemplate(name, folder));
+const createMicrofrontend = async (name, folder = '.', isRootPath) => {
+  await explain('Creating microfrontend', () => createMicrofrontendWithTemplate(name, folder, isRootPath));
 };
 
 const createMicrofrontendWithLibrary = async (name, folder = '.') => {

@@ -23,7 +23,6 @@ module.exports = {
       .join(' ');
 
     const command = `${envVars} npm run build`;
-    console.info(command);
     await exec(command, { cwd: `${__dirname}/../` });
     return `${__dirname}/../build`;
   },
