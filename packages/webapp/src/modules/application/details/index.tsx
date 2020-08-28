@@ -110,7 +110,7 @@ const ApplicationDetails: React.FunctionComponent<IApplicationDetailsProps> = ({
               </Link>
             ) : null
             }
-            <Button type="ghost" loading={deployingApplication} onClick={() => deployApplication()}>Deploy</Button>
+            <Button type="danger" loading={deployingApplication} onClick={() => deployApplication()}>Deploy</Button>
           </Space>
         </Form.Item>
       </Form>

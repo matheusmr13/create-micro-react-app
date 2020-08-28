@@ -97,7 +97,7 @@ function FullApp() {
           {collapsed ? <MenuUnfoldOutlined {...iconProps} /> : <MenuFoldOutlined {...iconProps} />}
           <div className="App__header-actions">
             <Space>
-              <a href="/create-micro-react-app/docs/getting-started" style={{ display: 'flex', alignItems: 'center' }}><QuestionCircleOutlined style={{ fontSize: '24px' }} /></a>
+              <a href="https://matheusmr13.github.io/create-micro-react-app/docs/" style={{ display: 'flex', alignItems: 'center' }}><QuestionCircleOutlined style={{ fontSize: '24px' }} /></a>
               <Dropdown overlay={(
                 <Menu style={{ marginTop: '8px' }}>
                   <Menu.Item key="0">

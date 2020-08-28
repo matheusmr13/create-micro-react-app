@@ -2,7 +2,7 @@ import React, { useState, FC } from 'react';
 import { useLoggedApiRequest } from 'base/hooks/request';
 
 import { useHistory } from 'react-router-dom';
-import { Form, Input, Button, Typography, Timeline, Select, AutoComplete, Switch } from 'antd';
+import { Form, Input, Button, Typography, Timeline, Select, AutoComplete, Switch, Space } from 'antd';
 import Page from 'base/components/page';
 import useQuery from 'base/hooks/query-param';
 const { Title } = Typography;
@@ -131,12 +131,14 @@ const NewMicrofrontend: React.FC<{
         }
 
         <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Save
-          </Button>
-          <Button type="ghost" onClick={handleSyncClick}>
-            Sync Versions
-          </Button>
+          <Space>
+            <Button type="primary" htmlType="submit">
+              Save
+            </Button>
+            <Button type="ghost" onClick={handleSyncClick}>
+              Sync Versions
+            </Button>
+          </Space>
         </Form.Item>
       </Form>
 

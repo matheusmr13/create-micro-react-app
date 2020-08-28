@@ -43,7 +43,7 @@ class Microfrontend extends BaseEntity {
   @Column()
   public packageName: string = '';
 
-  @Column()
+  @Column({ nullable: true })
   public projectLink: string = '';
 
   @Column({ nullable: true })

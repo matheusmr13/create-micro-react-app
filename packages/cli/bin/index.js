@@ -21,6 +21,8 @@ program
 
     File example "${chalk.italic('my-config.json')}":
     ${chalk.bold(`
+    {
+      "proxyUrl": "https://my-aplication-url.com",
       "microfrontends": {
         "my-microfrontend1": "/path/to/microfrontend1/root",
         "my-microfrontend2": "/path/to/microfrontend2/root"
@@ -28,6 +30,7 @@ program
       "app": {
         "my-webapp": "/path/to/app/root"
       }
+    }
     `)}
   `
   )
@@ -47,6 +50,12 @@ program
     - current deployed webapp version
     - current 2 other microservices versions
     - a devserver running just with your current microfrontend (where you started this command) in development
+  `
+  )
+  .option(
+    '-w, --webapp',
+    `
+    Combined with --proxy, put this container as proxy root.
   `
   )
   .option(
@@ -73,6 +82,7 @@ program
       opts.configurationFile = options.configurationFile;
     } else if (options.proxy) {
       type = start.TYPE.PROXY;
+      opts.isContainer = options.webapp;
       opts.url = options.proxy;
     } else if (options.all) {
       type = start.TYPE.LOCAL;

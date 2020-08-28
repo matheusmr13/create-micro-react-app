@@ -11,7 +11,7 @@ interface AwsS3Config {
   token: string;
 }
 
-const s3 = new AWS.S3({ region: 'sa-east-1' });
+const s3 = new AWS.S3({ region: process.env.AWS_REGION });
 
 class AwsS3Integration extends Integration {
   static async downloadArtifact(artifactPath: string, opts: { path: MicrofrontendDeployPath }) {

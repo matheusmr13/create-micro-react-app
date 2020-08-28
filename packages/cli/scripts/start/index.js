@@ -1,6 +1,9 @@
 const startProxyServer = require('./proxy-server');
 const startLocalAll = require('./all');
 const startSingle = require('./single');
+const { writeJson } = require('../utils/fs');
+const { resolveApp } = require('../utils/paths');
+const { getMetaFromUrl } = require('./proxy');
 
 const TYPE = {
   SINGLE: 'SINGLE',
@@ -15,10 +18,15 @@ const start = (type, opts) => {
       const { configurationFile } = opts;
       startLocalAll(configurationFile, opts);
     },
-    [TYPE.PROXY]: () => {
-      const { url } = opts;
-      startProxyServer(url);
-      startSingle({ port: 3001, isMicro: true });
+    [TYPE.PROXY]: async () => {
+      const { url, isContainer } = opts;
+      if (!isContainer) {
+        startProxyServer(url);
+      } else {
+        const envJson = await getMetaFromUrl(url);
+        await writeJson(resolveApp('public/microfrontends/meta.json'), envJson);
+      }
+      startSingle({ port: isContainer ? 3000 : 3001, isMicro: !isContainer });
     },
   }[type]());
 };
