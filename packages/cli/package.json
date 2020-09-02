@@ -1,6 +1,6 @@
 {
   "name": "@cmra/cli",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main:src": "src/index.js",
   "main": "index.js",
   "author": "Matheus Martins",
