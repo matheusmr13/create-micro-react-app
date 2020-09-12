@@ -7,6 +7,9 @@ import Notification from '../notification/notification';
 import User from '../entity/user';
 import { INTEGRATION_TYPE } from '../entity/integration/types';
 import ApplicationDeploy from '../entity/deploy/application-deploy';
+import Microfrontend from '../entity/microfrontend';
+import Namespace from '../entity/namespace';
+import { app } from 'firebase-admin';
 
 class ApplicationController extends BaseController<typeof Application> {
   constructor() {
@@ -46,6 +49,42 @@ class ApplicationController extends BaseController<typeof Application> {
       ...req.body,
     });
     res.json(application);
+  });
+
+  public instantDeploy = this.withContext(async (req: Request, res: Response, context) => {
+    const { microfrontendId, namespacePath, versionName } = req.body;
+    const application = await context.getInstance();
+    const user = await context.getUser();
+    const microfrontend = await Microfrontend.findOne(microfrontendId);
+    await microfrontend!.syncVersions();
+
+    let namespace = await Namespace.createQueryBuilder()
+      .where(`Namespace.path = :path`)
+      .andWhere(`Namespace.applicationId = :applicationId`)
+      .setParameter('path', namespacePath)
+      .setParameter('applicationId', application.id)
+      .getOne();
+    if (!namespace) {
+      namespace = await Namespace.createInstance({
+        applicationId: application.id!,
+        name: namespacePath,
+        path: namespacePath,
+        ownerId: user.id,
+      });
+
+      const mainNamespace = await Namespace.createQueryBuilder()
+        .andWhere(`Namespace.applicationId = :applicationId`)
+        .andWhere(`Namespace.isMain = true`)
+        .setParameter('applicationId', application.id)
+        .getOne();
+
+      const mainNextDeploy = mainNamespace?.getNextDeploy();
+      mainNextDeploy.
+    }
+
+
+
+    res.json({});
   });
 }
 

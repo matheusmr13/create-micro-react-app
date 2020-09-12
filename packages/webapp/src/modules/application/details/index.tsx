@@ -9,14 +9,15 @@ import MicrofrontendList from './microfrontend-list';
 import NamespaceList from './namespace-list';
 import FetchApplication from '../fetch';
 
-
 interface IIntegrationList {
   integrationType: string;
   destinationId: string;
 }
 
 const IntegrationList: FC<IIntegrationList> = ({ integrationType, destinationId }) => {
-  const [{ data: integrationList, loading: loadingIntegrations }] = useLoggedApiRequest(`/integrations/${integrationType}/destination`);
+  const [{ data: integrationList, loading: loadingIntegrations }] = useLoggedApiRequest(
+    `/integrations/${integrationType}/destination`
+  );
 
   if (loadingIntegrations) return null;
   return (
@@ -24,13 +25,11 @@ const IntegrationList: FC<IIntegrationList> = ({ integrationType, destinationId 
       <AutoComplete
         options={integrationList.map((integration: string) => ({ value: integration }))}
         defaultValue={destinationId}
-        filterOption={(inputValue, option) =>
-          option!.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-        }
+        filterOption={(inputValue, option) => option!.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
       />
     </Form.Item>
-  )
-}
+  );
+};
 
 interface IApplicationDetailsProps {
   application: any;
@@ -44,19 +43,24 @@ const ApplicationDetails: React.FunctionComponent<IApplicationDetailsProps> = ({
       success: 'Application saved',
     },
   });
-  const [{ loading: deployingApplication }, deployApplication] = useApiAction(`/applications/${application.id}/deploy`, {
-    method: 'POST',
-    message: {
-      success: 'Deploy done',
-    },
-  });
-  const [{ data: namespaces, loading: gettingNamespaces }, refetchNamespaces] = useLoggedApiRequest(`/namespaces?applicationId=${application.id}`);
+  const [{ loading: deployingApplication }, deployApplication] = useApiAction(
+    `/applications/${application.id}/deploy`,
+    {
+      method: 'POST',
+      message: {
+        success: 'Deploy done',
+      },
+    }
+  );
+  const [{ data: namespaces, loading: gettingNamespaces }, refetchNamespaces] = useLoggedApiRequest(
+    `/namespaces?applicationId=${application.id}`
+  );
   const [{ data: integrations, loading: loadingIntegrations }] = useLoggedApiRequest('/integrations');
 
   const handleFormChange = (values: any) => {
     const { integrationType } = values;
     if (integrationType) setSelectedIntegration(integrationType);
-  }
+  };
   useEffect(() => {
     refetchNamespaces();
   }, [refetchNamespaces]);
@@ -83,16 +87,18 @@ const ApplicationDetails: React.FunctionComponent<IApplicationDetailsProps> = ({
         {!loadingIntegrations && (
           <Form.Item label="Integration type" name="integrationType">
             <Select>
-              {integrations.map((integration: any) => <Select.Option key={integration.id} value={integration.id}>{integration.id}</Select.Option>)}
+              {integrations.map((integration: any) => (
+                <Select.Option key={integration.id} value={integration.id}>
+                  {integration.id}
+                </Select.Option>
+              ))}
             </Select>
           </Form.Item>
         )}
 
-        {
-          selectedIntegration && (
-            <IntegrationList integrationType={selectedIntegration} destinationId={application.destinationId} />
-          )
-        }
+        {selectedIntegration && (
+          <IntegrationList integrationType={selectedIntegration} destinationId={application.destinationId} />
+        )}
         <Form.Item>
           <Space>
             <Button type="primary" htmlType="submit">
@@ -108,9 +114,10 @@ const ApplicationDetails: React.FunctionComponent<IApplicationDetailsProps> = ({
               <Link to={`../namespace/${namespaces[0].id}/deploy/next`}>
                 <Button type="ghost">Prepare next deploy</Button>
               </Link>
-            ) : null
-            }
-            <Button type="danger" loading={deployingApplication} onClick={() => deployApplication()}>Deploy</Button>
+            ) : null}
+            <Button type="dashed" loading={deployingApplication} onClick={() => deployApplication()}>
+              Deploy
+            </Button>
           </Space>
         </Form.Item>
       </Form>

@@ -74,7 +74,7 @@ class ApplicationDeploy {
   async uploadAll() {
     if (this.application.integrationType === INTEGRATION_TYPE.GITHUB) {
       const tree = await getTreeFromFolder(this.path.finalDistFolder);
-      await uploadTree(this.application.destinationId, tree, this.user, 'my versiion');
+      await uploadTree(this.application.destinationId, tree, this.user, 'my version');
     } else if (this.application.integrationType === INTEGRATION_TYPE.AWS_S3) {
       await Promise.all(
         Object.values(this.namespaceDeploys).map(async (namespaceDeploy) => {
@@ -96,6 +96,14 @@ class ApplicationDeploy {
     await rm(this.path.rootFolder);
   }
 
+  async updateState() {
+    await Promise.all(
+      Object.values(this.namespaceDeploys).map(async (namespaceDeploy) => {
+        await namespaceDeploy.updateState();
+      })
+    );
+  }
+
   async execute() {
     try {
       this.debug('starting');
@@ -108,6 +116,8 @@ class ApplicationDeploy {
       await this.uploadAll();
       this.debug('cleaning up');
       await this.cleanUp();
+      this.debug('updating entities');
+      await this.updateState();
     } catch (e) {
       this.debug('deu ruim');
       console.error(e);

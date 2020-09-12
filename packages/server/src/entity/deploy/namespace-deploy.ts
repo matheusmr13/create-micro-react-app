@@ -2,7 +2,7 @@ import Namespace from '../namespace';
 
 import MicrofrontendDeploy from './microfrontend-deploy';
 import { DeployPath, NamespaceDeployPath } from './path';
-import Deploy from '../deploy';
+import Deploy, { STATUS } from '../deploy';
 import { TYPE } from '../microfrontend';
 import { writeJson } from '../../external/utils/fs';
 import ApplicationDeploy from './application-deploy';
@@ -81,6 +81,31 @@ class NamespaceDeploy {
       origin: this.path.microfrontendMetaJson,
       dest: this.path.microfrontendBucketMetaJson,
     });
+  }
+
+  async updateState() {
+    const { deploy, namespace } = this;
+    if (!deploy || !namespace) throw new Error();
+
+    const previousDeploy = await namespace.getCurrentDeploy();
+    previousDeploy.updateStatus(STATUS.PREVIOUS);
+
+    const nextDeploy = await Deploy.createEntity(
+      {
+        versions: deploy.versions,
+      },
+      namespace.applicationId,
+      namespace.id
+    );
+    await nextDeploy.save();
+
+    deploy.updateStatus(STATUS.CURRENT);
+
+    // const previousDeploy = await Deploy.
+
+    namespace.currentDeployId = deploy!.id;
+    namespace.nextDeployId = nextDeploy.id;
+    await namespace.save();
   }
 }
 

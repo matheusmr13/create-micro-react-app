@@ -23,7 +23,7 @@ class NamespaceController extends BaseController<typeof Namespace> {
     const namespace = await context.getInstance();
     const application = await Application.findOne(namespace.applicationId);
     const user = await context.getUser();
-    let nextDeploy = await namespace.getOrCreateNextDeploy();
+    let nextDeploy = await namespace.getNextDeploy();
     nextDeploy = Deploy.merge(nextDeploy, req.body);
     await nextDeploy.save();
     const userExtra = await user.getExtra();

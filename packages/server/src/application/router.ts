@@ -10,5 +10,6 @@ ApplicationRouter.post('/', asyncRequestHandler(ApplicationController.create));
 
 ApplicationRouter.post('/:uuid/deploy', asyncRequestHandler(ApplicationController.deploy));
 ApplicationRouter.post('/import', asyncRequestHandler(ApplicationController.import));
+ApplicationRouter.post('/:uuid/instant-deploy', asyncRequestHandler(ApplicationController.instantDeploy));
 
 export default ApplicationRouter;

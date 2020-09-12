@@ -11,5 +11,6 @@ MicrofrontendRouter.post('/', asyncRequestHandler(MicrofrontendController.create
 MicrofrontendRouter.post('/:uuid/sync', asyncRequestHandler(MicrofrontendController.syncVersions));
 MicrofrontendRouter.post('/clear', asyncRequestHandler(MicrofrontendController.clear));
 MicrofrontendRouter.post('/import', asyncRequestHandler(MicrofrontendController.import));
+// MicrofrontendRouter.post('/:uuid/release', asyncRequestHandler(MicrofrontendController.releaseVersion));
 
 export default MicrofrontendRouter;

@@ -69,13 +69,10 @@ class Namespace extends BaseEntity {
     return nextDeploy!;
   }
 
-  getOrCreateNextDeploy = async () => {
-    const actualNextDeploy = await this.getNextDeploy();
-    if (actualNextDeploy.status === DeployStatus.CURRENT) {
-      return await this.createNextDeploy();
-    }
-    return actualNextDeploy;
-  };
+  async getCurrentDeploy() {
+    const nextDeploy = await Deploy.findOne(this.currentDeployId);
+    return nextDeploy!;
+  }
 
   getDeployHistory = async () => {
     const deploys = await Deploy.createQueryBuilder()
