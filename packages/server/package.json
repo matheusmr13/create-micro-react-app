@@ -36,7 +36,7 @@
     "@types/testing-library__dom": "^7.5.0",
     "@types/uuid": "^7.0.2",
     "aws-sdk": "^2.719.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "cors": "^2.8.5",
     "dayjs": "^1.8.24",
     "express": "^4.17.1",
